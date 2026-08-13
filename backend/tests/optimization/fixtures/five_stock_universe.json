@@ -1,0 +1,14 @@
+{
+  "symbols": ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ITC"],
+  "expected_returns": [0.14, 0.16, 0.13, 0.17, 0.11],
+  "annualized_volatility": [0.22, 0.18, 0.16, 0.21, 0.14],
+  "sectors": ["Energy", "IT", "Financials", "IT", "FMCG"],
+  "target_return": 0.14,
+  "max_single_weight": 0.40,
+  "sector_caps": {"IT": 0.40},
+  "default_sector_cap": 1.0,
+  "min_holdings": 4,
+  "max_holdings": 5,
+  "min_lot_weight": 0.01,
+  "budget_inr": 2500000.00
+}
