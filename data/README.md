@@ -40,3 +40,13 @@ The historical CSV uses several headers that should be added to the Phase 2 load
 - `Volatility_20D`
 
 Header normalization already handles underscore variants such as `Company_Name`, `PE_Ratio`, `Market_Cap`, and `Dividend_Yield` where an equivalent spaced alias exists. `MA_50`, `MA_200`, `Price_to_Book`, and the 20-day volatility field require explicit semantic mapping decisions.
+
+## Dataset usage status
+
+Status after Phase 6:
+
+- The Kaggle files are downloaded and their dimensions, headers, metadata, and checksums are recorded.
+- Phase 2 ETL behavior is tested against a synthetic fixture, not this full raw dataset.
+- Phases 4–6 are validated against deterministic synthetic/golden optimization fixtures.
+- The real CSV has not yet undergone EDA, ETL mapping reconciliation, cleaning, PostgreSQL ingestion, or production optimization.
+- Phase 6 sector sensitivity coefficients are declared calibration assumptions and have not been estimated from the raw dataset.

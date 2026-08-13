@@ -58,6 +58,12 @@ The result contract reports solver status, weights, objective and risk-return me
 
 `app.explainability.build_explanations(result)` converts a feasible optimization result into an `ExplainabilityBundle` containing holding-level reasons, notable exclusions, material shadow-price insights, stock and sector concentration measures, a diversification score, and a display-ready portfolio summary. The service uses fixed rules and pure string templates only; it makes no generative-model or external API calls. Its item fields align with the `explanation_items` table and also expose the Phase 3 `rationale` and `model_score` display fields.
 
+### Scenario simulation
+
+`app.scenarios.run_scenario(base_inputs, scenario_type, params)` applies a pure shock transform to expected returns, covariance, INR budget, or risk constraints and then invokes the optimization and explainability layers again. Supported scenarios are market crash, rate increase, inflation, sector crash, budget increase, budget reduction, and risk-profile change.
+
+The result includes baseline and simulated metrics, holding-level weight changes and directions, regenerated explanations, nominal and inflation-adjusted return where applicable, and an explicit budget-scale/lot-feasibility classification. Sector sensitivity coefficients are documented assumptions in `app/scenarios/sensitivity_tables.py`; they are not represented as empirically fitted values.
+
 Run its independent 90% coverage gate with:
 
 ```bash
