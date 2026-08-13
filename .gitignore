@@ -13,3 +13,4 @@ __pycache__/
 htmlcov/
 *.egg-info/
 *.sqlite3
+/data/raw/
