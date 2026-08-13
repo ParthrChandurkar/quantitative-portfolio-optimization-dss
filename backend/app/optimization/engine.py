@@ -66,4 +66,20 @@ def solve(problem: OptimizationInput) -> OptimizationResult:
         for name, value in result.metadata.get("shadow_prices", {}).items()
     }
     hooks = compute_explanation_hooks(problem, weights, shadow_prices)
-    return replace(result, explanation_hooks=hooks)
+    context = {
+        "symbols": list(problem.symbols),
+        "expected_returns": problem.expected_returns.tolist(),
+        "covariance": problem.covariance.tolist(),
+        "sectors": list(problem.sectors),
+        "max_single_weight": problem.max_single_weight,
+        "sector_caps": dict(problem.sector_caps),
+        "default_sector_cap": problem.default_sector_cap,
+        "min_holdings": problem.min_holdings,
+        "max_holdings": problem.max_holdings,
+        "min_lot_weight": problem.min_lot_weight,
+    }
+    return replace(
+        result,
+        explanation_hooks=hooks,
+        metadata={**result.metadata, "explainability_context": context},
+    )

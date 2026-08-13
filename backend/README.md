@@ -54,6 +54,10 @@ Returns, volatility, weights, and sector caps use decimal values (`0.14` means 1
 
 The result contract reports solver status, weights, objective and risk-return metrics, named C1–C7 constraint checks, timing, shadow prices when available, Euler variance contributions, and excluded-stock diagnostics. No HTTP or framework type is exposed by the package.
 
+### Deterministic explanations
+
+`app.explainability.build_explanations(result)` converts a feasible optimization result into an `ExplainabilityBundle` containing holding-level reasons, notable exclusions, material shadow-price insights, stock and sector concentration measures, a diversification score, and a display-ready portfolio summary. The service uses fixed rules and pure string templates only; it makes no generative-model or external API calls. Its item fields align with the `explanation_items` table and also expose the Phase 3 `rationale` and `model_score` display fields.
+
 Run its independent 90% coverage gate with:
 
 ```bash
