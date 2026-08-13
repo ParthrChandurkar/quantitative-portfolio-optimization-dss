@@ -1,0 +1,11 @@
+Symbol,Company Name,Sector,Industry,Date,Open,High,Low,Close,Adj Close,Volume,PE Ratio,PB Ratio,Market Cap,Dividend Yield,EPS,Beta,SMA_50,SMA_200,RSI_14,MACD,Annualized Volatility
+HDFCBANK,HDFC Bank Limited,Financial Services,Private Banks,2026-01-01,100,106,99,105,100,1000,19.5,2.8,1200000,1.1,50.2,0.9,98,94,55,1.2,0.18
+HDFCBANK,HDFC Bank Limited,Financial Services,Private Banks,2026-01-02,105,112,104,110,110,1100,19.6,2.9,1210000,1.1,50.4,0.9,99,94.5,57,1.4,0.19
+HDFCBANK,HDFC Bank Limited,Financial Services,Private Banks,2026-01-03,110,113,108,111,121,1200,19.7,3.0,1220000,1.2,50.6,0.9,100,95,58,1.5,0.20
+HDFCBANK,HDFC Bank Limited,Financial Services,Private Banks,2026-01-04,111,116,109,115,133.1,1300,19.8,3.0,1230000,1.2,50.8,0.9,101,95.5,60,1.6,0.20
+HDFCBANK,HDFC Bank Limited,Financial Services,Private Banks,2026-01-05,115,117,112,114,146.41,1400,19.9,3.1,1240000,1.2,51.0,0.9,102,96,59,1.5,0.21
+INFY,Infosys Limited,Information Technology,IT Services,2026-01-01,200,204,198,202,200,2000,24.1,7.2,700000,2.0,65.0,0.8,198,185,52,2.1,0.22
+INFY,Infosys Limited,Information Technology,IT Services,2026-01-02,202,207,201,206,210,2100,24.2,7.3,705000,2.0,65.2,0.8,199,186,54,2.2,0.22
+INFY,Infosys Limited,Information Technology,IT Services,2026-01-03,206,214,205,212,220.5,2200,24.3,7.3,710000,2.1,65.4,0.8,201,187,58,2.5,0.23
+INFY,Infosys Limited,Information Technology,IT Services,2026-01-04,212,216,208,210,231.525,2300,24.4,7.4,715000,2.1,65.6,0.8,202,188,56,2.4,0.23
+INFY,Infosys Limited,Information Technology,IT Services,2026-01-05,210,218,209,217,243.10125,2400,24.5,7.5,720000,2.1,65.8,0.8,204,189,61,2.8,0.24
