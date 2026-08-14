@@ -1,0 +1,38 @@
+from __future__ import annotations
+
+import uuid
+from datetime import date
+from typing import Annotated
+
+from fastapi import APIRouter, Query
+
+from app.core.deps import AppSettings, CurrentUser, DBSession
+from app.schemas.common import success
+from app.services import analytics_service
+
+router = APIRouter(tags=["analytics"])
+
+
+@router.get("/portfolios/{portfolio_id}/snapshots/{snapshot_id}/analytics")
+async def get_analytics(
+    portfolio_id: uuid.UUID,
+    snapshot_id: uuid.UUID,
+    session: DBSession,
+    user: CurrentUser,
+    settings: AppSettings,
+    start_date: Annotated[date | None, Query()] = None,
+    end_date: Annotated[date | None, Query()] = None,
+    horizon_years: Annotated[int, Query(ge=0, le=50)] = 10,
+) -> dict:
+    return success(
+        await analytics_service.get_snapshot_analytics(
+            session,
+            user,
+            portfolio_id,
+            snapshot_id,
+            settings,
+            start_date=start_date,
+            end_date=end_date,
+            horizon_years=horizon_years,
+        )
+    )

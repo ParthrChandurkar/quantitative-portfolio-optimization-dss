@@ -20,6 +20,12 @@ class ReportStorage(Protocol):
     async def put(self, key: str, content: bytes, content_type: str) -> StoredObject:
         """Persist bytes and return an opaque location plus client download URL."""
 
+    async def get(self, location: str) -> bytes:
+        """Read bytes from an opaque location returned by ``put``."""
+
+    def url_for(self, location: str) -> str:
+        """Return the client-facing download URL for a stored location."""
+
 
 class LocalDiskStorage:
     def __init__(self, root: Path, url_prefix: str = "/generated-reports") -> None:
@@ -51,6 +57,16 @@ class LocalDiskStorage:
             download_url=f"{self._url_prefix}/{key}",
             size_bytes=len(content),
         )
+
+    async def get(self, location: str) -> bytes:
+        target = self._target(location)
+        if not target.is_file():
+            raise FileNotFoundError(location)
+        return await asyncio.to_thread(target.read_bytes)
+
+    def url_for(self, location: str) -> str:
+        self._target(location)
+        return f"{self._url_prefix}/{location}"
 
 
 def default_storage() -> ReportStorage:

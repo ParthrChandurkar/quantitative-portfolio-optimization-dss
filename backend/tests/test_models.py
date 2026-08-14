@@ -32,6 +32,7 @@ from app.db.models import (
 
 EXPECTED_TABLES = {
     "users",
+    "refresh_tokens",
     "sectors",
     "stocks",
     "stock_prices",
@@ -120,6 +121,7 @@ async def test_all_expected_tables_and_foreign_keys_exist(engine) -> None:
 
     assert tables == EXPECTED_TABLES
     assert foreign_keys["stocks"] == {"sectors"}
+    assert foreign_keys["refresh_tokens"] == {"users", "refresh_tokens"}
     assert foreign_keys["stock_prices"] == {"stocks"}
     assert foreign_keys["portfolio_snapshots"] == {"portfolios", "optimization_runs"}
     assert foreign_keys["scenario_runs"] == {"portfolio_snapshots"}

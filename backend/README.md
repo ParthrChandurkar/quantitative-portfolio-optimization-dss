@@ -90,6 +90,38 @@ Run the reports coverage gate with:
 pytest tests/reports --cov=app.reports --cov-fail-under=80
 ```
 
+### FastAPI system wiring
+
+Apply all migrations (including the Phase 9 refresh-token table), configure the JWT
+secret, and start the API from `backend/`:
+
+```text
+DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest
+JWT_SECRET=replace-with-a-long-random-production-secret
+JWT_ACCESS_EXPIRY=900
+JWT_REFRESH_EXPIRY=2592000
+COVARIANCE_LOOKBACK_DAYS=252
+CORS_ORIGINS=http://localhost:5173
+DEBUG=false
+```
+
+```bash
+alembic upgrade head
+uvicorn main:app --reload
+```
+
+The versioned API is available under `/api/v1`. JSON responses use the shared
+`data`/`error` envelope; the report download endpoint is intentionally raw
+`application/pdf`. All currency request and response values are Indian rupees (INR).
+
+Run the Phase 9 API/service coverage gate and its opt-in 49-stock PostgreSQL test with:
+
+```bash
+pytest tests/api --cov=app.api --cov=app.services --cov-fail-under=80
+REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest \
+  pytest tests/api/test_optimization.py::test_real_49_stock_optimization_through_http_api
+```
+
 Run its independent 90% coverage gate with:
 
 ```bash

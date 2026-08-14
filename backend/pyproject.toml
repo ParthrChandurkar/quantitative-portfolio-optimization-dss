@@ -9,15 +9,20 @@ description = "OptiVest portfolio optimization backend"
 requires-python = ">=3.11"
 dependencies = [
   "alembic>=1.13,<2",
+  "argon2-cffi>=23.1,<26",
   "asyncpg>=0.29,<1",
+  "email-validator>=2.2,<3",
+  "fastapi>=0.115,<1",
   "jinja2>=3.1,<4",
   "pydantic-settings>=2.2,<3",
+  "pyjwt>=2.9,<3",
   "numpy>=2.0,<3",
   "scipy>=1.14,<2",
   "pulp>=3.0,<4",
   "ortools>=9.10,<10",
   "sqlalchemy[asyncio]>=2.0.36,<3",
   "weasyprint>=66,<67",
+  "uvicorn[standard]>=0.34,<1",
 ]
 
 [project.optional-dependencies]
@@ -28,6 +33,7 @@ test = [
   "pytest-cov>=5,<7",
   "pypdf>=6,<7",
   "hypothesis>=6.100,<7",
+  "httpx>=0.28,<1",
 ]
 
 [tool.setuptools.packages.find]

@@ -1,0 +1,218 @@
+export type ApiErrorBody = { code: string; message: string }
+export type ApiEnvelope<T> = { data: T | null; error: ApiErrorBody | null }
+
+export type UserProfile = {
+  id: string
+  email: string
+  full_name: string
+  risk_profile_default: string | null
+  created_at: string
+}
+
+export type TokenSet = {
+  access_token: string
+  refresh_token: string
+  token_type: 'bearer'
+  access_expires_at: string
+  refresh_expires_at: string
+}
+
+export type Portfolio = {
+  id: string
+  name: string
+  is_active: boolean
+  created_at: string
+  latest_snapshot: Snapshot | null
+}
+
+export type Snapshot = {
+  id: string
+  label: string
+  expected_return: number | null
+  expected_volatility: number | null
+  sharpe_ratio: number | null
+  diversification_score: number | null
+  is_baseline: boolean
+  created_at: string
+  holdings?: Array<Record<string, unknown>>
+}
+
+export type Stock = {
+  id: string
+  symbol: string
+  company_name: string
+  sector: string
+  industry: string | null
+  listed_since: string | null
+}
+
+export type OptimizeRequest = {
+  budget: number
+  target_return?: number | null
+  risk_tolerance?: number | null
+  max_single_weight?: number
+  min_holdings?: number | null
+  max_holdings?: number | null
+  min_lot_weight?: number
+  sector_caps?: Record<string, number>
+  default_sector_cap?: number
+  solver?: 'Auto' | 'SciPy' | 'PuLP' | 'OR-Tools'
+  risk_free_rate?: number
+  lookback_days?: number
+  label?: string
+}
+
+export class OptiVestApiError extends Error {
+  constructor(public readonly status: number, public readonly code: string, message: string) {
+    super(message)
+  }
+}
+
+export interface TokenStore {
+  get(): TokenSet | null
+  set(tokens: TokenSet): void
+  clear(): void
+}
+
+class BrowserTokenStore implements TokenStore {
+  private readonly key = 'optivest.tokens'
+
+  get(): TokenSet | null {
+    const value = globalThis.localStorage?.getItem(this.key)
+    return value ? JSON.parse(value) as TokenSet : null
+  }
+
+  set(tokens: TokenSet): void {
+    globalThis.localStorage?.setItem(this.key, JSON.stringify(tokens))
+  }
+
+  clear(): void {
+    globalThis.localStorage?.removeItem(this.key)
+  }
+}
+
+export interface OptiVestApi {
+  signup(email: string, password: string, fullName: string): Promise<UserProfile & TokenSet>
+  login(email: string, password: string): Promise<UserProfile & TokenSet>
+  logout(): Promise<void>
+  me(): Promise<UserProfile>
+  updateMe(values: Partial<Pick<UserProfile, 'full_name' | 'risk_profile_default'>>): Promise<UserProfile>
+  stocks(sector?: string): Promise<Stock[]>
+  sectors(): Promise<Array<{ id: string; name: string }>>
+  portfolios(): Promise<Portfolio[]>
+  createPortfolio(name: string): Promise<Portfolio>
+  portfolio(id: string): Promise<Portfolio>
+  updatePortfolio(id: string, values: { name?: string; is_active?: boolean }): Promise<Portfolio>
+  snapshots(portfolioId: string): Promise<Snapshot[]>
+  optimize(portfolioId: string, values: OptimizeRequest): Promise<Record<string, unknown>>
+  optimizationRun(id: string): Promise<Record<string, unknown>>
+  scenario(portfolioId: string, values: Record<string, unknown>): Promise<Record<string, unknown>>
+  analytics(portfolioId: string, snapshotId: string, query?: URLSearchParams): Promise<Record<string, unknown>>
+  generateReport(portfolioId: string, snapshotId: string, reportType: string): Promise<Record<string, unknown>>
+  reports(): Promise<Array<Record<string, unknown>>>
+  downloadReport(id: string): Promise<Blob>
+}
+
+export class ApiClient implements OptiVestApi {
+  private refreshPromise: Promise<TokenSet> | null = null
+
+  constructor(
+    private readonly baseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api/v1',
+    private readonly tokenStore: TokenStore = new BrowserTokenStore(),
+    private readonly fetcher: typeof fetch = fetch,
+  ) {}
+
+  private async parse<T>(response: Response): Promise<T> {
+    const envelope = await response.json() as ApiEnvelope<T>
+    if (!response.ok || envelope.error || envelope.data === null) {
+      const error = envelope.error ?? { code: 'INVALID_RESPONSE', message: 'The server returned an invalid response.' }
+      throw new OptiVestApiError(response.status, error.code, error.message)
+    }
+    return envelope.data
+  }
+
+  private async rotate(): Promise<TokenSet> {
+    if (this.refreshPromise) return this.refreshPromise
+    const current = this.tokenStore.get()
+    if (!current) throw new OptiVestApiError(401, 'AUTH_REQUIRED', 'Sign in is required.')
+    this.refreshPromise = this.fetcher(`${this.baseUrl}/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: current.refresh_token }),
+    }).then(response => this.parse<TokenSet>(response)).then(tokens => {
+      this.tokenStore.set(tokens)
+      return tokens
+    }).finally(() => { this.refreshPromise = null })
+    return this.refreshPromise
+  }
+
+  private async request<T>(path: string, init: RequestInit = {}, retry = true): Promise<T> {
+    const tokens = this.tokenStore.get()
+    const headers = new Headers(init.headers)
+    if (init.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json')
+    if (tokens) headers.set('Authorization', `Bearer ${tokens.access_token}`)
+    const response = await this.fetcher(`${this.baseUrl}${path}`, { ...init, headers })
+    if (response.status === 401 && retry && tokens) {
+      await this.rotate()
+      return this.request<T>(path, init, false)
+    }
+    return this.parse<T>(response)
+  }
+
+  async signup(email: string, password: string, fullName: string): Promise<UserProfile & TokenSet> {
+    const data = await this.request<{ user: UserProfile } & TokenSet>('/auth/signup', {
+      method: 'POST', body: JSON.stringify({ email, password, full_name: fullName }),
+    }, false)
+    this.tokenStore.set(data)
+    return { ...data.user, ...data }
+  }
+
+  async login(email: string, password: string): Promise<UserProfile & TokenSet> {
+    const data = await this.request<{ user: UserProfile } & TokenSet>('/auth/login', {
+      method: 'POST', body: JSON.stringify({ email, password }),
+    }, false)
+    this.tokenStore.set(data)
+    return { ...data.user, ...data }
+  }
+
+  async logout(): Promise<void> {
+    const tokens = this.tokenStore.get()
+    if (tokens) await this.request('/auth/logout', {
+      method: 'POST', body: JSON.stringify({ refresh_token: tokens.refresh_token }),
+    }, false)
+    this.tokenStore.clear()
+  }
+
+  me = () => this.request<UserProfile>('/me')
+  updateMe = (values: Partial<Pick<UserProfile, 'full_name' | 'risk_profile_default'>>) =>
+    this.request<UserProfile>('/me', { method: 'PATCH', body: JSON.stringify(values) })
+  stocks = (sector?: string) => this.request<Stock[]>(`/stocks${sector ? `?sector=${encodeURIComponent(sector)}` : ''}`)
+  sectors = () => this.request<Array<{ id: string; name: string }>>('/sectors')
+  portfolios = () => this.request<Portfolio[]>('/portfolios')
+  createPortfolio = (name: string) => this.request<Portfolio>('/portfolios', { method: 'POST', body: JSON.stringify({ name }) })
+  portfolio = (id: string) => this.request<Portfolio>(`/portfolios/${id}`)
+  updatePortfolio = (id: string, values: { name?: string; is_active?: boolean }) =>
+    this.request<Portfolio>(`/portfolios/${id}`, { method: 'PATCH', body: JSON.stringify(values) })
+  snapshots = (portfolioId: string) => this.request<Snapshot[]>(`/portfolios/${portfolioId}/snapshots`)
+  optimize = (portfolioId: string, values: OptimizeRequest) =>
+    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/optimize`, { method: 'POST', body: JSON.stringify(values) })
+  optimizationRun = (id: string) => this.request<Record<string, unknown>>(`/optimization-runs/${id}`)
+  scenario = (portfolioId: string, values: Record<string, unknown>) =>
+    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/scenarios`, { method: 'POST', body: JSON.stringify(values) })
+  analytics = (portfolioId: string, snapshotId: string, query = new URLSearchParams()) =>
+    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/analytics${query.size ? `?${query}` : ''}`)
+  generateReport = (portfolioId: string, snapshotId: string, reportType: string) =>
+    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/reports`, { method: 'POST', body: JSON.stringify({ report_type: reportType }) })
+  reports = () => this.request<Array<Record<string, unknown>>>('/reports')
+
+  async downloadReport(id: string): Promise<Blob> {
+    const tokens = this.tokenStore.get()
+    const response = await this.fetcher(`${this.baseUrl}/reports/${id}/download`, {
+      headers: tokens ? { Authorization: `Bearer ${tokens.access_token}` } : {},
+    })
+    if (!response.ok) await this.parse(response)
+    return response.blob()
+  }
+}
+
+export const apiClient = new ApiClient()

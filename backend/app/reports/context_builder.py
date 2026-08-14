@@ -35,6 +35,7 @@ from app.explainability.shadow_price_insights import (
 )
 from app.optimization.data import build_market_data
 from app.optimization.types import ConstraintReport, OptimizationInput, SolverName
+from app.services.problem_service import decode_constraint_config
 
 
 @dataclass(frozen=True, slots=True)
@@ -171,6 +172,7 @@ def assemble_report_context(
     )
     if snapshot.expected_return is None or snapshot.expected_volatility is None:
         raise ValueError("report snapshot is missing expected return or volatility")
+    constraint_config = decode_constraint_config(run.sector_constraints)
     weights = {holding.symbol: float(holding.weight) for holding in holdings}
     sectors = {holding.symbol: holding.sector for holding in holdings}
     return ReportContext(
@@ -200,9 +202,7 @@ def assemble_report_context(
             risk_tolerance=run.risk_tolerance,
             max_single_weight=run.max_single_weight,
             min_holdings=run.min_holdings,
-            sector_caps={
-                str(key): float(value) for key, value in run.sector_constraints.items()
-            },
+            sector_caps=constraint_config["caps"],
         ),
         constraint_rows=constraints,
         explanations=explanations,
@@ -284,6 +284,7 @@ async def load_report_context(
         solver = SolverName(run.solver_used)
     except ValueError:
         solver = SolverName.AUTO
+    constraint_config = decode_constraint_config(run.sector_constraints)
     universe = OptimizationInput(
         symbols=symbols,
         expected_returns=market_data.expected_returns,
@@ -293,12 +294,14 @@ async def load_report_context(
         target_return=target_return,
         risk_tolerance=risk_tolerance,
         max_single_weight=float(run.max_single_weight),
-        sector_caps={
-            str(key): float(value) for key, value in run.sector_constraints.items()
-        },
-        min_holdings=run.min_holdings,
+        sector_caps=constraint_config["caps"],
+        default_sector_cap=constraint_config["default_sector_cap"],
+        min_holdings=constraint_config["min_holdings"],
+        max_holdings=constraint_config["max_holdings"],
+        min_lot_weight=constraint_config["min_lot_weight"],
         historical_returns=market_data.historical_returns,
         solver=solver,
+        risk_free_rate=constraint_config["risk_free_rate"],
     )
     phase4_reports = tuple(
         ConstraintReport(
