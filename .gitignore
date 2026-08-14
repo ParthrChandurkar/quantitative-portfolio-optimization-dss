@@ -12,6 +12,7 @@ __pycache__/
 .coverage
 htmlcov/
 coverage/
+coverage*.json
 /backend/generated-reports/
 *.egg-info/
 *.sqlite3

@@ -12,12 +12,17 @@ from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+_windows_dll_handle: Any | None = None
 if sys.platform == "win32" and "WEASYPRINT_DLL_DIRECTORIES" not in os.environ:
     # Current WeasyPrint requires a modern Pango runtime. MSYS2 is its documented
     # Windows installation route; deployments can override this directory explicitly.
     msys2_runtime = Path("C:/msys64/mingw64/bin")
     if msys2_runtime.exists():
         os.environ["WEASYPRINT_DLL_DIRECTORIES"] = str(msys2_runtime)
+        # Windows can otherwise resolve an older GTK Pango from PATH before the
+        # directory advertised to WeasyPrint. Keep the handle alive for the process.
+        os.environ["PATH"] = f"{msys2_runtime}{os.pathsep}{os.environ['PATH']}"
+        _windows_dll_handle = os.add_dll_directory(str(msys2_runtime))
 
 from weasyprint import HTML  # type: ignore[import-untyped]
 
