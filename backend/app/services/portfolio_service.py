@@ -4,11 +4,20 @@ from __future__ import annotations
 
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import APIError
-from app.db.models import Portfolio, PortfolioSnapshot, User
+from app.db.models import (
+    ExplanationItem,
+    OptimizationRun,
+    Portfolio,
+    PortfolioHolding,
+    PortfolioSnapshot,
+    Sector,
+    Stock,
+    User,
+)
 from app.schemas.portfolios import PortfolioCreateRequest, PortfolioUpdateRequest
 
 
@@ -79,12 +88,25 @@ async def latest_snapshot(
 
 async def portfolio_payload(session: AsyncSession, portfolio: Portfolio) -> dict:
     snapshot = await latest_snapshot(session, portfolio.id)
+    latest = None
+    if snapshot is not None:
+        run = await session.get(OptimizationRun, snapshot.optimization_run_id)
+        holding_count = await session.scalar(
+            select(func.count())
+            .select_from(PortfolioHolding)
+            .where(PortfolioHolding.snapshot_id == snapshot.id)
+        )
+        latest = {
+            **snapshot_payload(snapshot),
+            "budget_inr": float(run.budget) if run is not None else None,
+            "holding_count": holding_count or 0,
+        }
     return {
         "id": portfolio.id,
         "name": portfolio.name,
         "is_active": portfolio.is_active,
         "created_at": portfolio.created_at,
-        "latest_snapshot": snapshot_payload(snapshot) if snapshot is not None else None,
+        "latest_snapshot": latest,
     }
 
 
@@ -102,7 +124,72 @@ async def get_portfolio(
     session: AsyncSession, user: User, portfolio_id: uuid.UUID
 ) -> dict:
     portfolio = await require_owned_portfolio(session, portfolio_id, user.id)
-    return await portfolio_payload(session, portfolio)
+    payload = await portfolio_payload(session, portfolio)
+    snapshot = await latest_snapshot(session, portfolio.id)
+    if snapshot is None:
+        return payload
+    holding_rows = (
+        await session.execute(
+            select(PortfolioHolding, Stock, Sector.name)
+            .join(Stock, PortfolioHolding.stock_id == Stock.id)
+            .join(Sector, Stock.sector_id == Sector.id)
+            .where(PortfolioHolding.snapshot_id == snapshot.id)
+            .order_by(PortfolioHolding.weight.desc(), Stock.symbol)
+        )
+    ).all()
+    explanation_rows = (
+        await session.execute(
+            select(ExplanationItem, Stock.symbol)
+            .outerjoin(Stock, ExplanationItem.stock_id == Stock.id)
+            .where(ExplanationItem.optimization_run_id == snapshot.optimization_run_id)
+            .order_by(Stock.symbol)
+        )
+    ).all()
+    assert payload["latest_snapshot"] is not None
+    payload["latest_snapshot"]["holdings"] = [
+        {
+            "symbol": stock.symbol,
+            "company_name": stock.company_name,
+            "sector": sector,
+            "weight": float(holding.weight),
+            "allocated_amount_inr": float(holding.allocated_amount),
+            "shares": float(holding.shares),
+        }
+        for holding, stock, sector in holding_rows
+    ]
+    payload["latest_snapshot"]["explanations"] = {
+        "included": [
+            {
+                "symbol": symbol,
+                "decision": item.decision,
+                "primary_reason": item.primary_reason,
+                "marginal_return_contribution": float(
+                    item.marginal_return_contribution
+                )
+                if item.marginal_return_contribution is not None
+                else None,
+                "marginal_risk_contribution": float(item.marginal_risk_contribution)
+                if item.marginal_risk_contribution is not None
+                else None,
+                "binding_constraint": item.binding_constraint,
+                "narrative_text": item.narrative_text,
+            }
+            for item, symbol in explanation_rows
+            if item.decision.casefold() != "excluded"
+        ],
+        "notable_exclusions": [
+            {
+                "symbol": symbol,
+                "decision": item.decision,
+                "primary_reason": item.primary_reason,
+                "binding_constraint": item.binding_constraint,
+                "narrative_text": item.narrative_text,
+            }
+            for item, symbol in explanation_rows
+            if item.decision.casefold() == "excluded"
+        ],
+    }
+    return payload
 
 
 async def update_portfolio(

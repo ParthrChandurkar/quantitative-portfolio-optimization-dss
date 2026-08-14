@@ -19,15 +19,27 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`.
+In a second terminal, configure `backend/.env`, apply migrations, and run the API:
+
+```bash
+cd backend
+alembic upgrade head
+uvicorn main:app --reload
+```
+
+Open `http://localhost:5173`. The frontend defaults to
+`http://localhost:8000/api/v1`; override it with `VITE_API_BASE_URL` when needed.
 
 ## Validate
 
 ```bash
 npm run lint
 npm run build
+npm run test:coverage
 ```
 
 ## Stack
 
-React 19, TypeScript, Vite, Lucide icons, and a custom responsive design system. The current repository is a frontend product prototype with seeded Nifty-style market data; the architecture is ready for a FastAPI/PostgreSQL optimization service.
+React 19, TypeScript, Vite, React Query, React Router, FastAPI, PostgreSQL,
+SQLAlchemy, SciPy, PuLP, OR-Tools, and WeasyPrint. Financial data is loaded from the
+profiled Nifty-50 dataset; page components contain no seeded portfolio or metric data.

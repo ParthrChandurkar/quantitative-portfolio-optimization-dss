@@ -7,24 +7,34 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.4",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "~5.9.3",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "lucide-react": "latest"
+    "react-router-dom": "^7.18.2",
+    "typescript": "~5.9.3",
+    "vite": "latest"
   },
   "devDependencies": {
+    "@eslint/js": "latest",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.4",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@vitest/coverage-v8": "^4.1.10",
     "eslint": "latest",
-    "@eslint/js": "latest",
-    "typescript-eslint": "latest",
     "eslint-plugin-react-hooks": "latest",
     "eslint-plugin-react-refresh": "latest",
-    "globals": "latest"
+    "globals": "latest",
+    "jsdom": "^30.0.1",
+    "typescript-eslint": "latest",
+    "vitest": "^4.1.10"
   }
 }

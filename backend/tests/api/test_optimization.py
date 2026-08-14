@@ -38,6 +38,15 @@ async def test_optimize_returns_snapshot_holdings_metrics_and_explanations_toget
         headers=auth_headers,
     )
     assert snapshots.json()["data"][0]["id"] == optimized["snapshot_id"]
+    detail = await client.get(
+        f"/api/v1/portfolios/{optimized['portfolio_id']}", headers=auth_headers
+    )
+    latest = detail.json()["data"]["latest_snapshot"]
+    assert latest["id"] == optimized["snapshot_id"]
+    assert latest["budget_inr"] == 100000
+    assert latest["holdings"]
+    assert latest["explanations"]["included"]
+    assert latest["explanations"]["included"][0]["narrative_text"]
 
 
 @pytest.mark.skipif(

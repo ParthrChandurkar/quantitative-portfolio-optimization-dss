@@ -4,7 +4,7 @@
 
 The Phase 3 React prototype is located at repository-root `src/`, not `frontend/src/`. It contains static fixture imports and timer-driven interactions; there was no mock API client and no frontend test script or test files to replace while keeping page components unchanged.
 
-Phase 9 therefore adds the real dependency-injectable client at `src/lib/api/client.ts`, matching every `/api/v1` route and the shared response envelope. Per the Phase 9 instruction not to build or rewrite UI, the existing page components remain unchanged. A later UI integration task must replace their direct `src/data.ts` fixture usage with calls through the exported `OptiVestApi` interface.
+Phase 9 therefore added the real dependency-injectable client at `src/lib/api/client.ts`, matching every `/api/v1` route and the shared response envelope. Phase 9B subsequently closed this gap: `src/data.ts` was deleted and the application was split into live React Query pages. See [phase9b-frontend-integration.md](phase9b-frontend-integration.md).
 
 ## Backend behavior
 

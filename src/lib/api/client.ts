@@ -34,8 +34,75 @@ export type Snapshot = {
   diversification_score: number | null
   is_baseline: boolean
   created_at: string
-  holdings?: Array<Record<string, unknown>>
+  budget_inr?: number | null
+  holding_count?: number
+  holdings?: Holding[]
+  explanations?: ExplanationBundle
 }
+
+export type Holding = {
+  symbol: string
+  company_name: string
+  sector: string
+  weight: number
+  allocated_amount_inr: number
+  shares: number
+}
+
+export type Explanation = {
+  symbol: string | null
+  decision: string
+  primary_reason: string
+  marginal_return_contribution?: number | null
+  marginal_risk_contribution?: number | null
+  binding_constraint: string | null
+  narrative_text: string
+}
+
+export type ExplanationBundle = {
+  summary?: string
+  included: Explanation[]
+  notable_exclusions: Explanation[]
+  constraint_insights?: Array<Record<string, unknown>>
+  diversification?: { overall_score: number }
+}
+
+export type OptimizationResponse = {
+  run: { id: string; portfolio_id: string; status: 'pending' | 'solved' | 'infeasible' | 'failed'; solver_used: string; solve_time_ms: number | null; message: string | null }
+  snapshot: Snapshot | null
+  explanations: ExplanationBundle | null
+}
+
+export type ScenarioResponse = {
+  scenario_run_id: string
+  scenario_type: string
+  status: string
+  comparison: {
+    holdings: Array<{ symbol: string; base_weight: number; simulated_weight: number; delta_w: number; direction: string }>
+    base_metrics: PortfolioMetrics
+    simulated_metrics: PortfolioMetrics
+    expected_return_delta: number
+    volatility_delta: number
+    sharpe_ratio_delta: number
+    diversification_score_delta: number
+  } | null
+  explanations: ExplanationBundle | null
+  weights_unchanged: boolean
+  scale_change_explanation: string | null
+}
+
+export type PortfolioMetrics = { expected_return: number; volatility: number; sharpe_ratio: number; diversification_score: number }
+export type AnalyticsBundle = {
+  allocation: Array<{ symbol: string; sector: string; weight: number; allocated_amount_inr: number }>
+  risk_return: { expected_return: number; volatility: number }
+  growth_projection: Array<{ year: number; projected_value: number; lower_1sigma: number; upper_1sigma: number; lower_2sigma: number; upper_2sigma: number }>
+  performance: { buy_and_hold: BacktestResult; periodic_rebalance: BacktestResult }
+  risk_metrics: Record<string, number>
+  efficient_frontier: Array<{ expected_return: number; volatility: number }>
+  sector_distribution: Array<{ sector: string; allocation: number; cap: number; remaining_capacity: number; is_binding: boolean; exceeds_cap: boolean }>
+}
+export type BacktestResult = { points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>; warnings: string[] }
+export type ReportRecord = { id: string; snapshot_id: string; report_type: string; file_path: string; generated_at?: string; download_url: string; size_bytes?: number }
 
 export type Stock = {
   id: string
@@ -92,6 +159,7 @@ class BrowserTokenStore implements TokenStore {
 }
 
 export interface OptiVestApi {
+  isAuthenticated(): boolean
   signup(email: string, password: string, fullName: string): Promise<UserProfile & TokenSet>
   login(email: string, password: string): Promise<UserProfile & TokenSet>
   logout(): Promise<void>
@@ -104,12 +172,12 @@ export interface OptiVestApi {
   portfolio(id: string): Promise<Portfolio>
   updatePortfolio(id: string, values: { name?: string; is_active?: boolean }): Promise<Portfolio>
   snapshots(portfolioId: string): Promise<Snapshot[]>
-  optimize(portfolioId: string, values: OptimizeRequest): Promise<Record<string, unknown>>
+  optimize(portfolioId: string, values: OptimizeRequest): Promise<OptimizationResponse>
   optimizationRun(id: string): Promise<Record<string, unknown>>
-  scenario(portfolioId: string, values: Record<string, unknown>): Promise<Record<string, unknown>>
-  analytics(portfolioId: string, snapshotId: string, query?: URLSearchParams): Promise<Record<string, unknown>>
-  generateReport(portfolioId: string, snapshotId: string, reportType: string): Promise<Record<string, unknown>>
-  reports(): Promise<Array<Record<string, unknown>>>
+  scenario(portfolioId: string, values: Record<string, unknown>): Promise<ScenarioResponse>
+  analytics(portfolioId: string, snapshotId: string, query?: URLSearchParams): Promise<AnalyticsBundle>
+  generateReport(portfolioId: string, snapshotId: string, reportType: string): Promise<ReportRecord>
+  reports(): Promise<ReportRecord[]>
   downloadReport(id: string): Promise<Blob>
 }
 
@@ -121,6 +189,8 @@ export class ApiClient implements OptiVestApi {
     private readonly tokenStore: TokenStore = new BrowserTokenStore(),
     private readonly fetcher: typeof fetch = fetch,
   ) {}
+
+  isAuthenticated = () => this.tokenStore.get() !== null
 
   private async parse<T>(response: Response): Promise<T> {
     const envelope = await response.json() as ApiEnvelope<T>
@@ -142,6 +212,9 @@ export class ApiClient implements OptiVestApi {
     }).then(response => this.parse<TokenSet>(response)).then(tokens => {
       this.tokenStore.set(tokens)
       return tokens
+    }).catch(error => {
+      this.tokenStore.clear()
+      throw error
     }).finally(() => { this.refreshPromise = null })
     return this.refreshPromise
   }
@@ -195,15 +268,15 @@ export class ApiClient implements OptiVestApi {
     this.request<Portfolio>(`/portfolios/${id}`, { method: 'PATCH', body: JSON.stringify(values) })
   snapshots = (portfolioId: string) => this.request<Snapshot[]>(`/portfolios/${portfolioId}/snapshots`)
   optimize = (portfolioId: string, values: OptimizeRequest) =>
-    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/optimize`, { method: 'POST', body: JSON.stringify(values) })
+    this.request<OptimizationResponse>(`/portfolios/${portfolioId}/optimize`, { method: 'POST', body: JSON.stringify(values) })
   optimizationRun = (id: string) => this.request<Record<string, unknown>>(`/optimization-runs/${id}`)
   scenario = (portfolioId: string, values: Record<string, unknown>) =>
-    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/scenarios`, { method: 'POST', body: JSON.stringify(values) })
+    this.request<ScenarioResponse>(`/portfolios/${portfolioId}/scenarios`, { method: 'POST', body: JSON.stringify(values) })
   analytics = (portfolioId: string, snapshotId: string, query = new URLSearchParams()) =>
-    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/analytics${query.size ? `?${query}` : ''}`)
+    this.request<AnalyticsBundle>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/analytics${query.size ? `?${query}` : ''}`)
   generateReport = (portfolioId: string, snapshotId: string, reportType: string) =>
-    this.request<Record<string, unknown>>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/reports`, { method: 'POST', body: JSON.stringify({ report_type: reportType }) })
-  reports = () => this.request<Array<Record<string, unknown>>>('/reports')
+    this.request<ReportRecord>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/reports`, { method: 'POST', body: JSON.stringify({ report_type: reportType }) })
+  reports = () => this.request<ReportRecord[]>('/reports')
 
   async downloadReport(id: string): Promise<Blob> {
     const tokens = this.tokenStore.get()

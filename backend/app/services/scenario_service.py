@@ -6,11 +6,13 @@ import asyncio
 import uuid
 
 from fastapi.encoders import jsonable_encoder
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
-from app.db.models import OptimizationRun, ScenarioRun, User
+from app.db.models import OptimizationRun, ScenarioRun, Stock, StockFundamental, User
 from app.scenarios.service import run_scenario
+from app.scenarios.types import ScenarioType
 from app.schemas.scenarios import ScenarioRunRequest
 from app.services.analytics_service import snapshot_holdings
 from app.services.portfolio_service import require_owned_snapshot
@@ -32,14 +34,41 @@ async def run_portfolio_scenario(
         raise ValueError("snapshot optimization run is missing")
     symbols, _ = await snapshot_holdings(session, snapshot.id)
     context = await problem_from_run(session, settings, run, symbols)
+    scenario_params = dict(request.params)
+    if request.scenario_type is ScenarioType.MARKET_CRASH and "betas" not in scenario_params:
+        latest_fundamentals = (
+            select(
+                StockFundamental.stock_id,
+                func.max(StockFundamental.as_of_date).label("latest_date"),
+            )
+            .group_by(StockFundamental.stock_id)
+            .subquery()
+        )
+        beta_rows = (
+            await session.execute(
+                select(Stock.symbol, StockFundamental.beta)
+                .join(StockFundamental, StockFundamental.stock_id == Stock.id)
+                .join(
+                    latest_fundamentals,
+                    (latest_fundamentals.c.stock_id == StockFundamental.stock_id)
+                    & (latest_fundamentals.c.latest_date == StockFundamental.as_of_date),
+                )
+                .where(Stock.symbol.in_(symbols))
+            )
+        ).all()
+        beta_by_symbol = {
+            symbol: float(beta) if beta is not None else 1.0
+            for symbol, beta in beta_rows
+        }
+        scenario_params["betas"] = [beta_by_symbol.get(symbol, 1.0) for symbol in symbols]
     result = await asyncio.to_thread(
-        run_scenario, context.problem, request.scenario_type, request.params
+        run_scenario, context.problem, request.scenario_type, scenario_params
     )
     scenario_row = ScenarioRun(
         base_snapshot_id=snapshot.id,
         resulting_snapshot_id=None,
         scenario_type=request.scenario_type.value,
-        shock_parameters=request.params,
+        shock_parameters=scenario_params,
     )
     session.add(scenario_row)
     await session.commit()
