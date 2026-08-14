@@ -64,6 +64,20 @@ The result contract reports solver status, weights, objective and risk-return me
 
 The result includes baseline and simulated metrics, holding-level weight changes and directions, regenerated explanations, nominal and inflation-adjusted return where applicable, and an explicit budget-scale/lot-feasibility classification. Sector sensitivity coefficients are documented assumptions in `app/scenarios/sensitivity_tables.py`; they are not represented as empirically fitted values.
 
+### Analytics dashboard service
+
+`await app.analytics.get_analytics(snapshot_or_weights, universe, date_range, session=session)` returns chart-ready allocation, risk-return, growth projection, historical performance, risk metrics, efficient-frontier, and sector-distribution sections. Values and VaR amounts are INR.
+
+Historical performance is queried from `stock_prices` and includes both buy-and-hold and configurable periodic-rebalance series. Missing observations freeze that stock position for the date; this also handles the 47 zero-OHLC source rows rejected during ETL. Allocations for stocks not yet listed remain cash, and closed-market dates are not manufactured. The efficient frontier reuses the Phase 4 SciPy solver for every target-return point.
+
+Run the analytics coverage gate and the opt-in real PostgreSQL integration test with:
+
+```bash
+pytest tests/analytics --cov=app.analytics --cov-fail-under=85
+REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest \
+  pytest tests/analytics/test_backtest_real_data_integration.py
+```
+
 Run its independent 90% coverage gate with:
 
 ```bash

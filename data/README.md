@@ -46,4 +46,6 @@ Both executions accepted 287,263 rows and rejected the same 47 source rows whose
 - The Phase 2 mapping layer is reconciled to all real headers; no schema change was required.
 - Full PostgreSQL ingestion and full-volume idempotency validation are complete.
 - Stored `daily_return` values were independently verified for HDFCBANK, INFY, and RELIANCE.
-- The dataset is ready for Phase 7 backtesting/EDA. Corporate-action outliers and the 47 zero-price rows documented in the profile must remain visible to downstream data-quality filters.
+- Phase 7 now queries `stock_prices` directly for buy-and-hold and periodic-rebalance backtests. The real PostgreSQL integration run used RELIANCE, TCS, HDFCBANK, INFY, and ITC across 249 market dates in 2025, with a maximum four-day calendar gap and no missing-data warnings.
+- The equal-weight monthly-rebalance integration check changed ₹1,000,000 to ₹993,348.58; this is a pipeline-validation result, not an investment recommendation.
+- Corporate-action outliers and the 47 rejected zero-price rows documented in the profile remain visible to downstream data-quality filters. The loaded dataset is ready for subsequent API wiring and deeper model evaluation.
