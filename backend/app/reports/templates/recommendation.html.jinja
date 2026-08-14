@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>OptiVest Investment Recommendation</title>{% include "_styles.html.jinja" %}</head>
+<body>
+  <header>
+    <div class="brand">OptiVest · Investment Recommendation</div>
+    <h1>{{ report.portfolio_name }}</h1>
+    <p class="subtitle">Narrative decision brief for {{ report.investor_name }}</p>
+    <p class="meta">Based on {{ report.snapshot_label }} · Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
+  </header>
+
+  <div class="summary-box"><strong>Recommendation overview</strong><br>{{ report.plain_language_summary }}</div>
+
+  <section class="metric-grid">
+    <div class="metric"><span>Expected return</span><strong>{{ report.metrics.expected_return|percent }}</strong></div>
+    <div class="metric"><span>Expected volatility</span><strong>{{ report.metrics.expected_volatility|percent }}</strong></div>
+    <div class="metric"><span>Sharpe ratio</span><strong>{{ report.metrics.sharpe_ratio|number(2) }}</strong></div>
+    <div class="metric"><span>Budget</span><strong>{{ report.configured_constraints.budget_inr|inr }}</strong></div>
+  </section>
+
+  <h2>Why each stock is in the portfolio</h2>
+  {% for holding in report.holdings %}
+  <article class="prose-item">
+    <h3>{{ holding.symbol }} · {{ holding.company_name }} <span class="pill">{{ holding.weight|percent }}</span></h3>
+    {% set matching = report.explanations|selectattr('symbol', 'equalto', holding.symbol)|list %}
+    <p>{% if matching %}{{ matching[0].narrative_text }}{% else %}This holding is part of the optimized allocation under the configured portfolio constraints.{% endif %}</p>
+    <p class="muted">{{ holding.allocated_amount_inr|inr }} allocated in {{ holding.sector }}.</p>
+  </article>
+  {% endfor %}
+
+  <h2>Notable exclusions</h2>
+  {% if report.notable_exclusions %}
+    {% for item in report.notable_exclusions %}
+    <article class="prose-item"><h3>{{ item.symbol or 'Candidate asset' }}</h3><p>{{ item.narrative_text }}</p></article>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No notable exclusions were recorded for this optimization run.</p>
+  {% endif %}
+
+  <h2>What could change this recommendation</h2>
+  {% if report.shadow_price_insights %}
+    {% for insight in report.shadow_price_insights %}<div class="insight"><strong>{{ insight.constraint_name }}</strong><br>{{ insight.narrative }}</div>{% endfor %}
+  {% else %}
+    <p class="muted">No material binding-constraint sensitivity was recorded. A changed budget, target return, risk limit, or sector cap still requires a new optimization run.</p>
+  {% endif %}
+
+  {% include "_disclaimer.html.jinja" %}
+</body>
+</html>

@@ -78,6 +78,18 @@ REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest
   pytest tests/analytics/test_backtest_real_data_integration.py
 ```
 
+### PDF reports
+
+`await app.reports.generate_report(snapshot_id, report_type, user_id, session=session)` produces Portfolio Summary, Optimization Report, and Investment Recommendation PDFs. Report context reuses persisted snapshot, holding, explanation, and constraint values plus the Phase 7 analytics bundle. Generated artifacts are written through the `ReportStorage` interface and recorded in the `reports` table.
+
+WeasyPrint requires its native Pango runtime. Linux deployments should install the distribution packages documented by WeasyPrint. On Windows, install current MSYS2 Pango and either use the standard `C:\msys64\mingw64\bin` location detected by the renderer or set `WEASYPRINT_DLL_DIRECTORIES` explicitly. Local output defaults to `generated-reports/` and can be redirected with `REPORT_STORAGE_ROOT`.
+
+Run the reports coverage gate with:
+
+```bash
+pytest tests/reports --cov=app.reports --cov-fail-under=80
+```
+
 Run its independent 90% coverage gate with:
 
 ```bash

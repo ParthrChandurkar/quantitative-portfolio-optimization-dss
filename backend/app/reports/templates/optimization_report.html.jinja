@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>OptiVest Optimization Report</title>{% include "_styles.html.jinja" %}</head>
+<body>
+  <header>
+    <div class="brand">OptiVest · Technical Optimization Report</div>
+    <h1>{{ report.portfolio_name }}</h1>
+    <p class="subtitle">{{ report.snapshot_label }} · Mathematical formulation and solver audit</p>
+    <p class="meta">Prepared for {{ report.investor_name }} · Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
+  </header>
+
+  <h2>Model and solver</h2>
+  <div class="constraint-grid">
+    <div><span>Formulation</span><strong>{{ report.model_formulation }}</strong></div>
+    <div><span>Solver</span><strong>{{ report.solver_used }}</strong></div>
+    <div><span>Solve time</span><strong>{{ report.solve_time_ms if report.solve_time_ms is not none else '—' }} ms</strong></div>
+    <div><span>Budget</span><strong>{{ report.configured_constraints.budget_inr|inr }}</strong></div>
+    <div><span>Target return</span><strong>{{ report.configured_constraints.target_return|percent }}</strong></div>
+    <div><span>Risk tolerance</span><strong>{{ report.configured_constraints.risk_tolerance|percent }}</strong></div>
+    <div><span>Maximum stock weight</span><strong>{{ report.configured_constraints.max_single_weight|percent }}</strong></div>
+    <div><span>Minimum holdings</span><strong>{{ report.configured_constraints.min_holdings }}</strong></div>
+    {% for sector, cap in report.configured_constraints.sector_caps|dictsort %}
+    <div><span>{{ sector }} sector cap</span><strong>{{ cap|percent }}</strong></div>
+    {% endfor %}
+  </div>
+
+  <h2>Binding constraints and shadow prices</h2>
+  <table>
+    <thead><tr><th>Constraint</th><th>Status</th><th class="numeric">Slack</th><th class="numeric">Shadow price</th></tr></thead>
+    <tbody>
+      {% for constraint in report.constraint_rows %}
+      <tr><td>{{ constraint.constraint_name }}</td><td>{% if constraint.is_binding %}<span class="pill binding">Binding</span>{% else %}<span class="pill">Non-binding</span>{% endif %}</td><td class="numeric">{{ constraint.slack_value|number(6) }}</td><td class="numeric">{{ constraint.shadow_price|number(6) }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Optimized holdings</h2>
+  <table>
+    <thead><tr><th>Symbol</th><th>Sector</th><th class="numeric">Weight</th><th class="numeric">INR allocation</th></tr></thead>
+    <tbody>{% for holding in report.holdings %}<tr><td><strong>{{ holding.symbol }}</strong></td><td>{{ holding.sector }}</td><td class="numeric">{{ holding.weight|percent }}</td><td class="numeric">{{ holding.allocated_amount_inr|inr }}</td></tr>{% endfor %}</tbody>
+  </table>
+
+  <h2 class="page-break">Full per-stock explanation audit</h2>
+  <table>
+    <thead><tr><th>Stock</th><th>Decision / reason</th><th>Narrative</th><th class="numeric">Return contribution</th><th class="numeric">Risk contribution</th><th>Binding constraint</th></tr></thead>
+    <tbody>
+      {% for item in report.explanations %}
+      <tr><td><strong>{{ item.symbol or 'Portfolio' }}</strong></td><td>{{ item.decision }}<br><span class="muted">{{ item.primary_reason|replace('_', ' ') }}</span></td><td>{{ item.narrative_text }}</td><td class="numeric">{{ item.marginal_return_contribution|number(6) }}</td><td class="numeric">{{ item.marginal_risk_contribution|number(6) }}</td><td>{{ item.binding_constraint or '—' }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include "_disclaimer.html.jinja" %}
+</body>
+</html>

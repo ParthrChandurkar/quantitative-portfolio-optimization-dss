@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>OptiVest Portfolio Summary</title>{% include "_styles.html.jinja" %}</head>
+<body class="summary-report">
+  <header>
+    <div class="brand">OptiVest · Portfolio Summary</div>
+    <h1>{{ report.portfolio_name }}</h1>
+    <p class="subtitle">{{ report.snapshot_label }} · Prepared for {{ report.investor_name }}</p>
+    <p class="meta">Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
+  </header>
+
+  <section class="metric-grid">
+    <div class="metric"><span>Expected return</span><strong>{{ report.metrics.expected_return|percent }}</strong></div>
+    <div class="metric"><span>Volatility</span><strong>{{ report.metrics.expected_volatility|percent }}</strong></div>
+    <div class="metric"><span>Sharpe ratio</span><strong>{{ report.metrics.sharpe_ratio|number(2) }}</strong></div>
+    <div class="metric"><span>Diversification</span><strong>{{ report.metrics.diversification_score|number(1) }}</strong></div>
+  </section>
+
+  <div class="summary-box">{{ report.plain_language_summary }}</div>
+
+  <h2>Allocation breakdown</h2>
+  <table>
+    <thead><tr><th>Symbol</th><th>Company</th><th>Sector</th><th class="numeric">Weight</th><th class="numeric">Allocation</th><th class="numeric">Shares</th></tr></thead>
+    <tbody>
+      {% for holding in report.holdings %}
+      <tr><td><strong>{{ holding.symbol }}</strong></td><td>{{ holding.company_name }}</td><td>{{ holding.sector }}</td><td class="numeric">{{ holding.weight|percent }}</td><td class="numeric">{{ holding.allocated_amount_inr|inr }}</td><td class="numeric">{{ holding.shares|number(4) }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Sector distribution</h2>
+  <table>
+    <thead><tr><th>Sector</th><th class="numeric">Actual allocation</th><th class="numeric">Configured cap</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for sector in report.analytics.sector_distribution %}
+      <tr><td>{{ sector.sector }}</td><td class="numeric">{{ sector.allocation|percent }}</td><td class="numeric">{{ sector.cap|percent }}</td><td>{% if sector.is_binding %}<span class="pill binding">Binding</span>{% else %}<span class="pill">Within cap</span>{% endif %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include "_disclaimer.html.jinja" %}
+</body>
+</html>
