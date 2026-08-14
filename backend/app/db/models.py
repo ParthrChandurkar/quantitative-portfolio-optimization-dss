@@ -223,6 +223,9 @@ class Portfolio(UUIDPrimaryKeyMixin, Base):
     user: Mapped[User] = relationship(back_populates="portfolios")
     optimization_runs: Mapped[list[OptimizationRun]] = relationship(back_populates="portfolio")
     snapshots: Mapped[list[PortfolioSnapshot]] = relationship(back_populates="portfolio")
+    walk_forward_runs: Mapped[list[WalkForwardRun]] = relationship(
+        back_populates="portfolio"
+    )
 
 
 class OptimizationRun(UUIDPrimaryKeyMixin, Base):
@@ -416,3 +419,29 @@ class CovarianceCache(UUIDPrimaryKeyMixin, Base):
     computed_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+
+
+class WalkForwardRun(UUIDPrimaryKeyMixin, Base):
+    """Persisted, reproducible walk-forward validation result."""
+
+    __tablename__ = "walk_forward_runs"
+    __table_args__ = (
+        Index("ix_walk_forward_runs_portfolio_created_at", "portfolio_id", "created_at"),
+    )
+
+    portfolio_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("portfolios.id", ondelete="CASCADE"), nullable=False
+    )
+    rebalance_frequency: Mapped[str] = mapped_column(String(24), nullable=False)
+    lookback_days: Mapped[int] = mapped_column(Integer, nullable=False)
+    start_date: Mapped[date] = mapped_column(Date, nullable=False)
+    end_date: Mapped[date] = mapped_column(Date, nullable=False)
+    constraints_snapshot: Mapped[dict[str, Any]] = mapped_column(
+        JSON_DOCUMENT, nullable=False
+    )
+    result: Mapped[dict[str, Any]] = mapped_column(JSON_DOCUMENT, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    portfolio: Mapped[Portfolio] = relationship(back_populates="walk_forward_runs")

@@ -1,6 +1,6 @@
 # OptiVest
 
-OptiVest is an explainable decision-support system for constrained Nifty-50 portfolio optimization. It combines real daily market data, SciPy/PuLP/OR-Tools models, scenario re-solving, out-of-sample analytics, and audit-ready PDF reports in one authenticated web application. All monetary values are Indian rupees (INR).
+OptiVest is an explainable decision-support system for constrained Nifty-50 portfolio optimization. It combines real daily market data, SciPy/PuLP/OR-Tools models, scenario re-solving, static and walk-forward out-of-sample analytics, and audit-ready PDF reports in one authenticated web application. All monetary values are Indian rupees (INR).
 
 > Academic decision support only. OptiVest does not execute trades and is not personalized investment advice.
 
@@ -11,7 +11,7 @@ OptiVest is an explainable decision-support system for constrained Nifty-50 port
 - PostgreSQL storage for 49 stocks and 287,263 dated price, fundamental, and technical rows; the ETL is idempotent and rejects the documented 47 zero-OHLC source rows.
 - Continuous mean-variance QP with SciPy, cardinality-constrained mean absolute deviation with PuLP/CBC, and CP-SAT support selection with OR-Tools.
 - Stable constraint checks, binding-constraint logs, marginal contributions, deterministic explanations, seven re-solved scenario families, historical analytics, and generated PDFs.
-- JWT access/refresh authentication, ownership checks, React Query server state, and a structurally enforced out-of-sample split.
+- JWT access/refresh authentication, ownership checks, React Query server state, a structurally enforced out-of-sample split, and rolling walk-forward re-estimation.
 
 ## Technology stack
 
@@ -95,7 +95,7 @@ npm test
 npm run test:coverage
 ```
 
-Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the two loaded-PostgreSQL integration tests. The 15 August 2026 fresh run produced 158 passed and 2 environment-gated skips, 88.56% combined backend coverage, and 32/32 frontend tests with 83.49% statement and 96.29% line coverage. The configured 90% backend global target is not yet met. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
+Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 15 August 2026 stretch-phase run produced 168 passed and 3 environment-gated skips, 89.09% combined backend coverage, and 35/35 frontend tests with 84.32% statement and 96.42% line coverage. All three gated tests pass against the loaded database. The configured 90% backend global target is not yet met. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
 
 ## Final report and conversion
 
@@ -134,5 +134,10 @@ Use `.docx` as the output and omit `--pdf-engine` for an editable Word submissio
 | Phase 9C | `d5fea96` | Out-of-sample split and labels |
 
 ## Methodology warning
+
+The additive stretch-phase walk-forward run re-estimated and re-optimized over 13
+monthly periods without look-ahead. It ended at ₹10,11,596.09 with 1.1737% annualized
+return, 0.0771 Sharpe, -12.0030% drawdown and total turnover 8.0000. Transaction costs
+are not modeled; see [the full comparison](docs/methodology-notes.md#stretch-phase-walk-forward-re-estimation).
 
 The Phase 9B replay reused all 249 evaluation dates during fitting. Phase 9C identified the look-ahead bias and enforced disjoint windows. The corrected portfolio changed ₹10,00,000 to ₹11,01,423.96 with 10.3141% annualized realized return and 0.6777 realized Sharpe. See [Methodology Integrity](docs/final-report/07-methodology-integrity.md).

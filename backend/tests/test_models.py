@@ -47,6 +47,7 @@ EXPECTED_TABLES = {
     "scenario_runs",
     "reports",
     "covariance_cache",
+    "walk_forward_runs",
 }
 
 
@@ -126,6 +127,7 @@ async def test_all_expected_tables_and_foreign_keys_exist(engine) -> None:
     assert foreign_keys["portfolio_snapshots"] == {"portfolios", "optimization_runs"}
     assert foreign_keys["scenario_runs"] == {"portfolio_snapshots"}
     assert foreign_keys["reports"] == {"users", "portfolio_snapshots"}
+    assert foreign_keys["walk_forward_runs"] == {"portfolios"}
 
 
 @pytest.mark.parametrize(

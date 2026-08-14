@@ -113,6 +113,31 @@ export type AnalyticsBundle = {
   sector_distribution: Array<{ sector: string; allocation: number; cap: number; remaining_capacity: number; is_binding: boolean; exceeds_cap: boolean }>
 }
 export type BacktestResult = { points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>; warnings: string[]; validation_mode: string; estimation_end_date: string | null }
+export type WalkForwardMetrics = { annualized_return: number; annualized_volatility: number; sharpe_ratio: number; max_drawdown: number; historical_var_95_inr: number; final_value_inr: number }
+export type WalkForwardRun = {
+  id: string
+  portfolio_id: string
+  rebalance_frequency: string
+  lookback_days: number
+  start_date: string
+  end_date: string
+  constraints_snapshot: Record<string, unknown>
+  created_at: string
+  result: {
+    methodology: { label: string; strict_pre_rebalance_estimation: boolean; transaction_costs_included: boolean; start_date: string; end_date: string }
+    walk_forward: {
+      frequency: string
+      lookback_days: number
+      symbols: string[]
+      points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>
+      periods: Array<{ period_number: number; rebalance_date: string; holding_end_date: string; estimation_start_date: string; estimation_end_date: string; estimation_observations: number; weights: Record<string, number>; turnover: number; expected_return: number; expected_volatility: number }>
+      total_turnover: number
+      warnings: string[]
+      metrics: WalkForwardMetrics
+    }
+    static_comparison: { label: string; points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>; metrics: WalkForwardMetrics }
+  }
+}
 export type ReportRecord = { id: string; snapshot_id: string; report_type: string; file_path: string; generated_at?: string; download_url: string; size_bytes?: number }
 
 export type Stock = {
@@ -187,6 +212,8 @@ export interface OptiVestApi {
   optimizationRun(id: string): Promise<Record<string, unknown>>
   scenario(portfolioId: string, values: Record<string, unknown>): Promise<ScenarioResponse>
   analytics(portfolioId: string, snapshotId: string, query?: URLSearchParams): Promise<AnalyticsBundle>
+  runWalkForward(portfolioId: string, values?: { start_date?: string; end_date?: string; rebalance_frequency?: string; lookback_days?: number }): Promise<WalkForwardRun>
+  walkForwardRun(portfolioId: string, runId: string): Promise<WalkForwardRun>
   generateReport(portfolioId: string, snapshotId: string, reportType: string): Promise<ReportRecord>
   reports(): Promise<ReportRecord[]>
   downloadReport(id: string): Promise<Blob>
@@ -285,6 +312,10 @@ export class ApiClient implements OptiVestApi {
     this.request<ScenarioResponse>(`/portfolios/${portfolioId}/scenarios`, { method: 'POST', body: JSON.stringify(values) })
   analytics = (portfolioId: string, snapshotId: string, query = new URLSearchParams()) =>
     this.request<AnalyticsBundle>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/analytics${query.size ? `?${query}` : ''}`)
+  runWalkForward = (portfolioId: string, values: { start_date?: string; end_date?: string; rebalance_frequency?: string; lookback_days?: number } = {}) =>
+    this.request<WalkForwardRun>(`/portfolios/${portfolioId}/walk-forward`, { method: 'POST', body: JSON.stringify(values) })
+  walkForwardRun = (portfolioId: string, runId: string) =>
+    this.request<WalkForwardRun>(`/portfolios/${portfolioId}/walk-forward/${runId}`)
   generateReport = (portfolioId: string, snapshotId: string, reportType: string) =>
     this.request<ReportRecord>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/reports`, { method: 'POST', body: JSON.stringify({ report_type: reportType }) })
   reports = () => this.request<ReportRecord[]>('/reports')

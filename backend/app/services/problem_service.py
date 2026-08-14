@@ -158,6 +158,7 @@ async def problem_from_run(
     symbols: tuple[str, ...] | None,
     *,
     as_of_date: date | None = None,
+    lookback_days: int | None = None,
 ) -> ProblemContext:
     config = decode_constraint_config(run.sector_constraints)
     try:
@@ -181,5 +182,6 @@ async def problem_from_run(
         min_lot_weight=config["min_lot_weight"],
         risk_free_rate=config["risk_free_rate"],
         solver=solver,
+        lookback_days=lookback_days,
         as_of_date=as_of_date,
     )

@@ -59,3 +59,33 @@ The first describes what the model estimated using information available before 
 split; the second describes what the selected portfolio subsequently experienced.
 Their difference is expected and must not be hidden by parameter tuning. These results
 remain a historical simulation, not an investment guarantee or recommendation.
+
+## Stretch phase: walk-forward re-estimation
+
+The single-split result above holds one fitted target allocation throughout the entire
+evaluation year. The stretch implementation adds a stricter operational test: on the
+first trading date of every month it rebuilds expected returns and covariance from the
+latest 252 aligned observations strictly before that date, re-solves the original
+portfolio's stored constraints, and holds the new weights until the next rebalance.
+The simulation contains an explicit per-period assertion that rejects any estimation
+date greater than or equal to its rebalance date.
+
+The real 49-stock comparison was run on 2026-08-15 for the same 2025-01-30 to
+2026-01-30 evaluation interval and the same Rs. 1,000,000 budget. It produced 13
+monthly decision periods. Results were:
+
+| Metric | Walk-forward | Static single split |
+|---|---:|---:|
+| Final value | Rs. 1,011,596.09 | Rs. 1,101,423.96 |
+| Annualized realized return | 1.1737% | 10.2707% |
+| Realized volatility | 15.2271% | 15.1897% |
+| Realized Sharpe ratio | 0.0771 | 0.6762 |
+| Maximum drawdown | -12.0030% | -13.2597% |
+| Empirical one-day 95% VaR | Rs. 13,476.87 | Rs. 15,760.97 |
+
+Total one-way turnover, defined as the sum of absolute target-weight changes across
+rebalance events, was 8.0000. Transaction costs are deliberately not deducted in this
+version. This is a material simplification: because turnover is high, realistic costs
+would reduce the walk-forward result further. The lower return is reported without
+parameter tuning; it shows that frequent re-estimation can react to noisy recent means
+and is not automatically superior to a disciplined static allocation.

@@ -224,6 +224,47 @@ def periodic_rebalance_values(
     return values, periodic_returns
 
 
+def compound_rebalance_period(
+    returns: FloatArray,
+    weights: FloatArray,
+    starting_value: float,
+    observations: FloatArray | None = None,
+) -> tuple[FloatArray, FloatArray]:
+    """Reset to ``weights`` then compound every return row in one holding period.
+
+    This is the shared realized-return primitive used by walk-forward simulation.
+    Missing assets remain cash until their first observation, matching the standard
+    backtest's missing-listing behavior.
+    """
+
+    matrix, target, present = _validate_simulation_inputs(returns, weights, observations)
+    if starting_value <= 0:
+        raise ValueError("starting_value in INR must be positive")
+    listed = np.zeros(target.size, dtype=bool)
+    allocations = np.zeros(target.size, dtype=float)
+    cash = float(starting_value)
+    values = np.empty(matrix.shape[0], dtype=float)
+    periodic_returns = np.zeros(matrix.shape[0], dtype=float)
+    previous_value = float(starting_value)
+    for row_index in range(matrix.shape[0]):
+        newly_available = present[row_index] & ~listed
+        if row_index == 0:
+            listed |= newly_available
+            allocations = previous_value * target * listed
+            cash = float(previous_value - np.sum(allocations))
+        else:
+            initial_allocations = starting_value * target[newly_available]
+            allocations[newly_available] = initial_allocations
+            cash -= float(np.sum(initial_allocations))
+            listed |= newly_available
+        allocations *= 1.0 + matrix[row_index]
+        current_value = cash + float(np.sum(allocations))
+        values[row_index] = current_value
+        periodic_returns[row_index] = current_value / previous_value - 1.0
+        previous_value = current_value
+    return values, periodic_returns
+
+
 async def fetch_return_panel(
     session: AsyncSession,
     symbols: tuple[str, ...],

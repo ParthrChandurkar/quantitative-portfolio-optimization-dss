@@ -57,10 +57,14 @@ No tuning was performed after observing OOS results. The decrease in return/Shar
 
 ## Remaining limitations
 
-- A single fixed split tests one regime; it does not establish generalization across market cycles.
+- The fixed-split and walk-forward runs still test one evaluation year; they do not establish generalization across market cycles.
 - Constituents and survivorship characteristics follow the provided 49-symbol dataset.
 - Arithmetic historical mean is a noisy expected-return estimator.
 - Transaction costs, taxes, liquidity and slippage are absent.
 - Monthly rebalancing uses target weights but does not model execution frictions.
 
-Walk-forward estimation, multiple rolling test folds and cost-aware evaluation are therefore the highest-priority methodology extensions.
+The stretch phase subsequently implemented monthly/weekly/quarterly/annual walk-forward
+re-estimation with an assertion at every decision date. Its untuned monthly real-data
+run returned 1.1737% with 0.0771 Sharpe and -12.0030% drawdown versus the reconstructed
+static strategy's 10.2707%, 0.6762 and -13.2597%. Multiple disjoint market-regime folds
+and cost-aware evaluation remain the highest-priority methodology extensions.

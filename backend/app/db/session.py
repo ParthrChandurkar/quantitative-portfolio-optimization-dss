@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from collections.abc import AsyncIterator
 
 from sqlalchemy.ext.asyncio import (
@@ -12,14 +11,15 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-DEFAULT_DATABASE_URL = "postgresql+asyncpg://optivest:optivest@localhost:5432/optivest"
+from app.core.config import get_settings
 
 
-def create_engine(database_url: str | None = None, *, echo: bool = False) -> AsyncEngine:
+def create_engine(
+    database_url: str | None = None, *, echo: bool = False
+) -> AsyncEngine:
     """Create an async engine without establishing a connection eagerly."""
 
-    url = database_url if database_url is not None else os.getenv("DATABASE_URL")
-    url = url or DEFAULT_DATABASE_URL
+    url = database_url if database_url is not None else get_settings().database_url
     return create_async_engine(url, echo=echo, pool_pre_ping=True)
 
 
