@@ -14,6 +14,7 @@ from app.analytics.sector_distribution import SectorAllocation
 from app.analytics.service import (
     AllocationPoint,
     AnalyticsBundle,
+    MethodologyAudit,
     PerformanceAnalytics,
     RiskReturnPoint,
 )
@@ -47,6 +48,17 @@ def analytics_bundle() -> AnalyticsBundle:
     )
     report = ConstraintReport("C4 Sector cap: IT", True, True, 0.0, 0.02)
     return AnalyticsBundle(
+        methodology=MethodologyAudit(
+            "OUT-OF-SAMPLE BACKTEST",
+            date(2024, 1, 2),
+            date(2025, 1, 1),
+            date(2025, 1, 2),
+            date(2025, 1, 2),
+            date(2025, 1, 3),
+            252,
+            2,
+            False,
+        ),
         allocation=(
             AllocationPoint("ALPHA", "IT", 0.60, 60_000.0),
             AllocationPoint("BETA", "Energy", 0.40, 40_000.0),

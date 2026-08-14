@@ -21,6 +21,8 @@ class RiskMetrics:
     max_drawdown: float
     parametric_var_95: float
     historical_var_95: float
+    realized_annualized_return: float = 0.0
+    realized_sharpe_ratio: float = 0.0
 
 
 def sharpe_ratio(expected_return: float, risk_free_rate: float, volatility: float) -> float:
@@ -42,6 +44,19 @@ def realized_annualized_volatility(
     if values.size < 2:
         return 0.0
     return float(np.std(values, ddof=1) * np.sqrt(periods_per_year))
+
+
+def realized_annualized_return(
+    periodic_returns: FloatArray, periods_per_year: int = TRADING_DAYS
+) -> float:
+    """Geometrically annualize the observed evaluation-period returns."""
+
+    values = np.asarray(periodic_returns, dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("periodic_returns must be a non-empty vector")
+    if np.any(values <= -1.0):
+        raise ValueError("periodic returns must be greater than -100%")
+    return float(np.prod(1.0 + values) ** (periods_per_year / values.size) - 1.0)
 
 
 def maximum_drawdown(portfolio_values: FloatArray) -> float:
@@ -79,11 +94,17 @@ def build_risk_metrics(
     backtest_values: FloatArray,
 ) -> RiskMetrics:
     mean, model_volatility = portfolio_moments(weights, expected_returns, covariance)
+    realized_return = realized_annualized_return(backtest_returns)
+    realized_volatility = realized_annualized_volatility(backtest_returns)
     return RiskMetrics(
         sharpe_ratio=sharpe_ratio(mean, risk_free_rate, model_volatility),
         model_annualized_volatility=model_volatility,
-        realized_annualized_volatility=realized_annualized_volatility(backtest_returns),
+        realized_annualized_volatility=realized_volatility,
         max_drawdown=maximum_drawdown(backtest_values),
         parametric_var_95=parametric_var_95(budget, mean, model_volatility),
         historical_var_95=historical_var_95(budget, backtest_returns),
+        realized_annualized_return=realized_return,
+        realized_sharpe_ratio=sharpe_ratio(
+            realized_return, risk_free_rate, realized_volatility
+        ),
     )

@@ -23,6 +23,7 @@ async def get_analytics(
     start_date: Annotated[date | None, Query()] = None,
     end_date: Annotated[date | None, Query()] = None,
     horizon_years: Annotated[int, Query(ge=0, le=50)] = 10,
+    estimation_end_date: Annotated[date | None, Query()] = None,
 ) -> dict:
     return success(
         await analytics_service.get_snapshot_analytics(
@@ -34,5 +35,6 @@ async def get_analytics(
             start_date=start_date,
             end_date=end_date,
             horizon_years=horizon_years,
+            estimation_end_date=estimation_end_date,
         )
     )

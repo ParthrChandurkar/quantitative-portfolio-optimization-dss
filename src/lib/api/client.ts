@@ -93,6 +93,17 @@ export type ScenarioResponse = {
 
 export type PortfolioMetrics = { expected_return: number; volatility: number; sharpe_ratio: number; diversification_score: number }
 export type AnalyticsBundle = {
+  methodology: {
+    label: 'OUT-OF-SAMPLE BACKTEST' | 'IN-SAMPLE REPLAY'
+    estimation_start_date: string | null
+    estimation_last_date: string | null
+    split_date: string | null
+    evaluation_start_date: string
+    evaluation_end_date: string
+    estimation_observations: number
+    evaluation_observations: number
+    windows_overlap: boolean
+  }
   allocation: Array<{ symbol: string; sector: string; weight: number; allocated_amount_inr: number }>
   risk_return: { expected_return: number; volatility: number }
   growth_projection: Array<{ year: number; projected_value: number; lower_1sigma: number; upper_1sigma: number; lower_2sigma: number; upper_2sigma: number }>
@@ -101,7 +112,7 @@ export type AnalyticsBundle = {
   efficient_frontier: Array<{ expected_return: number; volatility: number }>
   sector_distribution: Array<{ sector: string; allocation: number; cap: number; remaining_capacity: number; is_binding: boolean; exceeds_cap: boolean }>
 }
-export type BacktestResult = { points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>; warnings: string[] }
+export type BacktestResult = { points: Array<{ trade_date: string; portfolio_value: number; portfolio_return: number }>; warnings: string[]; validation_mode: string; estimation_end_date: string | null }
 export type ReportRecord = { id: string; snapshot_id: string; report_type: string; file_path: string; generated_at?: string; download_url: string; size_bytes?: number }
 
 export type Stock = {

@@ -29,6 +29,11 @@ report-template choices, and a color palette; all financial values are API respo
 
 ## Live walkthrough result
 
+> **Phase 9C correction:** this walkthrough replayed 249 dates that were also used to
+> fit the optimizer, so the ₹1,507,469.92 result below is in-sample and must not be
+> cited as validation performance. See [methodology-notes.md](methodology-notes.md) for
+> the corrected disjoint-window result.
+
 On 2026-08-14, the complete API workflow ran against PostgreSQL and the 49-stock loaded
 universe. A ₹1,000,000 SciPy optimization solved in 146 ms with six holdings, 43.0367%
 model expected return, 16.5110% volatility, 2.6065 Sharpe ratio, and 76.5 diversification

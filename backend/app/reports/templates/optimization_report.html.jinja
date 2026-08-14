@@ -9,6 +9,8 @@
     <p class="meta">Prepared for {{ report.investor_name }} · Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
   </header>
 
+  {% include "_methodology.html.jinja" %}
+
   <h2>Model and solver</h2>
   <div class="constraint-grid">
     <div><span>Formulation</span><strong>{{ report.model_formulation }}</strong></div>

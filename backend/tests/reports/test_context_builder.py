@@ -3,11 +3,12 @@ from __future__ import annotations
 import uuid
 from datetime import date
 from decimal import Decimal
+from types import SimpleNamespace
 
 import numpy as np
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.analytics.service import AnalyticsBundle
+from app.analytics.service import AnalyticsBundle, AnalyticsDateRange
 from app.db.models import (
     ConstraintLog,
     ExplanationItem,
@@ -20,12 +21,13 @@ from app.db.models import (
     StockPrice,
     User,
 )
-from app.optimization.data import MarketData
+from app.optimization.types import OptimizationInput
 from app.reports.context_builder import (
     ReportContext,
     load_report_context,
     model_formulation,
 )
+from app.services.problem_service import ProblemContext
 
 
 def test_context_reuses_numeric_values_exactly(
@@ -143,30 +145,53 @@ async def test_load_context_reads_owned_snapshot_and_delegates_analytics(
     )
     await session.commit()
 
-    async def fake_market_data(*_args, **_kwargs) -> MarketData:
+    async def fake_problem_from_run(*_args, **_kwargs) -> ProblemContext:
         history = np.asarray([[0.01, 0.00], [0.00, 0.01], [0.02, -0.01]])
-        return MarketData(
-            ("ALPHA", "BETA"),
-            np.asarray([0.12, 0.10]),
-            np.asarray([[0.02, 0.001], [0.001, 0.03]]),
-            history,
-            3,
-            False,
+        problem = OptimizationInput(
+            symbols=("ALPHA", "BETA"),
+            expected_returns=np.asarray([0.12, 0.10]),
+            covariance=np.asarray([[0.02, 0.001], [0.001, 0.03]]),
+            sectors=("IT", "Energy"),
+            budget=100_000,
+            target_return=0.10,
+            max_single_weight=0.60,
+            default_sector_cap=0.60,
+            historical_returns=history,
+        )
+        return ProblemContext(
+            problem,
+            (alpha, beta),
+            date(2025, 12, 30),
+            (date(2025, 12, 28), date(2025, 12, 29), date(2025, 12, 30)),
         )
 
     captured = {}
 
-    async def fake_analytics(snapshot_input, universe, selected_range, *, session):
+    async def fake_analytics(snapshot_input, universe, selected_range, **_kwargs):
         captured["weights"] = snapshot_input.weights
         captured["symbols"] = universe.symbols
         captured["range"] = selected_range
         return analytics_bundle
 
     monkeypatch.setattr(
-        "app.reports.context_builder.build_market_data", fake_market_data
+        "app.reports.context_builder.problem_from_run", fake_problem_from_run
+    )
+    monkeypatch.setattr(
+        "app.reports.context_builder.solve",
+        lambda _problem: SimpleNamespace(
+            is_feasible=True,
+            weights={"ALPHA": 0.6, "BETA": 0.4},
+            constraint_reports=(),
+            message="",
+        ),
     )
     monkeypatch.setattr("app.reports.context_builder.get_analytics", fake_analytics)
-    context = await load_report_context(session, snapshot_id, user_id)
+    context = await load_report_context(
+        session,
+        snapshot_id,
+        user_id,
+        AnalyticsDateRange(date(2025, 12, 31), date(2025, 12, 31)),
+    )
 
     assert context.portfolio_name == "Context Portfolio"
     assert tuple(holding.symbol for holding in context.holdings) == ("ALPHA", "BETA")

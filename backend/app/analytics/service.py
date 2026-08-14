@@ -66,7 +66,21 @@ class PerformanceAnalytics:
 
 
 @dataclass(frozen=True, slots=True)
+class MethodologyAudit:
+    label: str
+    estimation_start_date: date | None
+    estimation_last_date: date | None
+    split_date: date | None
+    evaluation_start_date: date
+    evaluation_end_date: date
+    estimation_observations: int
+    evaluation_observations: int
+    windows_overlap: bool
+
+
+@dataclass(frozen=True, slots=True)
 class AnalyticsBundle:
+    methodology: MethodologyAudit
     allocation: tuple[AllocationPoint, ...]
     risk_return: RiskReturnPoint
     growth_projection: tuple[GrowthPoint, ...]
@@ -93,6 +107,8 @@ async def get_analytics(
     horizon_years: int = 10,
     frontier_points: int = 30,
     rebalance_frequency: RebalanceFrequency = RebalanceFrequency.MONTHLY,
+    estimation_end_date: date | None = None,
+    estimation_dates: tuple[date, ...] = (),
 ) -> AnalyticsBundle:
     """Compute every Analytics Dashboard tab from one consistent input bundle."""
 
@@ -120,6 +136,8 @@ async def get_analytics(
         selected_range.start_date,
         selected_range.end_date,
         BacktestMode.BUY_AND_HOLD,
+        estimation_end_date=estimation_end_date,
+        estimation_dates=estimation_dates,
     )
     periodic = await run_backtest(
         session,
@@ -129,6 +147,8 @@ async def get_analytics(
         selected_range.end_date,
         BacktestMode.PERIODIC_REBALANCE,
         rebalance_frequency,
+        estimation_end_date=estimation_end_date,
+        estimation_dates=estimation_dates,
     )
     if len(periodic.points) < 2:
         raise ValueError("analytics requires at least two market dates")
@@ -148,6 +168,25 @@ async def get_analytics(
         )
     )
     return AnalyticsBundle(
+        methodology=MethodologyAudit(
+            label=(
+                "OUT-OF-SAMPLE BACKTEST"
+                if estimation_end_date is not None
+                else "IN-SAMPLE REPLAY"
+            ),
+            estimation_start_date=min(estimation_dates) if estimation_dates else None,
+            estimation_last_date=max(estimation_dates) if estimation_dates else None,
+            split_date=estimation_end_date,
+            evaluation_start_date=periodic.points[0].trade_date,
+            evaluation_end_date=periodic.points[-1].trade_date,
+            estimation_observations=len(estimation_dates),
+            evaluation_observations=len(periodic.points),
+            windows_overlap=bool(
+                set(estimation_dates).intersection(
+                    point.trade_date for point in periodic.points
+                )
+            ),
+        ),
         allocation=allocations,
         risk_return=RiskReturnPoint(expected_return, volatility),
         growth_projection=project_growth(

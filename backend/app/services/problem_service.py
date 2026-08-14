@@ -20,6 +20,7 @@ class ProblemContext:
     problem: OptimizationInput
     stocks: tuple[Stock, ...]
     as_of_date: date
+    estimation_dates: tuple[date, ...]
 
 
 def encode_constraint_config(
@@ -61,11 +62,16 @@ def decode_constraint_config(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 async def latest_market_date(
-    session: AsyncSession, stock_ids: tuple
+    session: AsyncSession,
+    stock_ids: tuple,
+    on_or_before: date | None = None,
 ) -> date:
-    value = await session.scalar(
-        select(func.max(StockPrice.trade_date)).where(StockPrice.stock_id.in_(stock_ids))
+    statement = select(func.max(StockPrice.trade_date)).where(
+        StockPrice.stock_id.in_(stock_ids)
     )
+    if on_or_before is not None:
+        statement = statement.where(StockPrice.trade_date <= on_or_before)
+    value = await session.scalar(statement)
     if value is None:
         raise ValueError("selected stocks have no market data")
     return value
@@ -109,16 +115,19 @@ async def build_problem(
     risk_free_rate: float,
     solver: SolverName,
     lookback_days: int | None = None,
+    as_of_date: date | None = None,
 ) -> ProblemContext:
     stocks, sectors = await stock_universe(session, symbols)
     if len(stocks) < 2:
         raise ValueError("optimization requires at least two stocks")
     selected_symbols = tuple(stock.symbol for stock in stocks)
-    as_of_date = await latest_market_date(session, tuple(stock.id for stock in stocks))
+    market_as_of_date = await latest_market_date(
+        session, tuple(stock.id for stock in stocks), as_of_date
+    )
     market = await build_market_data(
         session,
         selected_symbols,
-        as_of_date,
+        market_as_of_date,
         lookback_days or settings.covariance_lookback_days,
     )
     problem = OptimizationInput(
@@ -139,14 +148,16 @@ async def build_problem(
         solver=solver,
         risk_free_rate=risk_free_rate,
     )
-    return ProblemContext(problem, stocks, as_of_date)
+    return ProblemContext(problem, stocks, market_as_of_date, market.observation_dates)
 
 
 async def problem_from_run(
     session: AsyncSession,
     settings: Settings,
     run: OptimizationRun,
-    symbols: tuple[str, ...],
+    symbols: tuple[str, ...] | None,
+    *,
+    as_of_date: date | None = None,
 ) -> ProblemContext:
     config = decode_constraint_config(run.sector_constraints)
     try:
@@ -170,4 +181,5 @@ async def problem_from_run(
         min_lot_weight=config["min_lot_weight"],
         risk_free_rate=config["risk_free_rate"],
         solver=solver,
+        as_of_date=as_of_date,
     )

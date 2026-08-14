@@ -2,21 +2,23 @@
 
 from __future__ import annotations
 
+import asyncio
 import uuid
 from datetime import date, timedelta
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.analytics.backtest import default_out_of_sample_split
 from app.analytics.service import (
     AnalyticsDateRange,
     SnapshotAnalyticsInput,
     get_analytics,
 )
 from app.core.config import Settings
-from app.db.models import ConstraintLog, OptimizationRun, PortfolioHolding, Stock, User
-from app.optimization.types import ConstraintReport
+from app.db.models import OptimizationRun, PortfolioHolding, Stock, StockPrice, User
+from app.optimization.engine import solve
 from app.services.portfolio_service import require_owned_snapshot
 from app.services.problem_service import problem_from_run
 
@@ -39,26 +41,6 @@ async def snapshot_holdings(
     }
 
 
-async def constraint_reports(
-    session: AsyncSession, run_id: uuid.UUID
-) -> tuple[ConstraintReport, ...]:
-    rows = (
-        await session.scalars(
-            select(ConstraintLog).where(ConstraintLog.optimization_run_id == run_id)
-        )
-    ).all()
-    return tuple(
-        ConstraintReport(
-            row.constraint_name,
-            True,
-            row.is_binding,
-            float(row.slack_value) if row.slack_value is not None else None,
-            float(row.shadow_price) if row.shadow_price is not None else None,
-        )
-        for row in rows
-    )
-
-
 async def get_snapshot_analytics(
     session: AsyncSession,
     user: User,
@@ -69,6 +51,7 @@ async def get_snapshot_analytics(
     start_date: date | None = None,
     end_date: date | None = None,
     horizon_years: int = 10,
+    estimation_end_date: date | None = None,
 ) -> dict:
     snapshot = await require_owned_snapshot(
         session, portfolio_id, snapshot_id, user.id
@@ -76,17 +59,36 @@ async def get_snapshot_analytics(
     run = await session.get(OptimizationRun, snapshot.optimization_run_id)
     if run is None:
         raise ValueError("snapshot optimization run is missing")
-    symbols, weights = await snapshot_holdings(session, snapshot.id)
-    context = await problem_from_run(session, settings, run, symbols)
-    selected_end = end_date or context.as_of_date
-    selected_start = start_date or selected_end - timedelta(days=365)
+    selected_end = end_date or await session.scalar(select(func.max(StockPrice.trade_date)))
+    if selected_end is None:
+        raise ValueError("analytics requires loaded stock prices")
+    split_date = estimation_end_date or await default_out_of_sample_split(
+        session, selected_end
+    )
+    if split_date > selected_end:
+        raise ValueError("estimation_end_date must not follow the evaluation end date")
+    context = await problem_from_run(
+        session,
+        settings,
+        run,
+        None,
+        as_of_date=split_date - timedelta(days=1),
+    )
+    fitted_result = await asyncio.to_thread(solve, context.problem)
+    if not fitted_result.is_feasible:
+        raise ValueError(
+            f"out-of-sample fit optimization failed: {fitted_result.message}"
+        )
+    selected_start = max(start_date or split_date, split_date)
     bundle = await get_analytics(
         SnapshotAnalyticsInput(
-            weights, await constraint_reports(session, snapshot.optimization_run_id)
+            fitted_result.weights, fitted_result.constraint_reports
         ),
         context.problem,
         AnalyticsDateRange(selected_start, selected_end),
         session=session,
         horizon_years=horizon_years,
+        estimation_end_date=split_date,
+        estimation_dates=context.estimation_dates,
     )
     return jsonable_encoder(bundle)

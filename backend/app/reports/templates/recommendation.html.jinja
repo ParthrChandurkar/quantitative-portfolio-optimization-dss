@@ -9,6 +9,8 @@
     <p class="meta">Based on {{ report.snapshot_label }} · Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
   </header>
 
+  {% include "_methodology.html.jinja" %}
+
   <div class="summary-box"><strong>Recommendation overview</strong><br>{{ report.plain_language_summary }}</div>
 
   <section class="metric-grid">

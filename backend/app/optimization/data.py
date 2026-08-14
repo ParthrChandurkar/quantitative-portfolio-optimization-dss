@@ -27,6 +27,7 @@ class MarketData:
     historical_returns: FloatArray
     observations: int
     cache_hit: bool
+    observation_dates: tuple[date, ...]
 
 
 def universe_hash(symbols: tuple[str, ...]) -> str:
@@ -102,7 +103,11 @@ async def build_market_data(
         raise ValueError("lookback_days must be at least 2")
     digest = universe_hash(symbols)
     cached = await _read_cache(session, digest, lookback_days, as_of_date)
-    if cached is not None and cached.matrix.get("symbols") == list(symbols):
+    if (
+        cached is not None
+        and cached.matrix.get("symbols") == list(symbols)
+        and cached.matrix.get("observation_dates")
+    ):
         payload = cached.matrix
         history = np.asarray(payload["historical_returns"], dtype=float)
         return MarketData(
@@ -112,6 +117,7 @@ async def build_market_data(
             history,
             history.shape[0],
             True,
+            tuple(date.fromisoformat(value) for value in payload["observation_dates"]),
         )
 
     rows = (
@@ -129,12 +135,14 @@ async def build_market_data(
     by_date: dict[date, dict[str, float]] = {}
     for symbol, trade_date, daily_return in rows:
         by_date.setdefault(trade_date, {})[symbol] = float(daily_return)
-    aligned = [
-        [values[symbol] for symbol in symbols]
-        for _, values in sorted(by_date.items(), reverse=True)
+    aligned_rows = [
+        (trade_date, [values[symbol] for symbol in symbols])
+        for trade_date, values in sorted(by_date.items(), reverse=True)
         if all(symbol in values for symbol in symbols)
     ][:lookback_days]
-    aligned.reverse()
+    aligned_rows.reverse()
+    observation_dates = tuple(trade_date for trade_date, _ in aligned_rows)
+    aligned = [values for _, values in aligned_rows]
     history = np.asarray(aligned, dtype=float)
     expected_returns, covariance = annualize_returns(history)
     await _write_cache(
@@ -147,6 +155,7 @@ async def build_market_data(
             "expected_returns": expected_returns.tolist(),
             "covariance": covariance.tolist(),
             "historical_returns": history.tolist(),
+            "observation_dates": [value.isoformat() for value in observation_dates],
         },
     )
     await session.commit()
@@ -157,5 +166,5 @@ async def build_market_data(
         history,
         history.shape[0],
         False,
+        observation_dates,
     )
-

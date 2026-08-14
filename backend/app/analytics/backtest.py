@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from enum import StrEnum
 
 import numpy as np
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import Stock, StockPrice
@@ -40,6 +40,8 @@ class BacktestResult:
     symbols: tuple[str, ...]
     points: tuple[BacktestPoint, ...]
     warnings: tuple[str, ...]
+    validation_mode: str = "in_sample_replay"
+    estimation_end_date: date | None = None
 
     @property
     def values(self) -> FloatArray:
@@ -56,6 +58,64 @@ class ReturnPanel:
     returns: FloatArray
     observations: FloatArray
     warnings: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class OutOfSampleDateAudit:
+    split_date: date
+    estimation_dates: tuple[date, ...]
+    evaluation_dates: tuple[date, ...]
+
+
+async def default_out_of_sample_split(
+    session: AsyncSession, evaluation_end_date: date
+) -> date:
+    """Choose a one-year split, falling back to the midpoint for tiny fixtures."""
+
+    candidate = evaluation_end_date - timedelta(days=365)
+    earlier_count = await session.scalar(
+        select(func.count(func.distinct(StockPrice.trade_date))).where(
+            StockPrice.trade_date < candidate
+        )
+    )
+    if int(earlier_count or 0) >= 2:
+        return candidate
+    dates = tuple(
+        (
+            await session.scalars(
+                select(StockPrice.trade_date)
+                .where(StockPrice.trade_date <= evaluation_end_date)
+                .distinct()
+                .order_by(StockPrice.trade_date)
+            )
+        ).all()
+    )
+    if len(dates) < 4:
+        raise ValueError(
+            "out-of-sample analytics requires at least four distinct market dates"
+        )
+    return dates[len(dates) // 2]
+
+
+def validate_out_of_sample_dates(
+    estimation_dates: tuple[date, ...],
+    evaluation_dates: tuple[date, ...],
+    estimation_end_date: date,
+) -> OutOfSampleDateAudit:
+    """Enforce fit dates before the split and evaluation dates from the split onward."""
+
+    if not estimation_dates or not evaluation_dates:
+        raise ValueError("out-of-sample validation requires fit and evaluation dates")
+    if max(estimation_dates) >= estimation_end_date:
+        raise ValueError("mu/Sigma estimation dates must be strictly before the split")
+    if min(evaluation_dates) < estimation_end_date:
+        raise ValueError("backtest evaluation dates must start on or after the split")
+    overlap = set(estimation_dates).intersection(evaluation_dates)
+    if overlap:
+        raise ValueError("mu/Sigma estimation and backtest dates must not overlap")
+    return OutOfSampleDateAudit(
+        estimation_end_date, estimation_dates, evaluation_dates
+    )
 
 
 def _validate_simulation_inputs(
@@ -232,12 +292,24 @@ async def run_backtest(
     end_date: date,
     mode: BacktestMode = BacktestMode.PERIODIC_REBALANCE,
     frequency: RebalanceFrequency = RebalanceFrequency.MONTHLY,
+    *,
+    estimation_end_date: date | None = None,
+    estimation_dates: tuple[date, ...] = (),
 ) -> BacktestResult:
-    """Run a database-backed historical reconstruction for FR-7."""
+    """Run FR-7 with an optional structurally enforced out-of-sample split."""
 
     symbols = tuple(weights)
     target = np.asarray([weights[symbol] for symbol in symbols], dtype=float)
-    panel = await fetch_return_panel(session, symbols, start_date, end_date)
+    evaluation_start = (
+        max(start_date, estimation_end_date)
+        if estimation_end_date is not None
+        else start_date
+    )
+    panel = await fetch_return_panel(session, symbols, evaluation_start, end_date)
+    if estimation_end_date is not None:
+        validate_out_of_sample_dates(
+            estimation_dates, panel.dates, estimation_end_date
+        )
     if mode is BacktestMode.BUY_AND_HOLD:
         values, returns = buy_and_hold_values(
             panel.returns, target, budget, panel.observations
@@ -258,4 +330,12 @@ async def run_backtest(
             panel.dates, values, returns, strict=True
         )
     )
-    return BacktestResult(mode, selected_frequency, symbols, points, panel.warnings)
+    return BacktestResult(
+        mode,
+        selected_frequency,
+        symbols,
+        points,
+        panel.warnings,
+        "out_of_sample" if estimation_end_date is not None else "in_sample_replay",
+        estimation_end_date,
+    )

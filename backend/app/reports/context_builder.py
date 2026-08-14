@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -10,12 +11,14 @@ from decimal import Decimal
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.analytics.backtest import default_out_of_sample_split
 from app.analytics.service import (
     AnalyticsBundle,
     AnalyticsDateRange,
     SnapshotAnalyticsInput,
     get_analytics,
 )
+from app.core.config import get_settings
 from app.db.models import (
     ConstraintLog,
     OptimizationRun,
@@ -33,9 +36,9 @@ from app.explainability.shadow_price_insights import (
     ShadowPriceInsight,
     build_shadow_price_insights,
 )
-from app.optimization.data import build_market_data
-from app.optimization.types import ConstraintReport, OptimizationInput, SolverName
-from app.services.problem_service import decode_constraint_config
+from app.optimization.engine import solve
+from app.optimization.types import ConstraintReport
+from app.services.problem_service import decode_constraint_config, problem_from_run
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,8 +267,6 @@ async def load_report_context(
             )
         ).all()
     )
-    symbols = tuple(stock.symbol for _, stock, _ in holding_rows)
-    sectors = tuple(sector.name for _, _, sector in holding_rows)
     stock_ids = tuple(stock.id for _, stock, _ in holding_rows)
     as_of_date = await session.scalar(
         select(func.max(StockPrice.trade_date)).where(StockPrice.stock_id.in_(stock_ids))
@@ -273,54 +274,29 @@ async def load_report_context(
     if as_of_date is None:
         raise ValueError("report holdings have no historical prices")
     selected_range = date_range or AnalyticsDateRange(
-        as_of_date - timedelta(days=365), as_of_date
+        await default_out_of_sample_split(session, as_of_date), as_of_date
     )
-    market_data = await build_market_data(session, symbols, as_of_date, lookback_days=252)
-    target_return = float(run.target_return) if run.target_return is not None else None
-    risk_tolerance = float(run.risk_tolerance) if run.risk_tolerance is not None else None
-    if target_return is None and risk_tolerance is None:
-        raise ValueError("optimization run has neither target return nor risk tolerance")
-    try:
-        solver = SolverName(run.solver_used)
-    except ValueError:
-        solver = SolverName.AUTO
-    constraint_config = decode_constraint_config(run.sector_constraints)
-    universe = OptimizationInput(
-        symbols=symbols,
-        expected_returns=market_data.expected_returns,
-        covariance=market_data.covariance,
-        sectors=sectors,
-        budget=float(run.budget),
-        target_return=target_return,
-        risk_tolerance=risk_tolerance,
-        max_single_weight=float(run.max_single_weight),
-        sector_caps=constraint_config["caps"],
-        default_sector_cap=constraint_config["default_sector_cap"],
-        min_holdings=constraint_config["min_holdings"],
-        max_holdings=constraint_config["max_holdings"],
-        min_lot_weight=constraint_config["min_lot_weight"],
-        historical_returns=market_data.historical_returns,
-        solver=solver,
-        risk_free_rate=constraint_config["risk_free_rate"],
+    split_date = selected_range.start_date
+    fit_context = await problem_from_run(
+        session,
+        get_settings(),
+        run,
+        None,
+        as_of_date=split_date - timedelta(days=1),
     )
-    phase4_reports = tuple(
-        ConstraintReport(
-            item.constraint_name,
-            True,
-            item.is_binding,
-            float(item.slack_value) if item.slack_value is not None else None,
-            float(item.shadow_price) if item.shadow_price is not None else None,
-        )
-        for item in constraint_logs
-    )
+    fitted_result = await asyncio.to_thread(solve, fit_context.problem)
+    if not fitted_result.is_feasible:
+        raise ValueError(f"out-of-sample report fit failed: {fitted_result.message}")
     analytics = await get_analytics(
         SnapshotAnalyticsInput(
-            {stock.symbol: float(holding.weight) for holding, stock, _ in holding_rows},
-            phase4_reports,
+            fitted_result.weights,
+            fitted_result.constraint_reports,
         ),
-        universe,
+        fit_context.problem,
         selected_range,
         session=session,
+        estimation_end_date=split_date,
+        estimation_dates=fit_context.estimation_dates,
     )
     return assemble_report_context(
         snapshot,

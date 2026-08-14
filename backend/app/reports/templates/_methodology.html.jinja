@@ -1,0 +1,11 @@
+<div class="summary-box">
+  <strong>Methodology labels</strong><br>
+  Snapshot expected return, volatility, and Sharpe ratio are <strong>IN-SAMPLE FIT</strong>
+  estimates from the saved optimization run. Historical performance is an
+  <strong>{{ report.analytics.methodology.label }}</strong>: μ and Σ use
+  {{ report.analytics.methodology.estimation_start_date }} through
+  {{ report.analytics.methodology.estimation_last_date }}, while evaluation uses
+  {{ report.analytics.methodology.evaluation_start_date }} through
+  {{ report.analytics.methodology.evaluation_end_date }}. The windows overlap:
+  {{ 'yes' if report.analytics.methodology.windows_overlap else 'no' }}.
+</div>

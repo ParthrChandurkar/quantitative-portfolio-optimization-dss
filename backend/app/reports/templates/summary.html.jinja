@@ -9,6 +9,8 @@
     <p class="meta">Generated {{ report.generated_at.strftime('%d %B %Y, %H:%M UTC') }}</p>
   </header>
 
+  {% include "_methodology.html.jinja" %}
+
   <section class="metric-grid">
     <div class="metric"><span>Expected return</span><strong>{{ report.metrics.expected_return|percent }}</strong></div>
     <div class="metric"><span>Volatility</span><strong>{{ report.metrics.expected_volatility|percent }}</strong></div>

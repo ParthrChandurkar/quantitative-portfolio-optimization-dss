@@ -43,6 +43,9 @@ def test_every_template_is_valid_html_and_contains_shared_content(
     assert html.lstrip().casefold().startswith("<!doctype html>")
     assert parser.html_elements == 1
     assert DISCLAIMER in html
+    assert "IN-SAMPLE FIT" in html
+    assert "OUT-OF-SAMPLE BACKTEST" in html
+    assert "The windows overlap:\n  no" in html
     for holding in report_context.holdings:
         assert holding.symbol in html
 

@@ -8,6 +8,7 @@ from app.analytics.risk_metrics import (
     historical_var_95,
     maximum_drawdown,
     parametric_var_95,
+    realized_annualized_return,
     realized_annualized_volatility,
     sharpe_ratio,
 )
@@ -24,6 +25,9 @@ def test_risk_formulas_match_known_analytical_answers() -> None:
     assert parametric_var_95(100_000.0, 0.10, 0.20) == pytest.approx(22_900.0)
     returns = np.asarray([-0.10, -0.05, 0.0, 0.05, 0.10])
     assert historical_var_95(100_000.0, returns) == pytest.approx(9_000.0)
+    assert realized_annualized_return(np.asarray([0.01, 0.01]), 2) == pytest.approx(
+        0.0201
+    )
 
 
 def test_combined_metrics_show_model_and_realized_risk_side_by_side() -> None:
@@ -40,6 +44,8 @@ def test_combined_metrics_show_model_and_realized_risk_side_by_side() -> None:
     assert metrics.realized_annualized_volatility > 0
     assert metrics.max_drawdown < 0
     assert np.isfinite(metrics.historical_var_95)
+    assert np.isfinite(metrics.realized_annualized_return)
+    assert np.isfinite(metrics.realized_sharpe_ratio)
 
 
 def test_zero_volatility_sharpe_and_short_series() -> None:
@@ -57,3 +63,5 @@ def test_risk_functions_reject_invalid_shapes_and_values() -> None:
         maximum_drawdown(np.asarray([100.0, 0.0]))
     with pytest.raises(ValueError, match="non-empty"):
         historical_var_95(100.0, np.asarray([]))
+    with pytest.raises(ValueError, match="non-empty"):
+        realized_annualized_return(np.asarray([]))
