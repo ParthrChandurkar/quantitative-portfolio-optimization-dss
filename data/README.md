@@ -7,7 +7,6 @@ The unmodified source dataset is stored locally in `data/raw/` and is intentiona
 - Dataset: [Nifty50 Stocks (1999–2026) Daily OHLCV & Fundamentals](https://www.kaggle.com/datasets/kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals)
 - Kaggle identifier: `kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals`
 - License reported by Kaggle: CC0 1.0
-- Dataset metadata period: 1999-01-01 through 2026-01-31
 - Metadata source: Yahoo Finance
 - Downloaded: 2026-08-13
 
@@ -21,8 +20,6 @@ The unmodified source dataset is stored locally in `data/raw/` and is intentiona
 
 ## Re-download
 
-From the repository root:
-
 ```bash
 kaggle datasets download \
   -d kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals \
@@ -30,23 +27,23 @@ kaggle datasets download \
   --unzip
 ```
 
-## ETL reconciliation notes
+## Reconciled PostgreSQL load
 
-The historical CSV uses several headers that should be added to the Phase 2 loader's `COLUMN_MAP` before ingestion:
+The real-data checkpoint was completed on 2026-08-14 against PostgreSQL 16 after applying Alembic revision `0001`. Full details are in [PROFILE_REPORT.md](PROFILE_REPORT.md).
 
-- `Company_Name`
-- `MA_50` and `MA_200`
-- `Price_to_Book`
-- `Volatility_20D`
+| Table | Rows after first load | Rows after identical rerun |
+|---|---:|---:|
+| `stocks` | 49 | 49 |
+| `stock_prices` | 287,263 | 287,263 |
+| `stock_fundamentals` | 287,263 | 287,263 |
+| `stock_technical_indicators` | 287,263 | 287,263 |
 
-Header normalization already handles underscore variants such as `Company_Name`, `PE_Ratio`, `Market_Cap`, and `Dividend_Yield` where an equivalent spaced alias exists. `MA_50`, `MA_200`, `Price_to_Book`, and the 20-day volatility field require explicit semantic mapping decisions.
+Both executions accepted 287,263 rows and rejected the same 47 source rows whose OHLC values were zero. The first run took 563.155 seconds and the idempotency run took 423.649 seconds on the local development machine. The summary-statistics CSV is an aggregate reference file and is not loaded into the dated tables.
 
 ## Dataset usage status
 
-Status after Phase 6:
-
-- The Kaggle files are downloaded and their dimensions, headers, metadata, and checksums are recorded.
-- Phase 2 ETL behavior is tested against a synthetic fixture, not this full raw dataset.
-- Phases 4–6 are validated against deterministic synthetic/golden optimization fixtures.
-- The real CSV has not yet undergone EDA, ETL mapping reconciliation, cleaning, PostgreSQL ingestion, or production optimization.
-- Phase 6 sector sensitivity coefficients are declared calibration assumptions and have not been estimated from the raw dataset.
+- Full column, type, null, numeric-validity, symbol, and date-range profiling is complete.
+- The Phase 2 mapping layer is reconciled to all real headers; no schema change was required.
+- Full PostgreSQL ingestion and full-volume idempotency validation are complete.
+- Stored `daily_return` values were independently verified for HDFCBANK, INFY, and RELIANCE.
+- The dataset is ready for Phase 7 backtesting/EDA. Corporate-action outliers and the 47 zero-price rows documented in the profile must remain visible to downstream data-quality filters.

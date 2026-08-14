@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import csv
+import math
 import re
 from collections import defaultdict
 from collections.abc import Iterable, Mapping, Sequence
@@ -44,22 +45,25 @@ COLUMN_MAP: dict[str, tuple[str, ...]] = {
     "high": ("High", "High Price"),
     "low": ("Low", "Low Price"),
     "close": ("Close", "Close Price"),
-    "adj_close": ("Adj Close", "Adjusted Close", "Adj_Close"),
+    # The real Kaggle export has no adjusted-close column. Its Yahoo Finance OHLC
+    # series is already split-adjusted, so Close is the documented fallback.
+    "adj_close": ("Adj Close", "Adjusted Close", "Adj_Close", "Close"),
     "volume": ("Volume", "Traded Volume"),
     "pe_ratio": ("PE Ratio", "P/E Ratio", "PE"),
-    "pb_ratio": ("PB Ratio", "P/B Ratio", "PB"),
+    "pb_ratio": ("PB Ratio", "P/B Ratio", "PB", "Price_to_Book"),
     "market_cap": ("Market Cap", "Market Capitalization"),
     "dividend_yield": ("Dividend Yield", "Div Yield"),
     "eps": ("EPS", "Earnings Per Share"),
     "beta": ("Beta",),
-    "sma_50": ("SMA_50", "SMA 50", "50 Day SMA"),
-    "sma_200": ("SMA_200", "SMA 200", "200 Day SMA"),
+    "sma_50": ("SMA_50", "SMA 50", "50 Day SMA", "MA_50"),
+    "sma_200": ("SMA_200", "SMA 200", "200 Day SMA", "MA_200"),
     "rsi_14": ("RSI_14", "RSI 14", "RSI"),
     "macd": ("MACD",),
     "volatility_annualized": (
         "Annualized Volatility",
         "Volatility Annualized",
         "Annualised Volatility",
+        "Volatility_20D",
     ),
 }
 
@@ -74,6 +78,8 @@ REQUIRED_COLUMNS = {
     "volume",
 }
 NULL_MARKERS = {"", "na", "n/a", "nan", "none", "null", "-"}
+PRICE_TOLERANCE = Decimal("0.000001")
+UPSERT_BATCH_SIZE = 2_000
 
 
 @dataclass(frozen=True, slots=True)
@@ -165,9 +171,15 @@ def _date(raw: str, field: str, *, required: bool = False) -> date | None:
         if required:
             raise ValueError(f"{field} is required")
         return None
-    for pattern in ("%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%Y/%m/%d"):
+    cleaned = raw.strip()
+    try:
+        # Covers the real source format: 1999-01-01 00:00:00+05:30.
+        return datetime.fromisoformat(cleaned).date()
+    except ValueError:
+        pass
+    for pattern in ("%d-%m-%Y", "%d/%m/%Y", "%Y/%m/%d"):
         try:
-            return datetime.strptime(raw.strip(), pattern).date()  # noqa: DTZ007
+            return datetime.strptime(cleaned, pattern).date()  # noqa: DTZ007
         except ValueError:
             continue
     raise ValueError(f"{field} has an unsupported date format: {raw!r}")
@@ -187,9 +199,13 @@ def _normalise_row(
     }
     if any(value <= 0 for value in prices.values()):
         raise ValueError("OHLC and adjusted close values must be positive")
-    if prices["high"] < max(prices["open"], prices["low"], prices["close"]):
+    if prices["high"] + PRICE_TOLERANCE < max(
+        prices["open"], prices["low"], prices["close"]
+    ):
         raise ValueError("high is below another OHLC value")
-    if prices["low"] > min(prices["open"], prices["high"], prices["close"]):
+    if prices["low"] - PRICE_TOLERANCE > min(
+        prices["open"], prices["high"], prices["close"]
+    ):
         raise ValueError("low is above another OHLC value")
     volume_decimal = _decimal(_value(row, headers, "volume"), "volume", required=True)
     if volume_decimal is None or volume_decimal < 0 or volume_decimal != volume_decimal.to_integral_value():
@@ -197,6 +213,13 @@ def _normalise_row(
 
     def optional_decimal(field: str) -> Decimal | None:
         return _decimal(_value(row, headers, field), field)
+
+    volatility = optional_decimal("volatility_annualized")
+    volatility_header = headers.get("volatility_annualized", "")
+    if volatility is not None and _normalise_header(volatility_header) == "volatility20d":
+        # Volatility_20D is a rolling daily standard deviation in the real dataset.
+        # Convert it to the annualized scale required by the stable Phase 2 schema.
+        volatility *= Decimal(str(math.sqrt(252)))
 
     assert trade_date is not None
     return NormalizedRow(
@@ -222,7 +245,7 @@ def _normalise_row(
         sma_200=optional_decimal("sma_200"),
         rsi_14=optional_decimal("rsi_14"),
         macd=optional_decimal("macd"),
-        volatility_annualized=optional_decimal("volatility_annualized"),
+        volatility_annualized=volatility,
     )
 
 
@@ -291,12 +314,32 @@ async def _upsert(
     values: dict[str, Any],
     natural_key: Sequence[str],
 ) -> None:
-    statement: Any = _dialect_insert(session, model).values(**values)
-    update_values = {key: value for key, value in values.items() if key not in natural_key}
-    statement = statement.on_conflict_do_update(
-        index_elements=[getattr(model, key) for key in natural_key], set_=update_values
-    )
-    await session.execute(statement)
+    await _upsert_many(session, model, [values], natural_key)
+
+
+async def _upsert_many(
+    session: AsyncSession,
+    model: type[Any],
+    values: Sequence[dict[str, Any]],
+    natural_key: Sequence[str],
+) -> None:
+    """Execute batched dialect-native upserts without exceeding parameter limits."""
+
+    if not values:
+        return
+    for offset in range(0, len(values), UPSERT_BATCH_SIZE):
+        batch = values[offset : offset + UPSERT_BATCH_SIZE]
+        statement: Any = _dialect_insert(session, model)
+        update_values = {
+            key: getattr(statement.excluded, key)
+            for key in batch[0]
+            if key not in natural_key
+        }
+        statement = statement.values(batch).on_conflict_do_update(
+            index_elements=[getattr(model, key) for key in natural_key],
+            set_=update_values,
+        )
+        await session.execute(statement)
 
 
 async def load_nifty_dataset(
@@ -317,8 +360,9 @@ async def load_nifty_dataset(
     try:
         for symbol_rows in rows_by_symbol.values():
             first = symbol_rows[0]
-            sector = await _get_or_create_sector(session, first.sector)
-            stock = await _get_or_create_stock(session, first, sector)
+            latest = symbol_rows[-1]
+            sector = await _get_or_create_sector(session, latest.sector)
+            stock = await _get_or_create_stock(session, latest, sector)
             previous_close = await session.scalar(
                 select(StockPrice.adj_close)
                 .where(
@@ -329,16 +373,14 @@ async def load_nifty_dataset(
                 .limit(1)
             )
 
+            price_values: list[dict[str, Any]] = []
+            fundamental_values: list[dict[str, Any]] = []
+            technical_values: list[dict[str, Any]] = []
             for row in symbol_rows:
-                if row.sector != sector.name:
-                    sector = await _get_or_create_sector(session, row.sector)
-                stock = await _get_or_create_stock(session, row, sector)
                 daily_return = None
                 if previous_close is not None and previous_close != Decimal(0):
                     daily_return = (row.adj_close / previous_close) - Decimal(1)
-                await _upsert(
-                    session,
-                    StockPrice,
+                price_values.append(
                     {
                         "stock_id": stock.id,
                         "trade_date": row.trade_date,
@@ -349,12 +391,9 @@ async def load_nifty_dataset(
                         "adj_close": row.adj_close,
                         "volume": row.volume,
                         "daily_return": daily_return,
-                    },
-                    ("stock_id", "trade_date"),
+                    }
                 )
-                await _upsert(
-                    session,
-                    StockFundamental,
+                fundamental_values.append(
                     {
                         "stock_id": stock.id,
                         "as_of_date": row.trade_date,
@@ -364,12 +403,9 @@ async def load_nifty_dataset(
                         "dividend_yield": row.dividend_yield,
                         "eps": row.eps,
                         "beta": row.beta,
-                    },
-                    ("stock_id", "as_of_date"),
+                    }
                 )
-                await _upsert(
-                    session,
-                    StockTechnicalIndicator,
+                technical_values.append(
                     {
                         "stock_id": stock.id,
                         "trade_date": row.trade_date,
@@ -378,10 +414,27 @@ async def load_nifty_dataset(
                         "rsi_14": row.rsi_14,
                         "macd": row.macd,
                         "volatility_annualized": row.volatility_annualized,
-                    },
-                    ("stock_id", "trade_date"),
+                    }
                 )
                 previous_close = row.adj_close
+            await _upsert_many(
+                session,
+                StockPrice,
+                price_values,
+                ("stock_id", "trade_date"),
+            )
+            await _upsert_many(
+                session,
+                StockFundamental,
+                fundamental_values,
+                ("stock_id", "as_of_date"),
+            )
+            await _upsert_many(
+                session,
+                StockTechnicalIndicator,
+                technical_values,
+                ("stock_id", "trade_date"),
+            )
         await session.commit()
     except Exception:
         await session.rollback()
