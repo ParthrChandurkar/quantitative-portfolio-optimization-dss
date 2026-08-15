@@ -89,3 +89,42 @@ version. This is a material simplification: because turnover is high, realistic 
 would reduce the walk-forward result further. The lower return is reported without
 parameter tuning; it shows that frequent re-estimation can react to noisy recent means
 and is not automatically superior to a disciplined static allocation.
+
+### Per-period sanity check
+
+The following rows were reconstructed directly from persisted run
+`211b3ed5-a04f-4e1b-958e-28dc82ea7eef`; no optimizer or simulation logic was rerun or
+changed.
+
+| Period start | Period end | Holdings selected | Period return | Turnover | Cumulative value |
+|---|---|---|---:|---:|---:|
+| 2025-01-30 | 2025-01-31 | BHARTIARTL 20.00%, DIVISLAB 20.00%, EICHERMOT 15.00%, M&M 20.00%, SUNPHARMA 5.00%, WIPRO 20.00% | -0.32% | 0.00 | ₹9,96,847.32 |
+| 2025-02-01 | 2025-02-28 | BHARTIARTL 20.00%, DIVISLAB 20.00%, EICHERMOT 15.00%, M&M 20.00%, POWERGRID 5.00%, WIPRO 20.00% | -7.95% | 0.10 | ₹9,17,584.55 |
+| 2025-03-03 | 2025-03-28 | BAJFINANCE 20.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, HINDALCO 20.00%, M&M 20.00% | +6.27% | 0.80 | ₹9,75,122.66 |
+| 2025-04-01 | 2025-04-30 | BAJFINANCE 20.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, EICHERMOT 15.00%, JSWSTEEL 5.00%, M&M 20.00% | +4.33% | 0.40 | ₹10,17,317.86 |
+| 2025-05-02 | 2025-05-30 | BHARTIARTL 20.00%, DIVISLAB 20.00%, ICICIBANK 20.00%, M&M 20.00%, TECHM 20.00% | +3.17% | 0.80 | ₹10,49,573.64 |
+| 2025-06-02 | 2025-06-30 | BAJFINANCE 15.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, HCLTECH 20.00%, HDFCLIFE 20.00%, TECHM 5.00% | +5.06% | 1.10 | ₹11,02,654.48 |
+| 2025-07-01 | 2025-07-31 | BAJFINANCE 15.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, HCLTECH 20.00%, HDFCLIFE 20.00%, TECHM 5.00% | -7.13% | 0.00 | ₹10,24,087.37 |
+| 2025-08-01 | 2025-08-29 | BAJFINANCE 20.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, HDFCBANK 15.00%, JSWSTEEL 20.00%, SHREECEM 5.00% | -3.27% | 0.90 | ₹9,90,627.33 |
+| 2025-09-01 | 2025-09-30 | BAJFINANCE 20.00%, BHARTIARTL 20.00%, DIVISLAB 20.00%, EICHERMOT 20.00%, MARUTI 15.00%, SHREECEM 5.00% | +5.42% | 0.70 | ₹10,44,293.22 |
+| 2025-10-01 | 2025-10-31 | BAJFINANCE 20.00%, EICHERMOT 20.00%, JSWSTEEL 20.00%, MARUTI 15.00%, SBIN 5.00%, SHREECEM 20.00% | +1.86% | 0.80 | ₹10,63,668.54 |
+| 2025-11-03 | 2025-11-28 | BAJFINANCE 20.00%, BHARTIARTL 10.00%, EICHERMOT 20.00%, JSWSTEEL 15.00%, MARUTI 15.00%, TATASTEEL 20.00% | -2.20% | 0.60 | ₹10,40,259.59 |
+| 2025-12-01 | 2025-12-31 | ADANIPORTS 20.00%, BAJAJFINSV 5.00%, BAJFINANCE 20.00%, BHARTIARTL 20.00%, EICHERMOT 15.00%, MARUTI 20.00% | -0.14% | 0.80 | ₹10,38,843.18 |
+| 2026-01-01 | 2026-01-30 | BAJFINANCE 20.00%, BPCL 10.00%, EICHERMOT 20.00%, HINDALCO 20.00%, MARUTI 15.00%, SBILIFE 15.00% | -2.62% | 1.00 | ₹10,11,596.09 |
+
+Interpretation: the run is internally consistent and does not show mechanical
+thrashing. The listed turnovers sum to exactly 8.0000, average 0.6154 per period, range
+from 0.00 to 1.10, and never approach the 2.0 maximum; the initial period and July have
+zero turnover. Every allocation contains five or six stocks, has an effective holding
+count between 5.00 and 5.71, and no stock exceeds the configured 20% cap. Performance
+is not evenly weak: February (-7.95%) and July (-7.13%) are the sharpest portfolio
+losses, while the relative shortfall versus the static strategy is concentrated from
+July through November; February does not explain much relative underperformance because
+the static portfolio also lost 7.56% that month. The selected stocks have complete
+19–23-observation bad-period histories and plausible realized moves—for example HCLTECH
+fell 14.42% and TECHM 11.65% in July, DIVISLAB fell 7.04% and HDFCBANK 5.70% in August,
+and TATASTEEL fell 8.14% in November—so there is no missing-row, zero-return, or isolated
+price-data anomaly visible in the loss concentration. The evidence therefore supports
+a genuine, regime-dependent estimation/selection-noise effect rather than a compounding
+or turnover-reporting bug, while refuting the narrower claim that the shortfall was
+spread uniformly across all 13 periods.
