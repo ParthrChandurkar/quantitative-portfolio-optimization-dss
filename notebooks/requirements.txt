@@ -1,0 +1,6 @@
+jupyterlab>=4.2,<5
+nbconvert>=7.16,<8
+ipykernel>=6.29,<7
+matplotlib>=3.8,<4
+seaborn>=0.13,<1
+pandas>=2.1,<3
