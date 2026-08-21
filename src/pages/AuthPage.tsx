@@ -16,9 +16,13 @@ export function AuthPage() {
     setError(undefined)
     const form = new FormData(event.currentTarget)
     try {
-      if (mode === 'signup') await api.signup(String(form.get('email')), String(form.get('password')), String(form.get('full_name')))
-      else await api.login(String(form.get('email')), String(form.get('password')))
-      navigate('/')
+      if (mode === 'signup') {
+        await api.signup(String(form.get('email')), String(form.get('password')), String(form.get('full_name')))
+        navigate('/onboarding/risk-profile')
+      } else {
+        await api.login(String(form.get('email')), String(form.get('password')))
+        navigate('/')
+      }
     } catch (value) { setError(value) } finally { setPending(false) }
   }
   return <main className="auth-page"><section className="card auth-card">

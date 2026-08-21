@@ -8,7 +8,7 @@ OptiVest is an explainable investment-planning and constrained Nifty-50 portfoli
 
 ## Project Scope: OR Foundation + AI Personalization Layer
 
-The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a leakage-safe gradient-boosting return forecast as a selectable alternative to the unchanged historical-mean input; its forecasts genuinely change the optimizer's allocation. Broader investor personalization remains planned work and is not claimed as implemented.
+The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a leakage-safe gradient-boosting return forecast as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a transparent rubric-trained risk classifier that recommends visible, editable optimization defaults after onboarding. The classifier learns synthetic rubric labels—not observed investor outcomes—and broader behavioral personalization remains future work.
 
 ![OptiVest analytics](docs/final-report/screenshots/05-analytics-out-of-sample.png)
 

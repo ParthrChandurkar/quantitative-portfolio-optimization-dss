@@ -4,7 +4,7 @@
 
 ## Project Scope: OR Foundation + AI Personalization Layer
 
-The implemented system is a complete Operations Research decision-support foundation comprising continuous and mixed-integer portfolio optimization, quantitative explanations, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 now adds a trained, leakage-safe gradient-boosting expected-return estimator as a selectable alternative to the unchanged historical-mean input. The broader investor-personalization layer remains future work, so this report does not attribute unimplemented personalization capability to the present system.
+The implemented system is a complete Operations Research decision-support foundation comprising continuous and mixed-integer portfolio optimization, quantitative explanations, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a trained, leakage-safe gradient-boosting expected-return estimator as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a questionnaire-based classifier trained to reproduce an explicit synthetic-label rubric and uses its predicted category to recommend visible, editable OR constraints. Broader behavior- and outcome-trained personalization remains future work and is not attributed to the present system.
 
 ## Project context and problem
 

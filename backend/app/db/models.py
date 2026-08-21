@@ -76,6 +76,7 @@ class User(UUIDPrimaryKeyMixin, Base):
     portfolios: Mapped[list[Portfolio]] = relationship(back_populates="user")
     reports: Mapped[list[Report]] = relationship(back_populates="user")
     refresh_tokens: Mapped[list[RefreshToken]] = relationship(back_populates="user")
+    risk_profiles: Mapped[list[UserRiskProfile]] = relationship(back_populates="user")
 
 
 class RefreshToken(UUIDPrimaryKeyMixin, Base):
@@ -438,6 +439,30 @@ class MlForecastRun(UUIDPrimaryKeyMixin, Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+
+
+class UserRiskProfile(UUIDPrimaryKeyMixin, Base):
+    """Auditable questionnaire response, classifier output, and editable defaults."""
+
+    __tablename__ = "user_risk_profiles"
+    __table_args__ = (Index("ix_user_risk_profiles_user_created_at", "user_id", "created_at"),)
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    questionnaire_answers: Mapped[dict[str, Any]] = mapped_column(
+        JSON_DOCUMENT, nullable=False
+    )
+    predicted_category: Mapped[str] = mapped_column(String(32), nullable=False)
+    category_confidence: Mapped[Decimal] = mapped_column(METRIC, nullable=False)
+    recommended_constraints: Mapped[dict[str, Any]] = mapped_column(
+        JSON_DOCUMENT, nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    user: Mapped[User] = relationship(back_populates="risk_profiles")
 
 
 class WalkForwardRun(UUIDPrimaryKeyMixin, Base):

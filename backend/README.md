@@ -97,6 +97,23 @@ python -m scripts.compare_return_estimation_methods --output ml-comparison.json
 The command trains only on feature and target dates strictly before its recorded
 cutoff. The checked-in results and limitations are in `../docs/methodology-notes.md`.
 
+## Personalized risk defaults
+
+Authenticated users can submit the six-question onboarding form through
+`POST /api/v1/me/risk-profile` and retrieve their latest result through
+`GET /api/v1/me/risk-profile`. The classifier predicts Conservative, Moderate, or
+Aggressive; a separate policy table maps that category to editable risk tolerance,
+single-stock cap, and sector-cap defaults. Regenerate the deterministic training data
+and small model artifact with:
+
+```bash
+python -m app.personalization.generate_training_data
+python -m app.personalization.train_risk_classifier
+```
+
+The honest label-source and accuracy interpretation are documented in
+`../docs/ai-personalization/risk-classifier-methodology.md`.
+
 WeasyPrint requires its native Pango runtime. Linux deployments should install the distribution packages documented by WeasyPrint. On Windows, install current MSYS2 Pango and either use the standard `C:\msys64\mingw64\bin` location detected by the renderer or set `WEASYPRINT_DLL_DIRECTORIES` explicitly. Local output defaults to `generated-reports/` and can be redirected with `REPORT_STORAGE_ROOT`.
 
 Run the reports coverage gate with:

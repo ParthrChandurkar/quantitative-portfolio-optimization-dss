@@ -2,7 +2,7 @@
 
 **Product name:** OptiVest
 
-This directory contains the submission-ready Markdown chapters and live-system evidence. The implemented evidence documents the completed Operations Research foundation and the first leakage-safe ML return-estimation phase; broader investor personalization is explicitly scoped as future work and is not represented as complete.
+This directory contains the submission-ready Markdown chapters and live-system evidence. The implemented evidence documents the completed Operations Research foundation, leakage-safe ML return estimation, and transparent rubric-trained risk personalization; broader behavior-trained personalization is future work and is not represented as complete.
 
 1. [Introduction](01-introduction.md)
 2. [System Design](02-system-design.md)

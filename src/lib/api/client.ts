@@ -165,6 +165,18 @@ export type OptimizeRequest = {
   label?: string
 }
 
+export type RiskQuestionnaireAnswers = {
+  age_bracket: 'under_30' | '30_44' | '45_59' | '60_plus'
+  investment_horizon: 'under_3_years' | '3_5_years' | '6_10_years' | 'over_10_years'
+  income_stability: 'unstable' | 'variable' | 'stable' | 'highly_stable'
+  loss_reaction: 'sell_all' | 'sell_some' | 'hold' | 'buy_more'
+  experience_level: 'none' | 'beginner' | 'intermediate' | 'advanced'
+  financial_dependents: 'three_or_more' | 'one_or_two' | 'none'
+}
+
+export type PersonalizedConstraints = { risk_tolerance: number; max_single_weight: number; default_sector_cap: number }
+export type RiskProfile = { id: string; predicted_category: 'conservative' | 'moderate' | 'aggressive'; category_confidence: number; probabilities: Record<string, number>; recommended_constraints: PersonalizedConstraints; questionnaire_answers: RiskQuestionnaireAnswers; model_name: string; created_at: string }
+
 export class OptiVestApiError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string) {
     super(message)
@@ -201,6 +213,8 @@ export interface OptiVestApi {
   logout(): Promise<void>
   me(): Promise<UserProfile>
   updateMe(values: Partial<Pick<UserProfile, 'full_name' | 'risk_profile_default'>>): Promise<UserProfile>
+  submitRiskProfile(answers: RiskQuestionnaireAnswers): Promise<RiskProfile>
+  riskProfile(): Promise<RiskProfile>
   stocks(sector?: string): Promise<Stock[]>
   sectors(): Promise<Array<{ id: string; name: string }>>
   portfolios(): Promise<Portfolio[]>
@@ -297,6 +311,9 @@ export class ApiClient implements OptiVestApi {
   me = () => this.request<UserProfile>('/me')
   updateMe = (values: Partial<Pick<UserProfile, 'full_name' | 'risk_profile_default'>>) =>
     this.request<UserProfile>('/me', { method: 'PATCH', body: JSON.stringify(values) })
+  submitRiskProfile = (answers: RiskQuestionnaireAnswers) =>
+    this.request<RiskProfile>('/me/risk-profile', { method: 'POST', body: JSON.stringify({ answers }) })
+  riskProfile = () => this.request<RiskProfile>('/me/risk-profile')
   stocks = (sector?: string) => this.request<Stock[]>(`/stocks${sector ? `?sector=${encodeURIComponent(sector)}` : ''}`)
   sectors = () => this.request<Array<{ id: string; name: string }>>('/sectors')
   portfolios = () => this.request<Portfolio[]>('/portfolios')

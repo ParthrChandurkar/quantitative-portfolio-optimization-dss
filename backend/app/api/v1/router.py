@@ -5,6 +5,7 @@ from app.api.v1 import (
     auth,
     me,
     optimization,
+    personalization,
     portfolios,
     reports,
     scenarios,
@@ -15,6 +16,7 @@ api_router = APIRouter(prefix="/api/v1")
 for router in (
     auth.router,
     me.router,
+    personalization.router,
     stocks.router,
     portfolios.router,
     optimization.router,
