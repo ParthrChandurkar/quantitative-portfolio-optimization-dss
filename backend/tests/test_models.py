@@ -48,6 +48,7 @@ EXPECTED_TABLES = {
     "reports",
     "covariance_cache",
     "walk_forward_runs",
+    "ml_forecast_runs",
 }
 
 

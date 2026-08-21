@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
-from datetime import date
-from typing import Any
+from datetime import date, timedelta
+from pathlib import Path
+from typing import Any, Literal
 
 import numpy as np
 from sqlalchemy import select
@@ -17,6 +18,7 @@ from app.db.models import CovarianceCache, Stock, StockPrice
 from app.optimization.types import FloatArray
 
 TRADING_DAYS = 252
+ReturnEstimationMethod = Literal["historical_mean", "ml_forecast"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,6 +30,7 @@ class MarketData:
     observations: int
     cache_hit: bool
     observation_dates: tuple[date, ...]
+    return_estimation_method: ReturnEstimationMethod = "historical_mean"
 
 
 def universe_hash(symbols: tuple[str, ...]) -> str:
@@ -89,11 +92,45 @@ async def _write_cache(
     await session.execute(statement)
 
 
+async def _expected_returns_for_method(
+    session: AsyncSession,
+    symbols: tuple[str, ...],
+    as_of_date: date,
+    historical_mean: FloatArray,
+    return_estimation_method: ReturnEstimationMethod,
+    ml_artifact_dir: Path | None,
+) -> FloatArray:
+    if return_estimation_method == "historical_mean":
+        return historical_mean
+    if return_estimation_method != "ml_forecast":
+        raise ValueError(f"unsupported return_estimation_method: {return_estimation_method}")
+    # Local import keeps the OR engine dependency-free; only this data adapter knows ML.
+    from app.ml.forecast_service import get_ml_forecast
+
+    # Historical ``as_of_date`` is inclusive. Forecast features are strictly before
+    # their timestamp, so the next calendar date represents an after-close forecast
+    # while retaining the exact same covariance window as the historical path.
+    forecast_date = as_of_date + timedelta(days=1)
+    if ml_artifact_dir is None:
+        forecast = await get_ml_forecast(session, symbols, forecast_date)
+    else:
+        forecast = await get_ml_forecast(
+            session,
+            symbols,
+            forecast_date,
+            artifact_dir=ml_artifact_dir,
+        )
+    return forecast.expected_returns
+
+
 async def build_market_data(
     session: AsyncSession,
     symbols: tuple[str, ...],
     as_of_date: date,
     lookback_days: int = 252,
+    return_estimation_method: ReturnEstimationMethod = "historical_mean",
+    *,
+    ml_artifact_dir: Path | None = None,
 ) -> MarketData:
     """Read-through/write-through covariance data for FR-2 and FR-4."""
 
@@ -101,6 +138,8 @@ async def build_market_data(
         raise ValueError("at least two symbols are required")
     if lookback_days < 2:
         raise ValueError("lookback_days must be at least 2")
+    if return_estimation_method not in {"historical_mean", "ml_forecast"}:
+        raise ValueError(f"unsupported return_estimation_method: {return_estimation_method}")
     digest = universe_hash(symbols)
     cached = await _read_cache(session, digest, lookback_days, as_of_date)
     if (
@@ -110,14 +149,24 @@ async def build_market_data(
     ):
         payload = cached.matrix
         history = np.asarray(payload["historical_returns"], dtype=float)
+        historical_mean = np.asarray(payload["expected_returns"], dtype=float)
+        expected_returns = await _expected_returns_for_method(
+            session,
+            symbols,
+            as_of_date,
+            historical_mean,
+            return_estimation_method,
+            ml_artifact_dir,
+        )
         return MarketData(
             symbols,
-            np.asarray(payload["expected_returns"], dtype=float),
+            expected_returns,
             np.asarray(payload["covariance"], dtype=float),
             history,
             history.shape[0],
             True,
             tuple(date.fromisoformat(value) for value in payload["observation_dates"]),
+            return_estimation_method,
         )
 
     rows = (
@@ -144,7 +193,7 @@ async def build_market_data(
     observation_dates = tuple(trade_date for trade_date, _ in aligned_rows)
     aligned = [values for _, values in aligned_rows]
     history = np.asarray(aligned, dtype=float)
-    expected_returns, covariance = annualize_returns(history)
+    historical_mean, covariance = annualize_returns(history)
     await _write_cache(
         session,
         digest,
@@ -152,13 +201,21 @@ async def build_market_data(
         as_of_date,
         {
             "symbols": list(symbols),
-            "expected_returns": expected_returns.tolist(),
+            "expected_returns": historical_mean.tolist(),
             "covariance": covariance.tolist(),
             "historical_returns": history.tolist(),
             "observation_dates": [value.isoformat() for value in observation_dates],
         },
     )
     await session.commit()
+    expected_returns = await _expected_returns_for_method(
+        session,
+        symbols,
+        as_of_date,
+        historical_mean,
+        return_estimation_method,
+        ml_artifact_dir,
+    )
     return MarketData(
         symbols,
         expected_returns,
@@ -167,4 +224,5 @@ async def build_market_data(
         history.shape[0],
         False,
         observation_dates,
+        return_estimation_method,
     )

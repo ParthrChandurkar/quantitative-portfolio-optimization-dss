@@ -36,6 +36,7 @@ def _run_payload(run: OptimizationRun, message: str | None = None) -> dict:
         "status": run.status,
         "solver_used": run.solver_used,
         "solve_time_ms": run.solve_time_ms,
+        "return_estimation_method": run.return_estimation_method,
         "message": message,
     }
 
@@ -222,6 +223,7 @@ async def optimize_portfolio(
         risk_free_rate=request.risk_free_rate,
         solver=request.solver,
         lookback_days=request.lookback_days,
+        return_estimation_method=request.return_estimation_method,
     )
     run = OptimizationRun(
         portfolio_id=portfolio_id,
@@ -244,6 +246,7 @@ async def optimize_portfolio(
             request.risk_free_rate,
         ),
         status="pending",
+        return_estimation_method=request.return_estimation_method,
     )
     session.add(run)
     await session.commit()

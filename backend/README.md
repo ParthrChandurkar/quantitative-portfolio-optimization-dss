@@ -82,6 +82,21 @@ REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest
 
 `await app.reports.generate_report(snapshot_id, report_type, user_id, session=session)` produces Portfolio Summary, Optimization Report, and Investment Recommendation PDFs. Report context reuses persisted snapshot, holding, explanation, and constraint values plus the Phase 7 analytics bundle. Generated artifacts are written through the `ReportStorage` interface and recorded in the `reports` table.
 
+## ML return forecasting
+
+The optimize request accepts `return_estimation_method` as either
+`historical_mean` (the unchanged default) or `ml_forecast`. The latter uses the saved
+gradient-boosting model while the covariance matrix and OR solver remain unchanged.
+To regenerate the ignored model artifact and reproduce the fixed out-of-sample
+comparison against the loaded PostgreSQL data, run from this directory:
+
+```bash
+python -m scripts.compare_return_estimation_methods --output ml-comparison.json
+```
+
+The command trains only on feature and target dates strictly before its recorded
+cutoff. The checked-in results and limitations are in `../docs/methodology-notes.md`.
+
 WeasyPrint requires its native Pango runtime. Linux deployments should install the distribution packages documented by WeasyPrint. On Windows, install current MSYS2 Pango and either use the standard `C:\msys64\mingw64\bin` location detected by the renderer or set `WEASYPRINT_DLL_DIRECTORIES` explicitly. Local output defaults to `generated-reports/` and can be redirected with `REPORT_STORAGE_ROOT`.
 
 Run the reports coverage gate with:

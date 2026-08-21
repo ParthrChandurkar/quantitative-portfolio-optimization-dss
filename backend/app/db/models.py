@@ -244,6 +244,9 @@ class OptimizationRun(UUIDPrimaryKeyMixin, Base):
         JSON_DOCUMENT, default=dict, nullable=False
     )
     status: Mapped[str] = mapped_column(String(32), nullable=False)
+    return_estimation_method: Mapped[str | None] = mapped_column(
+        String(32), default="historical_mean", server_default="historical_mean"
+    )
     solve_time_ms: Mapped[int | None] = mapped_column(Integer)
     run_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
@@ -417,6 +420,22 @@ class CovarianceCache(UUIDPrimaryKeyMixin, Base):
     as_of_date: Mapped[date] = mapped_column(Date, nullable=False)
     matrix: Mapped[dict[str, Any]] = mapped_column(JSON_DOCUMENT, nullable=False)
     computed_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
+class MlForecastRun(UUIDPrimaryKeyMixin, Base):
+    """Training provenance for one leakage-safe ML return forecast artifact."""
+
+    __tablename__ = "ml_forecast_runs"
+
+    estimation_end_date: Mapped[date] = mapped_column(Date, nullable=False)
+    model_artifact_path: Mapped[str] = mapped_column(String(1024), nullable=False)
+    feature_importances: Mapped[dict[str, Any]] = mapped_column(
+        JSON_DOCUMENT, nullable=False
+    )
+    training_row_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 

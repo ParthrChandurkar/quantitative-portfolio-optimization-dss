@@ -128,3 +128,36 @@ price-data anomaly visible in the loss concentration. The evidence therefore sup
 a genuine, regime-dependent estimation/selection-noise effect rather than a compounding
 or turnover-reporting bug, while refuting the narrower claim that the shortfall was
 spread uniformly across all 13 periods.
+
+## AI Phase 1: return-estimation comparison
+
+The additive ML path was evaluated on the same static out-of-sample interval and the
+same optimization constraints as the corrected Phase 9C run. The gradient-boosting
+regressor was trained on 12,924 stock-date samples to predict forward 21-trading-day
+adjusted-close return. Its exclusive training cutoff was 2025-01-29: every training
+feature and label date was earlier than that cutoff. Both optimizers used covariance
+observations from 2024-01-23 through 2025-01-29 and both portfolios were evaluated
+from 2025-01-30 through 2026-01-30. The structural audit found zero overlapping
+estimation/evaluation dates.
+
+| Metric | Historical mean | ML forecast |
+|---|---:|---:|
+| Annualized realized return | 10.2707% | 5.8787% |
+| Realized Sharpe ratio | 0.6762 | 0.3453 |
+| Maximum drawdown | -13.2597% | -13.3183% |
+| Realized annualized volatility | 15.1897% | 17.0250% |
+| Final portfolio value | Rs. 1,101,423.96 | Rs. 1,058,067.44 |
+| Fit-period expected return | 42.9119% | 29.9460% |
+| Fit-period model volatility | 16.9399% | 20.7871% |
+| Holdings | BHARTIARTL 20%, DIVISLAB 20%, EICHERMOT 15%, M&M 20%, SUNPHARMA 5%, WIPRO 20% | ADANIENT 20%, ASIANPAINT 20%, INDUSINDBK 20%, LTIM 20%, NTPC 20% |
+
+The historical path exactly reproduced the established static-split final value and
+allocation, confirming that adding the selectable estimator did not change the OR
+baseline. The untuned ML portfolio remained profitable but underperformed: it earned
+about 5.88% with higher volatility and a lower Sharpe ratio. This is reported without
+post-hoc tuning. Over this single period, the selected gradient-boosting features did
+not improve return estimation enough to beat the simpler historical mean. RSI and
+MACD were absent in the loaded Kaggle rows and were therefore retained as imputed,
+zero-importance features; the other requested technical and fundamental features were
+available. This limitation and the one-period result mean the comparison demonstrates
+a real selectable ML input—not evidence that ML is generally superior.

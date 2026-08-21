@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
 from app.db.models import OptimizationRun, Sector, Stock, StockPrice
-from app.optimization.data import build_market_data
+from app.optimization.data import ReturnEstimationMethod, build_market_data
 from app.optimization.types import OptimizationInput, SolverName
 
 
@@ -116,6 +116,7 @@ async def build_problem(
     solver: SolverName,
     lookback_days: int | None = None,
     as_of_date: date | None = None,
+    return_estimation_method: ReturnEstimationMethod = "historical_mean",
 ) -> ProblemContext:
     stocks, sectors = await stock_universe(session, symbols)
     if len(stocks) < 2:
@@ -129,6 +130,7 @@ async def build_problem(
         selected_symbols,
         market_as_of_date,
         lookback_days or settings.covariance_lookback_days,
+        return_estimation_method,
     )
     problem = OptimizationInput(
         symbols=selected_symbols,
@@ -159,6 +161,7 @@ async def problem_from_run(
     *,
     as_of_date: date | None = None,
     lookback_days: int | None = None,
+    return_estimation_method: ReturnEstimationMethod | None = None,
 ) -> ProblemContext:
     config = decode_constraint_config(run.sector_constraints)
     try:
@@ -184,4 +187,9 @@ async def problem_from_run(
         solver=solver,
         lookback_days=lookback_days,
         as_of_date=as_of_date,
+        return_estimation_method=(
+            return_estimation_method
+            or run.return_estimation_method
+            or "historical_mean"
+        ),
     )

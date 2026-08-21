@@ -22,7 +22,11 @@ async def optimize(
 ) -> dict:
     return success(
         await optimization_service.optimize_portfolio(
-            session, user, portfolio_id, request, settings
+            session=session,
+            user=user,
+            portfolio_id=portfolio_id,
+            request=request,
+            settings=settings,
         )
     )
 

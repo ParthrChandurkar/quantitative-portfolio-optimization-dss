@@ -22,6 +22,7 @@ async def test_optimize_returns_snapshot_holdings_metrics_and_explanations_toget
     optimized: dict,
 ) -> None:
     payload = optimized["payload"]
+    assert payload["run"]["return_estimation_method"] == "historical_mean"
     assert payload["snapshot"]["holdings"]
     assert payload["snapshot"]["expected_return"] is not None
     assert payload["snapshot"]["expected_volatility"] is not None

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -21,6 +22,9 @@ class OptimizeRequest(BaseModel):
     risk_free_rate: float = 0.0
     lookback_days: int | None = Field(default=None, ge=2)
     label: str = Field(default="Optimized portfolio", max_length=160)
+    return_estimation_method: Literal["historical_mean", "ml_forecast"] = (
+        "historical_mean"
+    )
 
     @model_validator(mode="after")
     def require_objective_constraint(self) -> OptimizeRequest:

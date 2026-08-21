@@ -17,3 +17,5 @@ coverage*.json
 *.egg-info/
 *.sqlite3
 /data/raw/
+/backend/app/ml/artifacts/*
+!/backend/app/ml/artifacts/.gitkeep
