@@ -1,5 +1,11 @@
 # Introduction
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
+## Project Scope: OR Foundation + AI Personalization Layer
+
+The implemented system is a complete Operations Research decision-support foundation comprising continuous and mixed-integer portfolio optimization, quantitative explanations, scenario re-solving, and static plus walk-forward validated analytics. The revised project direction places an AI/ML-driven personalization layer above this foundation. That layer is the current next phase: specific personalization features, required data, model choices, integration contracts, and evaluation measures remain to be selected and implemented, so this report does not attribute unimplemented AI capability to the present system.
+
 ## Project context and problem
 
 Choosing a Nifty-50 portfolio is a coupled decision: increasing one allocation changes the capital, risk budget, concentration, and sector capacity available to every other stock. Ranking securities by return cannot enforce a budget identity, position bounds, sector caps, cardinality, or a required risk/return level.

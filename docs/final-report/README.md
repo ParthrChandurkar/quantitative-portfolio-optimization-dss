@@ -1,6 +1,8 @@
-# OptiVest Final B.Tech Project Report
+# AI-Driven Personalized Investment Planning and Portfolio Optimization — Final B.Tech Project Report
 
-This directory contains the submission-ready Markdown chapters and live-system evidence.
+**Product name:** OptiVest
+
+This directory contains the submission-ready Markdown chapters and live-system evidence. The implemented evidence documents the completed Operations Research foundation; AI/ML personalization is explicitly scoped as the next phase and is not represented as complete.
 
 1. [Introduction](01-introduction.md)
 2. [System Design](02-system-design.md)

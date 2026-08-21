@@ -1,5 +1,7 @@
 # UI and UX Evidence
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 Screenshots were captured on 15 August 2026 from the live React app at `127.0.0.1:5173`, connected to FastAPI and the loaded PostgreSQL database. They are not wireframes or fixture renders.
 
 ## Dashboard

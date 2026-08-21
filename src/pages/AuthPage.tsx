@@ -23,7 +23,7 @@ export function AuthPage() {
   }
   return <main className="auth-page"><section className="card auth-card">
     <div className="brand"><div className="brand-mark"><TrendingUp/></div><span>OptiVest</span></div>
-    <p className="eyebrow">QUANTITATIVE PORTFOLIO DSS</p><h2>{mode === 'signup' ? 'Create your workspace' : 'Welcome back'}</h2><p>Use the live Nifty-50 optimization system.</p>
+    <p className="eyebrow">AI-DRIVEN PERSONALIZED INVESTMENT PLANNING</p><h2>{mode === 'signup' ? 'Create your workspace' : 'Welcome back'}</h2><p>Use the live Nifty-50 optimization foundation while the AI personalization layer is developed.</p>
     {error != null ? <PageError error={error}/> : null}<form onSubmit={submit}>
       {mode === 'signup' && <label>Full name<input name="full_name" required defaultValue="OptiVest Investor"/></label>}
       <label>Email<input name="email" type="email" required defaultValue="investor@example.com"/></label>

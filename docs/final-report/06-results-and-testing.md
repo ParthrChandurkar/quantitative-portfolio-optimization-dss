@@ -1,5 +1,7 @@
 # Results and Testing
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## Fresh verification protocol
 
 Results in this chapter were refreshed on 15 August 2026 after the additive walk-forward stretch phase. Backend coverage used `pytest --cov=app`; frontend coverage used `vitest run --coverage`. Targets from phase prompts are not substituted for achieved values.

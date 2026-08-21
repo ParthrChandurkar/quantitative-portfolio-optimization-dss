@@ -1,5 +1,7 @@
 # Optimization Methodology
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## Notation and estimation
 
 For (n) assets, let (w_i) be portfolio weight, (mu_i) annual expected return, (Sigma) annual covariance, (B) budget in INR, (s(i)) the sector of asset (i), (y_i\in\{0,1\}) its selection flag, and (r_{ti}) observed return in period (t).

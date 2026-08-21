@@ -2,7 +2,7 @@
 
 ## Project title
 
-Decision Support System for Quantitative Portfolio Optimization Using Operations Research Techniques
+AI-Driven Personalized Investment Planning and Portfolio Optimization
 
 Product name: **OptiVest**
 

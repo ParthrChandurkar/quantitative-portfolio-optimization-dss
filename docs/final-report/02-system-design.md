@@ -1,5 +1,7 @@
 # System Design
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## Implemented architecture
 
 ```mermaid

@@ -1,5 +1,7 @@
 # Conclusion and Future Work
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## What was built
 
 OptiVest now spans the full research-to-product path: formal requirements; a UUID/Numeric PostgreSQL schema; profiled, idempotently loaded real Nifty data; three solver families; independent feasibility checks; deterministic explanations; seven re-solved scenario types; real-price analytics; static and walk-forward temporal validation; PDF generation; JWT/ownership-aware APIs; and a fully connected React UI.

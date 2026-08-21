@@ -1,8 +1,14 @@
-# OptiVest
+# AI-Driven Personalized Investment Planning and Portfolio Optimization
 
-OptiVest is an explainable decision-support system for constrained Nifty-50 portfolio optimization. It combines real daily market data, SciPy/PuLP/OR-Tools models, scenario re-solving, static and walk-forward out-of-sample analytics, and audit-ready PDF reports in one authenticated web application. All monetary values are Indian rupees (INR).
+**Product name:** OptiVest
+
+OptiVest is an explainable investment-planning and constrained Nifty-50 portfolio-optimization system. It combines real daily market data, SciPy/PuLP/OR-Tools models, scenario re-solving, static and walk-forward out-of-sample analytics, and audit-ready PDF reports in one authenticated web application. All monetary values are Indian rupees (INR).
 
 > Academic decision support only. OptiVest does not execute trades and is not personalized investment advice.
+
+## Project Scope: OR Foundation + AI Personalization Layer
+
+The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. The project is now positioned to add an AI/ML-driven personalization layer on top of that foundation. That personalization layer is the current next phase of work; its features, data requirements, models, integration points, and evaluation criteria have not yet been selected or implemented, and this version makes no claim that they already exist.
 
 ![OptiVest analytics](docs/final-report/screenshots/05-analytics-out-of-sample.png)
 

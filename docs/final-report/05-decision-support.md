@@ -1,5 +1,7 @@
 # Decision Support and Explainability
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## From solution to evidence
 
 An allocation alone does not reveal whether a stock was chosen for return, diversification, a minimum-holdings rule, or merely because another cap bound the problem. Phase 5 consumes the same symbols, weights, expected returns, covariance, sector labels, constraint reports, solver diagnostics and shadow prices used by optimization. It does not call a language model or invent a second scoring path.

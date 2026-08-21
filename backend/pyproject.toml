@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "optivest-backend"
 version = "0.1.0"
-description = "OptiVest portfolio optimization backend"
+description = "Backend for AI-Driven Personalized Investment Planning and Portfolio Optimization"
 requires-python = ">=3.11"
 dependencies = [
   "alembic>=1.13,<2",

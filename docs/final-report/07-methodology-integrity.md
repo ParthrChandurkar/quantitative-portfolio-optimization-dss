@@ -1,5 +1,7 @@
 # Methodology Integrity: Look-Ahead Bias Audit
 
+*Project: AI-Driven Personalized Investment Planning and Portfolio Optimization (OptiVest)*
+
 ## Why this audit matters
 
 A backtest is invalid as validation when the optimizer uses returns from the same dates on which its chosen weights are evaluated. The resulting replay answers “how did a portfolio selected with future knowledge fit that history?” rather than “how did a portfolio selected at the time perform afterward?”
