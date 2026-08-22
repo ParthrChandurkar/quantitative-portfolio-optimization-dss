@@ -4,13 +4,13 @@
 
 ## What was built
 
-OptiVest now spans the full research-to-product path: formal requirements; a UUID/Numeric PostgreSQL schema; profiled, idempotently loaded real Nifty data; three solver families; independent feasibility checks; deterministic explanations; seven re-solved scenario types; real-price analytics; static and walk-forward temporal validation; PDF generation; JWT/ownership-aware APIs; and a fully connected React UI.
+OptiVest now spans the full research-to-product path: formal requirements; a UUID/Numeric PostgreSQL schema; profiled, idempotently loaded real Nifty data; three solver families; independent feasibility checks; deterministic explanations; seven re-solved scenario types; real-price analytics; static and walk-forward temporal validation; PDF generation; JWT/ownership-aware APIs; a fully connected React UI; and the completed scoped AI layer described in Chapter 9.
 
 The live system optimizes the 49-stock universe, persists holdings and “Why?” narratives, re-solves a 20% crash, displays a 30-point frontier and a zero-overlap OOS audit, and downloads a real two-page PDF. The corrected OOS result—₹10,00,000 to ₹11,01,423.96 with 0.6777 Sharpe—is less visually impressive than the biased replay and scientifically more useful.
 
 ## Honest simplifications and fallbacks
 
-- Expected returns are annualized arithmetic historical means; no shrinkage, factor or Bayesian estimator is fitted.
+- Historical annualized arithmetic mean remains the default expected-return estimator. The optional gradient-boosting estimator underperformed it on the single honest OOS comparison; no shrinkage, factor or Bayesian estimator is fitted.
 - PuLP uses mean absolute deviation for a linear cardinality model; its relaxation shadow prices are not integer-program dual prices.
 - OR-Tools selects support and delegates continuous weights to SciPy; it is a hybrid heuristic.
 - Rate and inflation sensitivity tables are transparent estimated calibration assumptions, not coefficients fitted to this dataset.
@@ -18,8 +18,11 @@ The live system optimizes the 49-stock universe, persists holdings and “Why?�
 - Backtests omit fees, bid–ask spread, slippage, taxes and market impact.
 - Walk-forward evaluation re-estimates historical means/covariance but does not yet use shrinkage or transaction-cost-aware optimization.
 - PDF generation is synchronous service work moved to a thread, not a distributed job queue.
-- Backend achieved coverage is 89.09%, below its configured 90% global gate; service orchestration/error branches need additional tests.
+- Backend achieved combined coverage is 90.05%, passing its configured 90% global gate; service orchestration/error branches remain the weakest tested area.
 - The Kaggle snapshot contains 49 symbols and does not reconstruct historical Nifty membership, so survivorship effects remain possible.
+- Risk-profile accuracy measures replication of a synthetic rubric, not suitability or realized investor outcomes.
+- Assistant intent accuracy is measured on separable synthetic templates rather than a real, multilingual investor-question corpus.
+- Isolation Forest unusualness is retrained per held stock and is not evidence of fraud, news, or certain loss; background execution prevents this work from delaying optimization responses.
 
 ## Future work
 
@@ -30,6 +33,7 @@ The live system optimizes the 49-stock universe, persists holdings and “Why?�
 3. Model transaction costs, taxes, liquidity, turnover and whole-share lot constraints inside each rebalance decision.
 4. Compare monthly, quarterly and annual policies under the same cost assumptions.
 5. Reconstruct point-in-time index membership and corporate-action validation to reduce survivorship/data artifacts.
+6. Evaluate walk-forward retraining of the ML return model; the completed comparison used one fixed leakage-safe training cutoff and did not attempt rolling ML refits.
 
 ### Scenario calibration
 
@@ -41,7 +45,7 @@ Move optimization, walk-forward analytics and PDF jobs to Celery/Redis (or an eq
 
 ### Product and validation
 
-Add accessible responsive chart interactions, snapshot comparison/history selection, downloadable methodology manifests, stronger frontend branch coverage, and independent benchmark comparisons. A regulated deployment would also require suitability, disclosures, governance, data licensing and security review beyond this academic system.
+Collect consented, longitudinal investor decisions and outcomes before claiming suitability prediction; use them to evaluate and recalibrate the risk classifier beyond rubric replication. Build a richer human-labeled, multilingual NLP corpus beyond synthetic templates to measure assistant robustness. Add accessible responsive chart interactions, snapshot comparison/history selection, downloadable methodology manifests, stronger frontend branch coverage, and independent benchmark comparisons. A regulated deployment would also require suitability, disclosures, governance, data licensing and security review beyond this academic system.
 
 ## Final assessment
 

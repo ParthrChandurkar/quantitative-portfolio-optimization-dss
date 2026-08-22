@@ -156,11 +156,12 @@ def _safe_ratio(numerator: float, denominator: float) -> float:
     return numerator / denominator - 1.0
 
 
-def _feature_vector(observations: list[_Observation], index: int) -> list[float]:
+def _feature_vector(
+    observations: list[_Observation],
+    closes: FloatMatrix,
+    index: int,
+) -> list[float]:
     current = observations[index]
-    closes = np.asarray(
-        [item.adjusted_close for item in observations], dtype=float
-    )
     recent_returns = np.asarray(
         [item.daily_return for item in observations[index - 20 : index + 1]],
         dtype=float,
@@ -210,13 +211,16 @@ async def build_training_features(
     targets: list[float] = []
     for symbol in universe:
         observations = grouped[symbol]
+        closes = np.asarray(
+            [item.adjusted_close for item in observations], dtype=float
+        )
         stop = len(observations) - forward_days
         for index in range(MAX_TRAILING_WINDOW, stop, stride):
             target_index = index + forward_days
             symbols.append(symbol)
             feature_dates.append(observations[index].trade_date)
             target_dates.append(observations[target_index].trade_date)
-            values.append(_feature_vector(observations, index))
+            values.append(_feature_vector(observations, closes, index))
             targets.append(
                 observations[target_index].adjusted_close
                 / observations[index].adjusted_close
@@ -251,8 +255,11 @@ async def build_inference_features(
         if len(observations) <= MAX_TRAILING_WINDOW:
             raise ValueError(f"insufficient feature history for {symbol}")
         index = len(observations) - 1
+        closes = np.asarray(
+            [item.adjusted_close for item in observations], dtype=float
+        )
         feature_dates.append(observations[index].trade_date)
-        values.append(_feature_vector(observations, index))
+        values.append(_feature_vector(observations, closes, index))
     dataset = FeatureDataset(
         universe,
         tuple(feature_dates),

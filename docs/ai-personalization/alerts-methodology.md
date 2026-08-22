@@ -28,4 +28,5 @@ An unacknowledged portfolio condition is persisted once. Rechecking the same con
 
 - Isolation Forest identifies statistical unusualness, not fraud, news events, or guaranteed downside.
 - The contamination rate and profile thresholds are documented policy assumptions rather than labels fitted from investor outcomes.
-- Alerts are evaluated when the application invokes the checker; a production deployment would normally schedule checks through a background worker.
+- Optimize and scenario responses enqueue alert evaluation as FastAPI background work in a separate database session. This removes alert latency from the response, but a multi-instance production deployment should replace in-process background tasks with a durable worker and retry queue.
+- Per-stock Isolation Forests are trained for each check rather than shared through a potentially stale in-memory cache. Feature construction was optimized during finalization, reducing a live six-holding check from a profiled 19.201 seconds to 7.416 seconds; this remaining work is acceptable only because it is off the response path.

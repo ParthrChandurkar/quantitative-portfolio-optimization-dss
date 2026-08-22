@@ -58,7 +58,7 @@ async def test_successful_optimize_runs_alert_check_hook(
     client, auth_headers, seeded_market, monkeypatch
 ) -> None:
     check = AsyncMock(return_value=[])
-    monkeypatch.setattr("app.services.optimization_service.check_alerts", check)
+    monkeypatch.setattr("app.api.v1.optimization.check_alerts_in_background", check)
     portfolio = await client.post(
         "/api/v1/portfolios", json={"name": "Hook Portfolio"}, headers=auth_headers
     )
@@ -84,7 +84,7 @@ async def test_successful_scenario_runs_alert_check_hook(
     client, auth_headers, optimized, monkeypatch
 ) -> None:
     check = AsyncMock(return_value=[])
-    monkeypatch.setattr("app.services.scenario_service.check_alerts", check)
+    monkeypatch.setattr("app.api.v1.scenarios.check_alerts_in_background", check)
     response = await client.post(
         f"/api/v1/portfolios/{optimized['portfolio_id']}/scenarios",
         headers=auth_headers,

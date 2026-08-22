@@ -8,7 +8,7 @@ OptiVest is an explainable investment-planning and constrained Nifty-50 portfoli
 
 ## Project Scope: OR Foundation + AI Personalization Layer
 
-The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a leakage-safe gradient-boosting return forecast as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a transparent rubric-trained risk classifier that recommends visible, editable optimization defaults after onboarding. AI Phase 3 adds an offline intent classifier that routes portfolio questions to deterministic answers grounded in stored system results. The classifiers learn synthetic labels—not observed investor outcomes or conversations—and broader behavioral personalization remains future work.
+The Operations Research foundation and the planned AI personalization layer are now complete. The OR core provides continuous and mixed-integer optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. On top of it, four production ML models provide a selectable leakage-safe return forecast, rubric-transparent risk classification, offline intent routing, and held-stock anomaly detection. Three user-facing experiences expose personalized onboarding, grounded portfolio Q&A, and profile-aware alerts. The historical-mean estimator remains the default, every recommended constraint stays editable, and synthetic questionnaire/language labels are reported honestly rather than presented as observed investor outcomes. See the [AI personalization chapter](docs/final-report/09-ai-personalization-layer.md).
 
 ![OptiVest analytics](docs/final-report/screenshots/05-analytics-out-of-sample.png)
 
@@ -103,7 +103,7 @@ npm test
 npm run test:coverage
 ```
 
-Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI Phase 4 run against that database produced 219 passed and 0 skipped backend tests with 90% combined coverage; the focused alerts suite measured 91.00%. The frontend produced 47/47 passing tests with 83% statement and 96% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
+Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI-finalization run produced 225 passed and 3 environment-gated skips by default with 90.05% combined coverage; the three real-PostgreSQL tests then passed separately, giving 228/228 behavioral checks when the database is enabled. The frontend produced 47/47 passing tests with 83.00% statement and 96.00% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
 
 ## Final report and conversion
 

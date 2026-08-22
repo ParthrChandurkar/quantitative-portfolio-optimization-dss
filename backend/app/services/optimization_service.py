@@ -9,7 +9,6 @@ from decimal import Decimal
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.alerts.service import check_alerts
 from app.analytics.risk_metrics import sharpe_ratio
 from app.core.config import Settings
 from app.core.errors import APIError
@@ -271,7 +270,6 @@ async def optimize_portfolio(
     run.status = "solved"
     await session.commit()
     await session.refresh(snapshot)
-    await check_alerts(session, user.id, portfolio_id)
     return {
         "run": _run_payload(run, result.message),
         "snapshot": {**snapshot_payload(snapshot), "holdings": holdings},

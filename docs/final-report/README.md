@@ -2,7 +2,7 @@
 
 **Product name:** OptiVest
 
-This directory contains the submission-ready Markdown chapters and live-system evidence. The implemented evidence documents the completed Operations Research foundation, leakage-safe ML return estimation, and transparent rubric-trained risk personalization; broader behavior-trained personalization is future work and is not represented as complete.
+This directory contains the submission-ready Markdown chapters and live-system evidence. Both the Operations Research foundation and the scoped AI personalization layer are complete. The report distinguishes real-market learning from synthetic rubric/intent learning and records negative as well as positive evaluation results without overstating suitability or predictive performance.
 
 1. [Introduction](01-introduction.md)
 2. [System Design](02-system-design.md)
@@ -12,6 +12,7 @@ This directory contains the submission-ready Markdown chapters and live-system e
 6. [Results and Testing](06-results-and-testing.md)
 7. [Methodology Integrity](07-methodology-integrity.md)
 8. [Conclusion and Future Work](08-conclusion-and-future-work.md)
+9. [AI Personalization Layer](09-ai-personalization-layer.md)
 
 The source methodology audit is [one directory above](../methodology-notes.md). The repository [README](../../README.md) documents setup, ETL, testing, coverage and Pandoc PDF/DOCX assembly.
 

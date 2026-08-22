@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import logging
 import uuid
 from datetime import timedelta
 
 from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from app.alerts.risk_drift_detector import detect_risk_drift
 from app.alerts.stock_anomaly_detector import detect_stock_anomalies
@@ -23,6 +24,28 @@ from app.db.models import (
     StockPrice,
     UserRiskProfile,
 )
+
+logger = logging.getLogger(__name__)
+
+
+async def check_alerts_in_background(
+    engine: AsyncEngine,
+    user_id: uuid.UUID,
+    portfolio_id: uuid.UUID,
+) -> None:
+    """Run a post-response alert check in its own database session."""
+
+    factory = async_sessionmaker(engine, expire_on_commit=False, autoflush=False)
+    async with factory() as session:
+        try:
+            await check_alerts(session, user_id, portfolio_id)
+        except Exception:
+            await session.rollback()
+            logger.exception(
+                "Background alert check failed for user=%s portfolio=%s",
+                user_id,
+                portfolio_id,
+            )
 
 
 async def _latest_profile(
