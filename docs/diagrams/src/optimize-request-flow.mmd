@@ -1,48 +1,57 @@
 ---
-title: POST /portfolios/{id}/optimize — Request Flow
+title: One Optimize Request — Fast, Explainable, and Non-Blocking
 ---
-flowchart LR
-    REQ(["React client<br/>constraints + INR budget"]):::external
-    ROUTE["FastAPI route<br/>auth + ownership"]:::sync
-    SERVICE["optimization_service<br/>optimize_portfolio()"]:::sync
-    BUILD["Build inputs<br/>mu · Sigma · constraints"]:::sync
-    SOLVE["engine.solve()<br/>selected OR solver"]:::orcore
-    EXPLAIN["build_explanations()<br/>reasons + constraints"]:::orcore
-    WRITE["Persist full solution<br/>run · snapshot · holdings"]:::data
-    RESPONSE["Solved response<br/>snapshot ID + explanations"]:::positive
-    UI(["React holdings<br/>and Why? panel"]):::external
-    DB[("PostgreSQL 16")]:::data
+flowchart TB
+    subgraph PREPARE["01 · PREPARE THE DECISION MODEL · synchronous"]
+        direction LR
+        REQ(["<b>REQUEST</b><br/>constraints + INR budget"]):::external
+        ROUTE["<b>SECURE ROUTE</b><br/>authentication + ownership"]:::sync
+        SERVICE["<b>ORCHESTRATE</b><br/>optimization_service"]:::sync
+        READ[("<b>POSTGRESQL READ</b><br/>portfolio + market history")]:::data
+        BUILD["<b>BUILD INPUTS</b><br/>mu · Sigma · constraints"]:::sync
 
-    REQ --> ROUTE --> SERVICE --> BUILD
-    BUILD --> SOLVE --> EXPLAIN --> WRITE
-    WRITE --> RESPONSE --> UI
-    BUILD <-->|market + portfolio reads| DB
-    WRITE -->|atomic commit| DB
-
-    ALERT["FastAPI BackgroundTask<br/>check_alerts_in_background()"]:::background
-    DETECT["Risk drift + held-stock<br/>anomaly checks"]:::background
-    ALERTDB["Persist deduplicated alerts<br/>GET /me/alerts"]:::data
-
-    RESPONSE -. "after response" .-> ALERT
-    ALERT -.-> DETECT
-    DETECT -.-> DB
-    DETECT -.-> ALERTDB
-    ALERTDB -.-> DB
-
-    subgraph KEY["Legend"]
-        direction TB
-        KSYNC["Synchronous request path"]:::sync
-        KOR["OR / explainability"]:::orcore
-        KBG["Post-response background path"]:::background
-        KDATA["Persistence"]:::data
+        REQ --> ROUTE --> SERVICE --> READ --> BUILD
     end
 
-    DB ~~~ KSYNC
+    subgraph DECIDE["02 · SOLVE, EXPLAIN, AND COMMIT · synchronous"]
+        direction LR
+        SOLVE["<b>SOLVE</b><br/>selected OR engine"]:::orcore
+        EXPLAIN["<b>EXPLAIN</b><br/>reasons + binding constraints"]:::orcore
+        WRITE[("<b>ATOMIC COMMIT</b><br/>run · snapshot · holdings")]:::data
+        RESPONSE["<b>RETURN RESULT</b><br/>snapshot ID + explanations"]:::positive
+        UI(["<b>DECISION READY</b><br/>holdings + Why? panel"]):::outcome
+
+        SOLVE --> EXPLAIN --> WRITE --> RESPONSE --> UI
+    end
+
+    subgraph MONITOR["03 · POST-RESPONSE AI MONITORING · never blocks the HTTP result"]
+        direction LR
+        ALERT["<b>BACKGROUND TASK</b><br/>check_alerts_in_background()"]:::background
+        DETECT["<b>AI MONITORING</b><br/>risk drift + stock anomalies"]:::background
+        ALERTDB[("<b>ALERT INBOX</b><br/>deduplicated · GET /me/alerts")]:::data
+
+        ALERT -.-> DETECT -.-> ALERTDB
+    end
+
+    PREPARE -->|model-ready inputs| DECIDE
+    DECIDE -. "response already returned" .-> MONITOR
+
+    subgraph KEY["VISUAL KEY"]
+        direction LR
+        KSYNC["USER WAITS"]:::sync
+        KOR["OR + EXPLANATION"]:::orcore
+        KBG["POST-RESPONSE"]:::background
+        KDATA["PERSISTED"]:::data
+    end
 
     classDef sync fill:#FFFFFF,color:#0B0E13,stroke:#64748B,stroke-width:2px;
-    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2px;
-    classDef background fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2px,stroke-dasharray:6 4;
-    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2px;
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2.5px;
+    classDef background fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2.5px,stroke-dasharray:6 4;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2.5px;
     classDef positive fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:3px;
+    classDef outcome fill:#131722,color:#E7E9EE,stroke:#22C55E,stroke-width:3px;
     classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
+    style PREPARE fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px
+    style DECIDE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2px
+    style MONITOR fill:#FFFAF0,stroke:#F59E0B,stroke-width:2px,stroke-dasharray:7 5
     style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px

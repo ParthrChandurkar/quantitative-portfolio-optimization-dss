@@ -1,49 +1,49 @@
 ---
-title: OptiVest AI / ML Pipeline Connected to the OR Core
+title: OptiVest Intelligence Pipeline — AI Enhances, OR Decides
 ---
 flowchart TB
-    DB[("Real PostgreSQL market data<br/>prices · technicals · fundamentals")]:::data
-    ANSWERS["Six-answer risk questionnaire"]:::external
-    QUESTION["Investor portfolio question"]:::external
+    DB[("<b>REAL MARKET DATA</b><br/>prices · technicals · fundamentals")]:::data
+    ANSWERS["<b>INVESTOR PROFILE</b><br/>six-answer questionnaire"]:::external
+    QUESTION["<b>PORTFOLIO QUESTION</b><br/>natural-language input"]:::external
 
-    subgraph AIMODELS["AI Layer — Models and Personalization"]
+    subgraph AIMODELS["01 · AI MODELS AND PERSONALIZATION"]
         direction LR
-        FEATURES["Shared feature engineering<br/>ml/features.py · 12 market features"]:::ai
-        FORECAST["Return forecaster<br/>GradientBoostingRegressor"]:::ai
-        RISK["Risk classifier<br/>multinomial Logistic Regression"]:::ai
-        INTENT["Intent classifier<br/>TF-IDF + Logistic Regression"]:::ai
-        ANOMALY["Anomaly detector<br/>per-stock Isolation Forest"]:::ai
+        FEATURES["<b>SHARED FEATURES</b><br/>ml/features.py · 12 market signals"]:::ai
+        FORECAST["<b>RETURN FORECASTER</b><br/>GradientBoostingRegressor"]:::ai
+        RISK["<b>RISK CLASSIFIER</b><br/>multinomial Logistic Regression"]:::ai
+        INTENT["<b>INTENT CLASSIFIER</b><br/>TF-IDF + Logistic Regression"]:::ai
+        ANOMALY["<b>ANOMALY DETECTOR</b><br/>per-stock Isolation Forest"]:::ai
     end
 
-    subgraph ORCORE["Operations Research Core"]
+    subgraph ORCORE["02 · OPERATIONS RESEARCH CORE · AUTHORITATIVE"]
         direction LR
-        SCENARIOS["Scenario simulator<br/>shock transform"]:::orcore
-        OPT["Optimizer<br/>historical mean or optional ML mu"]:::orcore
-        EXPLAIN["Explainability<br/>reasons + constraints"]:::orcore
-        ANALYTICS["Analytics<br/>OOS backtest + risk + frontier"]:::orcore
+        SCENARIOS["<b>SCENARIO SIMULATOR</b><br/>shock transform"]:::orcore
+        OPT["<b>OPTIMIZER</b><br/>historical mean or optional ML mu"]:::orcore
+        EXPLAIN["<b>EXPLAINABILITY</b><br/>reasons + constraints"]:::orcore
+        ANALYTICS["<b>VALIDATED ANALYTICS</b><br/>OOS backtest + risk + frontier"]:::orcore
 
         SCENARIOS -->|re-solve| OPT
         OPT --> EXPLAIN
         OPT --> ANALYTICS
     end
 
-    SNAPSHOT[("Persisted OR outputs<br/>snapshot · explanations · analytics")]:::data
+    SNAPSHOT[("<b>AUDITABLE OR OUTPUTS</b><br/>snapshot · explanations · analytics")]:::data
 
-    subgraph AIEXPERIENCES["AI Layer — Grounded User Experiences"]
+    subgraph AIEXPERIENCES["03 · GROUNDED AI EXPERIENCES"]
         direction LR
-        ASSISTANT["Grounded answer composer<br/>deterministic templates only"]:::ai
-        ALERTS["Personalized alerts<br/>deduplicated + numerically grounded"]:::ai
+        ASSISTANT["<b>GROUNDED ANSWERS</b><br/>deterministic templates only"]:::ai
+        ALERTS["<b>PERSONALIZED ALERTS</b><br/>deduplicated + numerically grounded"]:::ai
     end
 
-    UI["React UI<br/>defaults · answers · alerts"]:::frontend
+    UI["<b>PERSONALIZED DECISION SUPPORT</b><br/>defaults · answers · alerts"]:::frontend
 
     DB --> FEATURES
     FEATURES --> FORECAST
     FEATURES --> ANOMALY
     ANSWERS --> RISK
     QUESTION --> INTENT
-    FORECAST -->|optional expected-return vector| OPT
-    RISK -->|editable stock, sector, risk defaults| OPT
+    FORECAST -->|optional ML mu| OPT
+    RISK -->|editable OR defaults| OPT
     INTENT -->|shock intent| SCENARIOS
     EXPLAIN --> SNAPSHOT
     ANALYTICS --> SNAPSHOT
@@ -55,12 +55,12 @@ flowchart TB
     ASSISTANT --> UI
     ALERTS --> UI
 
-    subgraph KEY["Legend"]
+    subgraph KEY["VISUAL KEY"]
         direction LR
-        KOR["OR Core"]:::orcore
-        KAI["AI / ML Layer"]:::ai
-        KDATA["Persisted real data"]:::data
-        KUI["User-facing surface"]:::frontend
+        KOR["OR CORE"]:::orcore
+        KAI["AI / ML"]:::ai
+        KDATA["REAL DATA"]:::data
+        KUI["USER OUTCOME"]:::frontend
     end
 
     UI ~~~ KOR

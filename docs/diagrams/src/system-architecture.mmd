@@ -1,36 +1,48 @@
 ---
-title: OptiVest System Architecture
+title: OptiVest — From Investor Intent to Auditable Portfolio Decisions
 ---
 flowchart TB
-    USER([Investor / Faculty Reviewer]):::external
-    UI["React 19 + TypeScript 5.9<br/>Vite · React Query · Typed API Client"]:::frontend
-    API["FastAPI + Pydantic API Layer<br/>JWT authentication · ownership checks"]:::service
-    SVC["Service Orchestration<br/>async sessions · background-task scheduling"]:::service
+    subgraph ACCESS["01 · EXPERIENCE AND SECURE API"]
+        direction TB
+        USER(["<b>INVESTOR / FACULTY REVIEWER</b><br/>configures · compares · validates"]):::external
+        UI["<b>REACT 19 + TYPESCRIPT 5.9</b><br/>Vite · React Query · typed API client"]:::frontend
+        API["<b>FASTAPI + PYDANTIC</b><br/>JWT authentication · ownership checks"]:::service
+        SVC["<b>SERVICE ORCHESTRATION</b><br/>async sessions · background-task scheduling"]:::service
 
-    subgraph ORCORE["Operations Research Core"]
-        direction LR
-        OPT["Optimization<br/>SciPy SLSQP · PuLP/CBC · OR-Tools CP-SAT"]:::orcore
-        EXP["Explainability<br/>constraints · contributions · narratives"]:::orcore
-        SCN["Scenarios<br/>seven shock transforms + re-solve"]:::orcore
-        ANA["Analytics<br/>OOS backtests · frontier · risk metrics"]:::orcore
-        REP["Reports<br/>Jinja2 + WeasyPrint PDFs"]:::orcore
+        USER --> UI
+        UI -->|JWT + JSON| API
+        API --> SVC
     end
 
-    subgraph AILAYER["AI / Personalization Layer"]
-        direction LR
-        ML["ML Forecasting<br/>Gradient Boosting return model"]:::ai
-        PERS["Personalization<br/>Logistic Regression risk profile"]:::ai
-        AST["Assistant<br/>TF-IDF + Logistic Regression intents"]:::ai
-        ALT["Alerts<br/>drift rules + Isolation Forest"]:::ai
+    subgraph INTELLIGENCE["02 · DECISION INTELLIGENCE"]
+        direction TB
+        subgraph AILAYER["AI / PERSONALIZATION LAYER · additive and optional"]
+            direction LR
+            ML["<b>ML FORECASTING</b><br/>Gradient Boosting return model"]:::ai
+            PERS["<b>PERSONALIZATION</b><br/>Logistic Regression risk profile"]:::ai
+            AST["<b>GROUNDED ASSISTANT</b><br/>TF-IDF + Logistic Regression intents"]:::ai
+            ALT["<b>PERSONALIZED ALERTS</b><br/>drift rules + Isolation Forest"]:::ai
+        end
+
+        subgraph ORCORE["OPERATIONS RESEARCH CORE · authoritative decision engine"]
+            direction LR
+            OPT["<b>OPTIMIZATION</b><br/>SciPy SLSQP · PuLP/CBC · OR-Tools CP-SAT"]:::orcore
+            EXP["<b>EXPLAINABILITY</b><br/>constraints · contributions · narratives"]:::orcore
+            SCN["<b>SCENARIO SIMULATOR</b><br/>seven shock transforms + re-solve"]:::orcore
+            ANA["<b>VALIDATED ANALYTICS</b><br/>OOS backtests · frontier · risk metrics"]:::orcore
+            REP["<b>PDF REPORTS</b><br/>Jinja2 + WeasyPrint"]:::orcore
+        end
     end
 
-    DB[("PostgreSQL 16<br/>21 application tables")]:::data
-    CSV["Kaggle Nifty CSVs<br/>287,310 raw rows"]:::external
-    ETL["Idempotent ETL<br/>prices · fundamentals · technicals"]:::data
+    subgraph FOUNDATION["03 · AUDITED DATA FOUNDATION"]
+        direction LR
+        CSV["<b>KAGGLE NIFTY DATA</b><br/>287,310 raw rows"]:::external
+        ETL["<b>IDEMPOTENT ETL</b><br/>prices · fundamentals · technicals"]:::data
+        DB[("<b>POSTGRESQL 16</b><br/>21 application tables")]:::data
 
-    USER --> UI
-    UI -->|JWT + JSON| API
-    API --> SVC
+        CSV --> ETL --> DB
+    end
+
     SVC --> OPT
     SVC --> EXP
     SVC --> SCN
@@ -42,27 +54,29 @@ flowchart TB
     SVC -. post-response .-> ALT
     ML -->|optional mu| OPT
     PERS -->|editable defaults| OPT
-    AST -->|grounded calls| EXP
+    AST -->|grounded evidence| EXP
     AST -->|real re-solves| SCN
     SVC -->|async SQLAlchemy transactions| DB
-    CSV --> ETL --> DB
 
-    subgraph KEY["Legend"]
+    subgraph KEY["VISUAL KEY"]
         direction LR
-        KOR["OR Core"]:::orcore
-        KAI["AI Layer"]:::ai
-        KDATA["Data / persistence"]:::data
-        KEDGE["External / user"]:::external
+        KOR["OR CORE"]:::orcore
+        KAI["AI LAYER"]:::ai
+        KDATA["DATA"]:::data
+        KEDGE["USER / INPUT"]:::external
     end
 
     DB ~~~ KOR
 
-    classDef frontend fill:#131722,color:#E7E9EE,stroke:#3E7BFA,stroke-width:2px;
+    classDef frontend fill:#131722,color:#E7E9EE,stroke:#3E7BFA,stroke-width:3px;
     classDef service fill:#FFFFFF,color:#0B0E13,stroke:#64748B,stroke-width:2px;
-    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2px;
-    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2px;
-    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2px;
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2.5px;
+    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2.5px;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2.5px;
     classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
-    style ORCORE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2px
-    style AILAYER fill:#FFFAF0,stroke:#F59E0B,stroke-width:2px
+    style ACCESS fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px
+    style INTELLIGENCE fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.5px
+    style ORCORE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2.5px
+    style AILAYER fill:#FFFAF0,stroke:#F59E0B,stroke-width:2.5px
+    style FOUNDATION fill:#F3FBF6,stroke:#22C55E,stroke-width:2px
     style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px

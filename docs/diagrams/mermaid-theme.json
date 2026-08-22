@@ -1,6 +1,7 @@
 {
   "theme": "base",
   "look": "classic",
+  "themeCSS": ".node rect,.node polygon,.node path,.node circle,.node ellipse{filter:drop-shadow(0 3px 7px rgba(11,14,19,.12));}.node rect{rx:10px;ry:10px}.cluster rect{rx:16px;ry:16px;filter:drop-shadow(0 4px 12px rgba(11,14,19,.07))}.cluster-label text,.cluster-label span{font-weight:700!important;letter-spacing:.035em}.titleText,.erDiagramTitleText{font-weight:800!important;font-size:22px!important;letter-spacing:.01em}.flowchart-link,.relationshipLine{stroke-width:2px!important}.edgeLabel{font-weight:600!important;background-color:#fff!important;border-radius:6px;padding:2px 6px}.nodeLabel{line-height:1.38}.erDiagram .node rect{filter:drop-shadow(0 3px 7px rgba(11,14,19,.10))}.erDiagram .nodeLabel{font-weight:600}",
   "themeVariables": {
     "background": "#F7F8FA",
     "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
