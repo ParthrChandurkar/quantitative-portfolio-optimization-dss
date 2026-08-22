@@ -29,4 +29,18 @@ describe('ApiClient native fetch integration', () => {
     await expect(client.askAssistant('portfolio-1', 'Why these weights?')).resolves.toEqual(response)
     expect(fetcher).toHaveBeenCalledWith('http://localhost/api/v1/portfolios/portfolio-1/assistant/ask', expect.objectContaining({ method: 'POST', body: JSON.stringify({ question: 'Why these weights?' }) }))
   })
+
+  it('uses the authenticated alert list, acknowledge, and check endpoints', async () => {
+    const fetcher = vi.fn().mockImplementation(() => Promise.resolve(new Response(JSON.stringify({ data: [], error: null }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })))
+    const client = new ApiClient('http://localhost/api/v1', undefined, fetcher)
+    await client.alerts()
+    await client.acknowledgeAlert('alert-1')
+    await client.checkAlerts('portfolio-1')
+    expect(fetcher).toHaveBeenNthCalledWith(1, 'http://localhost/api/v1/me/alerts', expect.anything())
+    expect(fetcher).toHaveBeenNthCalledWith(2, 'http://localhost/api/v1/me/alerts/alert-1/acknowledge', expect.objectContaining({ method: 'PATCH' }))
+    expect(fetcher).toHaveBeenNthCalledWith(3, 'http://localhost/api/v1/portfolios/portfolio-1/alerts/check', expect.objectContaining({ method: 'POST' }))
+  })
 })

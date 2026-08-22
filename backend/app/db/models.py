@@ -78,6 +78,7 @@ class User(UUIDPrimaryKeyMixin, Base):
     refresh_tokens: Mapped[list[RefreshToken]] = relationship(back_populates="user")
     risk_profiles: Mapped[list[UserRiskProfile]] = relationship(back_populates="user")
     assistant_query_logs: Mapped[list[AssistantQueryLog]] = relationship(back_populates="user")
+    alerts: Mapped[list[Alert]] = relationship(back_populates="user")
 
 
 class RefreshToken(UUIDPrimaryKeyMixin, Base):
@@ -130,6 +131,7 @@ class Stock(UUIDPrimaryKeyMixin, Base):
     technical_indicators: Mapped[list[StockTechnicalIndicator]] = relationship(
         back_populates="stock"
     )
+    alerts: Mapped[list[Alert]] = relationship(back_populates="stock")
 
 
 class StockPrice(UUIDPrimaryKeyMixin, Base):
@@ -231,6 +233,7 @@ class Portfolio(UUIDPrimaryKeyMixin, Base):
     assistant_query_logs: Mapped[list[AssistantQueryLog]] = relationship(
         back_populates="portfolio"
     )
+    alerts: Mapped[list[Alert]] = relationship(back_populates="portfolio")
 
 
 class OptimizationRun(UUIDPrimaryKeyMixin, Base):
@@ -305,6 +308,7 @@ class PortfolioSnapshot(UUIDPrimaryKeyMixin, Base):
     scenarios_as_result: Mapped[list[ScenarioRun]] = relationship(
         back_populates="resulting_snapshot", foreign_keys="ScenarioRun.resulting_snapshot_id"
     )
+    alerts: Mapped[list[Alert]] = relationship(back_populates="snapshot")
 
 
 class PortfolioHolding(UUIDPrimaryKeyMixin, Base):
@@ -494,6 +498,44 @@ class AssistantQueryLog(UUIDPrimaryKeyMixin, Base):
 
     user: Mapped[User] = relationship(back_populates="assistant_query_logs")
     portfolio: Mapped[Portfolio] = relationship(back_populates="assistant_query_logs")
+
+
+class Alert(UUIDPrimaryKeyMixin, Base):
+    """Grounded, user-visible risk drift or held-stock anomaly."""
+
+    __tablename__ = "alerts"
+    __table_args__ = (
+        Index("ix_alerts_user_acknowledged_created_at", "user_id", "acknowledged", "created_at"),
+        Index("ix_alerts_portfolio_created_at", "portfolio_id", "created_at"),
+    )
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    portfolio_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("portfolios.id", ondelete="CASCADE"), nullable=False
+    )
+    snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID, ForeignKey("portfolio_snapshots.id", ondelete="SET NULL")
+    )
+    stock_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID, ForeignKey("stocks.id", ondelete="SET NULL")
+    )
+    alert_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    severity: Mapped[str] = mapped_column(String(16), nullable=False)
+    message: Mapped[str] = mapped_column(Text, nullable=False)
+    grounding: Mapped[dict[str, Any]] = mapped_column(JSON_DOCUMENT, nullable=False)
+    acknowledged: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default="false", nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    user: Mapped[User] = relationship(back_populates="alerts")
+    portfolio: Mapped[Portfolio] = relationship(back_populates="alerts")
+    snapshot: Mapped[PortfolioSnapshot | None] = relationship(back_populates="alerts")
+    stock: Mapped[Stock | None] = relationship(back_populates="alerts")
 
 
 class WalkForwardRun(UUIDPrimaryKeyMixin, Base):

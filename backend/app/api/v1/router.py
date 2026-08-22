@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.v1 import (
+    alerts,
     analytics,
     assistant,
     auth,
@@ -23,6 +24,7 @@ for router in (
     optimization.router,
     scenarios.router,
     analytics.router,
+    alerts.router,
     assistant.router,
     reports.router,
 ):

@@ -19,6 +19,7 @@ The fully implemented foundation is an Operations Research decision-support engi
 - Stable constraint checks, binding-constraint logs, marginal contributions, deterministic explanations, seven re-solved scenario families, historical analytics, and generated PDFs.
 - JWT access/refresh authentication, ownership checks, React Query server state, a structurally enforced out-of-sample split, and rolling walk-forward re-estimation.
 - Offline portfolio Q&A with a seven-intent TF-IDF/logistic-regression router, auditable deterministic answers, and real scenario re-solving for shock questions.
+- Personalized notification alerts for risk/diversification drift and Isolation Forest anomalies in held stocks, with inline grounding and acknowledgment history.
 
 ## Technology stack
 
@@ -102,7 +103,7 @@ npm test
 npm run test:coverage
 ```
 
-Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI Phase 3 run against that database produced 205 passed and 0 skipped backend tests with 90% combined coverage; the focused assistant suite measured 90.29%. The frontend produced 43/43 passing tests with 83% statement and 96% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
+Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI Phase 4 run against that database produced 219 passed and 0 skipped backend tests with 90% combined coverage; the focused alerts suite measured 91.00%. The frontend produced 47/47 passing tests with 83% statement and 96% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
 
 ## Final report and conversion
 
@@ -110,6 +111,7 @@ Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/opt
 - [Methodology integrity notes](docs/methodology-notes.md)
 - [Requirements](docs/phase1-requirements/)
 - [Grounded assistant methodology](docs/ai-personalization/assistant-methodology.md)
+- [Personalized alert methodology](docs/ai-personalization/alerts-methodology.md)
 
 With Pandoc, XeLaTeX, and `mermaid-filter` installed:
 

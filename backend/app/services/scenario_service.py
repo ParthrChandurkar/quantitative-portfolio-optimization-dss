@@ -9,6 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.alerts.service import check_alerts
 from app.core.config import Settings
 from app.db.models import OptimizationRun, ScenarioRun, Stock, StockFundamental, User
 from app.scenarios.service import run_scenario
@@ -73,6 +74,8 @@ async def run_portfolio_scenario(
     session.add(scenario_row)
     await session.commit()
     await session.refresh(scenario_row)
+    if result.simulated_result.is_feasible:
+        await check_alerts(session, user.id, portfolio_id)
     return {
         "scenario_run_id": scenario_row.id,
         "scenario_type": result.scenario_type.value,

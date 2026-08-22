@@ -154,6 +154,19 @@ export type AssistantAnswer = {
   is_fallback: boolean
 }
 
+export type AlertRecord = {
+  id: string
+  portfolio_id: string
+  snapshot_id: string | null
+  stock_id: string | null
+  alert_type: 'RISK_DRIFT' | 'DIVERSIFICATION_DRIFT' | 'STOCK_ANOMALY'
+  severity: 'info' | 'warning' | 'critical'
+  message: string
+  grounding: Record<string, unknown>
+  acknowledged: boolean
+  created_at: string
+}
+
 export type Stock = {
   id: string
   symbol: string
@@ -246,6 +259,9 @@ export interface OptiVestApi {
   reports(): Promise<ReportRecord[]>
   downloadReport(id: string): Promise<Blob>
   askAssistant(portfolioId: string, question: string): Promise<AssistantAnswer>
+  alerts(): Promise<AlertRecord[]>
+  acknowledgeAlert(alertId: string): Promise<AlertRecord>
+  checkAlerts(portfolioId: string): Promise<AlertRecord[]>
 }
 
 export class ApiClient implements OptiVestApi {
@@ -353,6 +369,11 @@ export class ApiClient implements OptiVestApi {
   reports = () => this.request<ReportRecord[]>('/reports')
   askAssistant = (portfolioId: string, question: string) =>
     this.request<AssistantAnswer>(`/portfolios/${portfolioId}/assistant/ask`, { method: 'POST', body: JSON.stringify({ question }) })
+  alerts = () => this.request<AlertRecord[]>('/me/alerts')
+  acknowledgeAlert = (alertId: string) =>
+    this.request<AlertRecord>(`/me/alerts/${alertId}/acknowledge`, { method: 'PATCH' })
+  checkAlerts = (portfolioId: string) =>
+    this.request<AlertRecord[]>(`/portfolios/${portfolioId}/alerts/check`, { method: 'POST' })
 
   async downloadReport(id: string): Promise<Blob> {
     const tokens = this.tokenStore.get()
