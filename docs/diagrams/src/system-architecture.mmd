@@ -1,82 +1,52 @@
 ---
-title: OptiVest — From Investor Intent to Auditable Portfolio Decisions
+title: OptiVest Platform Architecture — Data to Personalized Decisions
 ---
-flowchart TB
-    subgraph ACCESS["01 · EXPERIENCE AND SECURE API"]
+flowchart LR
+    subgraph INGEST["01 · INGEST"]
         direction TB
-        USER(["<b>INVESTOR / FACULTY REVIEWER</b><br/>configures · compares · validates"]):::external
-        UI["<b>REACT 19 + TYPESCRIPT 5.9</b><br/>Vite · React Query · typed API client"]:::frontend
-        API["<b>FASTAPI + PYDANTIC</b><br/>JWT authentication · ownership checks"]:::service
-        SVC["<b>SERVICE ORCHESTRATION</b><br/>async sessions · background-task scheduling"]:::service
-
-        USER --> UI
-        UI -->|JWT + JSON| API
-        API --> SVC
+        CSV["<b>NIFTY-50 DATASET</b><br/>287,310 real market rows<br/>OHLCV · fundamentals · indicators"]:::external
+        ETL["<b>IDEMPOTENT ETL</b><br/>column reconciliation<br/>daily returns · natural-key upserts"]:::ingest
+        CSV --> ETL
     end
 
-    subgraph INTELLIGENCE["02 · DECISION INTELLIGENCE"]
+    subgraph STORE["02 · GOVERN AND STORE"]
         direction TB
-        subgraph AILAYER["AI / PERSONALIZATION LAYER · additive and optional"]
-            direction LR
-            ML["<b>ML FORECASTING</b><br/>Gradient Boosting return model"]:::ai
-            PERS["<b>PERSONALIZATION</b><br/>Logistic Regression risk profile"]:::ai
-            AST["<b>GROUNDED ASSISTANT</b><br/>TF-IDF + Logistic Regression intents"]:::ai
-            ALT["<b>PERSONALIZED ALERTS</b><br/>drift rules + Isolation Forest"]:::ai
-        end
-
-        subgraph ORCORE["OPERATIONS RESEARCH CORE · authoritative decision engine"]
-            direction LR
-            OPT["<b>OPTIMIZATION</b><br/>SciPy SLSQP · PuLP/CBC · OR-Tools CP-SAT"]:::orcore
-            EXP["<b>EXPLAINABILITY</b><br/>constraints · contributions · narratives"]:::orcore
-            SCN["<b>SCENARIO SIMULATOR</b><br/>seven shock transforms + re-solve"]:::orcore
-            ANA["<b>VALIDATED ANALYTICS</b><br/>OOS backtests · frontier · risk metrics"]:::orcore
-            REP["<b>PDF REPORTS</b><br/>Jinja2 + WeasyPrint"]:::orcore
-        end
+        DB["<b>POSTGRESQL 16 · GOVERNED PLATFORM</b><br/>21 application tables · seven migrations<br/><br/><b>MARKET</b> · prices · fundamentals · indicators<br/><b>DECISIONS</b> · runs · snapshots · holdings<br/><b>AUDIT + AI</b> · explanations · models · alerts<br/><br/>UUID keys · indexed dates · reproducible history"]:::data
     end
 
-    subgraph FOUNDATION["03 · AUDITED DATA FOUNDATION"]
-        direction LR
-        CSV["<b>KAGGLE NIFTY DATA</b><br/>287,310 raw rows"]:::external
-        ETL["<b>IDEMPOTENT ETL</b><br/>prices · fundamentals · technicals"]:::data
-        DB[("<b>POSTGRESQL 16</b><br/>21 application tables")]:::data
+    subgraph INTELLIGENCE["03 · ANALYZE AND OPTIMIZE"]
+        direction TB
+        OR["<b>OPERATIONS RESEARCH CORE</b><br/><br/>Mean-variance QP · MAD MILP<br/>SciPy SLSQP · PuLP/CBC · OR-Tools<br/>Constraints · scenario re-solves<br/>Explainability · OOS analytics"]:::orcore
+        AI["<b>AI / PERSONALIZATION LAYER</b><br/><br/>Gradient Boosting return forecast<br/>Logistic Regression risk profile<br/>Grounded intent classifier<br/>Isolation Forest anomaly alerts"]:::ai
 
-        CSV --> ETL --> DB
+        AI -->|optional mu + editable defaults| OR
     end
 
-    SVC --> OPT
-    SVC --> EXP
-    SVC --> SCN
-    SVC --> ANA
-    SVC --> REP
-    SVC --> ML
-    SVC --> PERS
-    SVC --> AST
-    SVC -. post-response .-> ALT
-    ML -->|optional mu| OPT
-    PERS -->|editable defaults| OPT
-    AST -->|grounded evidence| EXP
-    AST -->|real re-solves| SCN
-    SVC -->|async SQLAlchemy transactions| DB
+    subgraph DELIVER["04 · DELIVER"]
+        direction TB
+        API["<b>FASTAPI + PYDANTIC</b><br/>JWT · ownership checks<br/>typed JSON contracts"]:::api
+        UI["<b>REACT 19 + TYPESCRIPT</b><br/>React Query · live server state<br/>responsive OptiVest workspace"]:::frontend
+        OUT["<b>PERSONALIZED DECISION SUPPORT</b><br/>optimized holdings · Why? narratives<br/>scenarios · analytics · PDFs · alerts"]:::outcome
 
-    subgraph KEY["VISUAL KEY"]
-        direction LR
-        KOR["OR CORE"]:::orcore
-        KAI["AI LAYER"]:::ai
-        KDATA["DATA"]:::data
-        KEDGE["USER / INPUT"]:::external
+        API --> UI --> OUT
     end
 
-    DB ~~~ KOR
+    ETL -->|validated rows| DB
+    DB -->|historical inputs| OR
+    DB -->|features + profiles| AI
+    OR -->|feasible portfolio + evidence| API
+    AI -->|grounded personalization| API
 
+    classDef external fill:#FFFFFF,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
+    classDef ingest fill:#EEF4FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2.5px;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:3px;
+    classDef dataCard fill:#F3FBF6,color:#0B0E13,stroke:#22C55E,stroke-width:1.7px;
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:3px;
+    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:3px;
+    classDef api fill:#FFFFFF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2.5px;
     classDef frontend fill:#131722,color:#E7E9EE,stroke:#3E7BFA,stroke-width:3px;
-    classDef service fill:#FFFFFF,color:#0B0E13,stroke:#64748B,stroke-width:2px;
-    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2.5px;
-    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2.5px;
-    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2.5px;
-    classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
-    style ACCESS fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px
-    style INTELLIGENCE fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.5px
-    style ORCORE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2.5px
-    style AILAYER fill:#FFFAF0,stroke:#F59E0B,stroke-width:2.5px
-    style FOUNDATION fill:#F3FBF6,stroke:#22C55E,stroke-width:2px
-    style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px
+    classDef outcome fill:#131722,color:#E7E9EE,stroke:#22C55E,stroke-width:3px;
+    style INGEST fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px
+    style STORE fill:#F3FBF6,stroke:#22C55E,stroke-width:2px
+    style INTELLIGENCE fill:#F8FAFF,stroke:#3E7BFA,stroke-width:2px
+    style DELIVER fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px
