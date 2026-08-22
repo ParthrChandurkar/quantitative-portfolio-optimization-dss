@@ -1,0 +1,2101 @@
+question,intent
+I am asking: am I well diversified,DIVERSIFICATION_QUESTION
+I am asking: book a restaurant,UNKNOWN
+I am asking: describe diversification,DIVERSIFICATION_QUESTION
+I am asking: describe the portfolio construction,ALLOCATION_RATIONALE
+I am asking: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+I am asking: do I hold enough different assets,DIVERSIFICATION_QUESTION
+I am asking: explain my diversification score,DIVERSIFICATION_QUESTION
+I am asking: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+I am asking: explain the overall allocation,ALLOCATION_RATIONALE
+I am asking: explain the overall investment mix,ALLOCATION_RATIONALE
+I am asking: explain the rejection of NTPC,EXPLAIN_STOCK_EXCLUSION
+I am asking: explain the selected mix,ALLOCATION_RATIONALE
+I am asking: explain the selection of NTPC,EXPLAIN_STOCK_INCLUSION
+I am asking: explain why we do not own DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+I am asking: explain why we own DIVISLAB,EXPLAIN_STOCK_INCLUSION
+I am asking: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+I am asking: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+I am asking: give me the portfolio rationale,ALLOCATION_RATIONALE
+I am asking: give me world news,UNKNOWN
+I am asking: help me buy a phone,UNKNOWN
+I am asking: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+I am asking: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+I am asking: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+I am asking: how do I bake bread,UNKNOWN
+I am asking: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+I am asking: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+I am asking: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+I am asking: how spread out are my investments,DIVERSIFICATION_QUESTION
+I am asking: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+I am asking: how would a 25% crash affect me,HYPOTHETICAL_SHOCK
+I am asking: is my allocation concentrated,DIVERSIFICATION_QUESTION
+I am asking: is one sector dominating,DIVERSIFICATION_QUESTION
+I am asking: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+I am asking: justify including HDFCBANK,EXPLAIN_STOCK_INCLUSION
+I am asking: justify leaving out HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+I am asking: play some music,UNKNOWN
+I am asking: reason for excluding INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+I am asking: reason for holding INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+I am asking: reoptimize after a 25% decline,HYPOTHETICAL_SHOCK
+I am asking: run a falls scenario,HYPOTHETICAL_SHOCK
+I am asking: run an inflation shock,HYPOTHETICAL_SHOCK
+I am asking: set an alarm,UNKNOWN
+I am asking: show a real market shock result,HYPOTHETICAL_SHOCK
+I am asking: show movie times,UNKNOWN
+I am asking: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+I am asking: show stock and sector concentration,DIVERSIFICATION_QUESTION
+I am asking: simulate a 20% market falls,HYPOTHETICAL_SHOCK
+I am asking: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+I am asking: stress test a market drops,HYPOTHETICAL_SHOCK
+I am asking: stress the Automobile sector,HYPOTHETICAL_SHOCK
+I am asking: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+I am asking: summarize the optimization decision,ALLOCATION_RATIONALE
+I am asking: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+I am asking: tell me a joke,UNKNOWN
+I am asking: tell me about sector diversification,DIVERSIFICATION_QUESTION
+I am asking: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+I am asking: tell me why TATASTEEL is excluded,EXPLAIN_STOCK_EXCLUSION
+I am asking: tell me why TATASTEEL is included,EXPLAIN_STOCK_INCLUSION
+I am asking: translate this sentence,UNKNOWN
+I am asking: what determined the allocation,ALLOCATION_RATIONALE
+I am asking: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+I am asking: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+I am asking: what drove these weights,ALLOCATION_RATIONALE
+I am asking: what happens during a crash,HYPOTHETICAL_SHOCK
+I am asking: what if inflation rises 5%,HYPOTHETICAL_SHOCK
+I am asking: what if interest rates rise 20%,HYPOTHETICAL_SHOCK
+I am asking: what if the Financial Services sector crashes,HYPOTHETICAL_SHOCK
+I am asking: what if the market crashes,HYPOTHETICAL_SHOCK
+I am asking: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+I am asking: what is my volatility,PORTFOLIO_RISK_SUMMARY
+I am asking: what is quantum physics,UNKNOWN
+I am asking: what is the capital of france,UNKNOWN
+I am asking: what is the concentration level,DIVERSIFICATION_QUESTION
+I am asking: what is the exclusion rationale for ITC,EXPLAIN_STOCK_EXCLUSION
+I am asking: what is the inclusion rationale for ITC,EXPLAIN_STOCK_INCLUSION
+I am asking: what is the logic behind the allocation,ALLOCATION_RATIONALE
+I am asking: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+I am asking: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+I am asking: what is the weather today,UNKNOWN
+I am asking: what is your favorite color,UNKNOWN
+I am asking: what kept LTIM out,EXPLAIN_STOCK_EXCLUSION
+I am asking: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+I am asking: what made LTIM get selected,EXPLAIN_STOCK_INCLUSION
+I am asking: what prevented a RELIANCE position,EXPLAIN_STOCK_EXCLUSION
+I am asking: what supports the RELIANCE position,EXPLAIN_STOCK_INCLUSION
+I am asking: who won the football match,UNKNOWN
+I am asking: why are the weights like this,ALLOCATION_RATIONALE
+I am asking: why did I get these holdings,ALLOCATION_RATIONALE
+I am asking: why did the optimizer choose TCS,EXPLAIN_STOCK_INCLUSION
+I am asking: why did the optimizer reject TCS,EXPLAIN_STOCK_EXCLUSION
+I am asking: why did you exclude SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+I am asking: why did you include SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+I am asking: why does my allocation contain MARUTI,EXPLAIN_STOCK_INCLUSION
+I am asking: why does my allocation omit MARUTI,EXPLAIN_STOCK_EXCLUSION
+I am asking: why is BHARTIARTL missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+I am asking: why is BHARTIARTL one of my holdings,EXPLAIN_STOCK_INCLUSION
+I am asking: why is EICHERMOT in my portfolio,EXPLAIN_STOCK_INCLUSION
+I am asking: why is EICHERMOT not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+I am asking: why is money allocated to INFY,EXPLAIN_STOCK_INCLUSION
+I am asking: why is no money allocated to INFY,EXPLAIN_STOCK_EXCLUSION
+I am asking: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+I am asking: why this combination of stocks,ALLOCATION_RATIONALE
+I am asking: why was ASIANPAINT bought,EXPLAIN_STOCK_INCLUSION
+I am asking: why was ASIANPAINT not selected,EXPLAIN_STOCK_EXCLUSION
+I am asking: write an email for me,UNKNOWN
+I want to know: am I well diversified,DIVERSIFICATION_QUESTION
+I want to know: book a restaurant,UNKNOWN
+I want to know: describe diversification,DIVERSIFICATION_QUESTION
+I want to know: describe the portfolio construction,ALLOCATION_RATIONALE
+I want to know: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+I want to know: do I hold enough different assets,DIVERSIFICATION_QUESTION
+I want to know: explain my diversification score,DIVERSIFICATION_QUESTION
+I want to know: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+I want to know: explain the overall allocation,ALLOCATION_RATIONALE
+I want to know: explain the overall investment mix,ALLOCATION_RATIONALE
+I want to know: explain the rejection of DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+I want to know: explain the selected mix,ALLOCATION_RATIONALE
+I want to know: explain the selection of DIVISLAB,EXPLAIN_STOCK_INCLUSION
+I want to know: explain why we do not own MARUTI,EXPLAIN_STOCK_EXCLUSION
+I want to know: explain why we own MARUTI,EXPLAIN_STOCK_INCLUSION
+I want to know: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+I want to know: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+I want to know: give me the portfolio rationale,ALLOCATION_RATIONALE
+I want to know: give me world news,UNKNOWN
+I want to know: help me buy a phone,UNKNOWN
+I want to know: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+I want to know: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+I want to know: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+I want to know: how do I bake bread,UNKNOWN
+I want to know: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+I want to know: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+I want to know: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+I want to know: how spread out are my investments,DIVERSIFICATION_QUESTION
+I want to know: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+I want to know: how would a 10% crash affect me,HYPOTHETICAL_SHOCK
+I want to know: is my allocation concentrated,DIVERSIFICATION_QUESTION
+I want to know: is one sector dominating,DIVERSIFICATION_QUESTION
+I want to know: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+I want to know: justify including NTPC,EXPLAIN_STOCK_INCLUSION
+I want to know: justify leaving out NTPC,EXPLAIN_STOCK_EXCLUSION
+I want to know: play some music,UNKNOWN
+I want to know: reason for excluding AXISBANK,EXPLAIN_STOCK_EXCLUSION
+I want to know: reason for holding AXISBANK,EXPLAIN_STOCK_INCLUSION
+I want to know: reoptimize after a 10% decline,HYPOTHETICAL_SHOCK
+I want to know: run a falls scenario,HYPOTHETICAL_SHOCK
+I want to know: run an inflation shock,HYPOTHETICAL_SHOCK
+I want to know: set an alarm,UNKNOWN
+I want to know: show a real market shock result,HYPOTHETICAL_SHOCK
+I want to know: show movie times,UNKNOWN
+I want to know: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+I want to know: show stock and sector concentration,DIVERSIFICATION_QUESTION
+I want to know: simulate a 5% market falls,HYPOTHETICAL_SHOCK
+I want to know: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+I want to know: stress test a market drops,HYPOTHETICAL_SHOCK
+I want to know: stress the IT sector,HYPOTHETICAL_SHOCK
+I want to know: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+I want to know: summarize the optimization decision,ALLOCATION_RATIONALE
+I want to know: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+I want to know: tell me a joke,UNKNOWN
+I want to know: tell me about sector diversification,DIVERSIFICATION_QUESTION
+I want to know: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+I want to know: tell me why HINDALCO is excluded,EXPLAIN_STOCK_EXCLUSION
+I want to know: tell me why HINDALCO is included,EXPLAIN_STOCK_INCLUSION
+I want to know: translate this sentence,UNKNOWN
+I want to know: what determined the allocation,ALLOCATION_RATIONALE
+I want to know: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+I want to know: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+I want to know: what drove these weights,ALLOCATION_RATIONALE
+I want to know: what happens during a crash,HYPOTHETICAL_SHOCK
+I want to know: what if inflation rises 15%,HYPOTHETICAL_SHOCK
+I want to know: what if interest rates rise 5%,HYPOTHETICAL_SHOCK
+I want to know: what if the Pharma sector crashes,HYPOTHETICAL_SHOCK
+I want to know: what if the market crashes,HYPOTHETICAL_SHOCK
+I want to know: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+I want to know: what is my volatility,PORTFOLIO_RISK_SUMMARY
+I want to know: what is quantum physics,UNKNOWN
+I want to know: what is the capital of france,UNKNOWN
+I want to know: what is the concentration level,DIVERSIFICATION_QUESTION
+I want to know: what is the exclusion rationale for ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+I want to know: what is the inclusion rationale for ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+I want to know: what is the logic behind the allocation,ALLOCATION_RATIONALE
+I want to know: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+I want to know: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+I want to know: what is the weather today,UNKNOWN
+I want to know: what is your favorite color,UNKNOWN
+I want to know: what kept M&M out,EXPLAIN_STOCK_EXCLUSION
+I want to know: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+I want to know: what made M&M get selected,EXPLAIN_STOCK_INCLUSION
+I want to know: what prevented a EICHERMOT position,EXPLAIN_STOCK_EXCLUSION
+I want to know: what supports the EICHERMOT position,EXPLAIN_STOCK_INCLUSION
+I want to know: who won the football match,UNKNOWN
+I want to know: why are the weights like this,ALLOCATION_RATIONALE
+I want to know: why did I get these holdings,ALLOCATION_RATIONALE
+I want to know: why did the optimizer choose SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+I want to know: why did the optimizer reject SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+I want to know: why did you exclude BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+I want to know: why did you include BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+I want to know: why does my allocation contain BPCL,EXPLAIN_STOCK_INCLUSION
+I want to know: why does my allocation omit BPCL,EXPLAIN_STOCK_EXCLUSION
+I want to know: why is INDUSINDBK missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+I want to know: why is INDUSINDBK one of my holdings,EXPLAIN_STOCK_INCLUSION
+I want to know: why is ITC in my portfolio,EXPLAIN_STOCK_INCLUSION
+I want to know: why is ITC not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+I want to know: why is money allocated to LTIM,EXPLAIN_STOCK_INCLUSION
+I want to know: why is no money allocated to LTIM,EXPLAIN_STOCK_EXCLUSION
+I want to know: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+I want to know: why this combination of stocks,ALLOCATION_RATIONALE
+I want to know: why was WIPRO bought,EXPLAIN_STOCK_INCLUSION
+I want to know: why was WIPRO not selected,EXPLAIN_STOCK_EXCLUSION
+I want to know: write an email for me,UNKNOWN
+am I well diversified,DIVERSIFICATION_QUESTION
+answer this: am I well diversified,DIVERSIFICATION_QUESTION
+answer this: book a restaurant,UNKNOWN
+answer this: describe diversification,DIVERSIFICATION_QUESTION
+answer this: describe the portfolio construction,ALLOCATION_RATIONALE
+answer this: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+answer this: do I hold enough different assets,DIVERSIFICATION_QUESTION
+answer this: explain my diversification score,DIVERSIFICATION_QUESTION
+answer this: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+answer this: explain the overall allocation,ALLOCATION_RATIONALE
+answer this: explain the overall investment mix,ALLOCATION_RATIONALE
+answer this: explain the rejection of TCS,EXPLAIN_STOCK_EXCLUSION
+answer this: explain the selected mix,ALLOCATION_RATIONALE
+answer this: explain the selection of TCS,EXPLAIN_STOCK_INCLUSION
+answer this: explain why we do not own SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+answer this: explain why we own SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+answer this: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+answer this: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+answer this: give me the portfolio rationale,ALLOCATION_RATIONALE
+answer this: give me world news,UNKNOWN
+answer this: help me buy a phone,UNKNOWN
+answer this: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+answer this: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+answer this: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+answer this: how do I bake bread,UNKNOWN
+answer this: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+answer this: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+answer this: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+answer this: how spread out are my investments,DIVERSIFICATION_QUESTION
+answer this: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+answer this: how would a 10% crash affect me,HYPOTHETICAL_SHOCK
+answer this: is my allocation concentrated,DIVERSIFICATION_QUESTION
+answer this: is one sector dominating,DIVERSIFICATION_QUESTION
+answer this: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+answer this: justify including AXISBANK,EXPLAIN_STOCK_INCLUSION
+answer this: justify leaving out AXISBANK,EXPLAIN_STOCK_EXCLUSION
+answer this: play some music,UNKNOWN
+answer this: reason for excluding ITC,EXPLAIN_STOCK_EXCLUSION
+answer this: reason for holding ITC,EXPLAIN_STOCK_INCLUSION
+answer this: reoptimize after a 10% decline,HYPOTHETICAL_SHOCK
+answer this: run a crashes scenario,HYPOTHETICAL_SHOCK
+answer this: run an inflation shock,HYPOTHETICAL_SHOCK
+answer this: set an alarm,UNKNOWN
+answer this: show a real market shock result,HYPOTHETICAL_SHOCK
+answer this: show movie times,UNKNOWN
+answer this: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+answer this: show stock and sector concentration,DIVERSIFICATION_QUESTION
+answer this: simulate a 5% market crashes,HYPOTHETICAL_SHOCK
+answer this: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+answer this: stress test a market declines,HYPOTHETICAL_SHOCK
+answer this: stress the IT sector,HYPOTHETICAL_SHOCK
+answer this: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+answer this: summarize the optimization decision,ALLOCATION_RATIONALE
+answer this: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+answer this: tell me a joke,UNKNOWN
+answer this: tell me about sector diversification,DIVERSIFICATION_QUESTION
+answer this: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+answer this: tell me why DIVISLAB is excluded,EXPLAIN_STOCK_EXCLUSION
+answer this: tell me why DIVISLAB is included,EXPLAIN_STOCK_INCLUSION
+answer this: translate this sentence,UNKNOWN
+answer this: what determined the allocation,ALLOCATION_RATIONALE
+answer this: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+answer this: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+answer this: what drove these weights,ALLOCATION_RATIONALE
+answer this: what happens during a crash,HYPOTHETICAL_SHOCK
+answer this: what if inflation rises 15%,HYPOTHETICAL_SHOCK
+answer this: what if interest rates rise 5%,HYPOTHETICAL_SHOCK
+answer this: what if the Pharma sector crashes,HYPOTHETICAL_SHOCK
+answer this: what if the market drops,HYPOTHETICAL_SHOCK
+answer this: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+answer this: what is my volatility,PORTFOLIO_RISK_SUMMARY
+answer this: what is quantum physics,UNKNOWN
+answer this: what is the capital of france,UNKNOWN
+answer this: what is the concentration level,DIVERSIFICATION_QUESTION
+answer this: what is the exclusion rationale for HINDALCO,EXPLAIN_STOCK_EXCLUSION
+answer this: what is the inclusion rationale for HINDALCO,EXPLAIN_STOCK_INCLUSION
+answer this: what is the logic behind the allocation,ALLOCATION_RATIONALE
+answer this: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+answer this: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+answer this: what is the weather today,UNKNOWN
+answer this: what is your favorite color,UNKNOWN
+answer this: what kept HDFCBANK out,EXPLAIN_STOCK_EXCLUSION
+answer this: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+answer this: what made HDFCBANK get selected,EXPLAIN_STOCK_INCLUSION
+answer this: what prevented a M&M position,EXPLAIN_STOCK_EXCLUSION
+answer this: what supports the M&M position,EXPLAIN_STOCK_INCLUSION
+answer this: who won the football match,UNKNOWN
+answer this: why are the weights like this,ALLOCATION_RATIONALE
+answer this: why did I get these holdings,ALLOCATION_RATIONALE
+answer this: why did the optimizer choose WIPRO,EXPLAIN_STOCK_INCLUSION
+answer this: why did the optimizer reject WIPRO,EXPLAIN_STOCK_EXCLUSION
+answer this: why did you exclude RELIANCE,EXPLAIN_STOCK_EXCLUSION
+answer this: why did you include RELIANCE,EXPLAIN_STOCK_INCLUSION
+answer this: why does my allocation contain BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+answer this: why does my allocation omit BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+answer this: why is EICHERMOT missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+answer this: why is EICHERMOT one of my holdings,EXPLAIN_STOCK_INCLUSION
+answer this: why is TATASTEEL in my portfolio,EXPLAIN_STOCK_INCLUSION
+answer this: why is TATASTEEL not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+answer this: why is money allocated to BPCL,EXPLAIN_STOCK_INCLUSION
+answer this: why is no money allocated to BPCL,EXPLAIN_STOCK_EXCLUSION
+answer this: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+answer this: why this combination of stocks,ALLOCATION_RATIONALE
+answer this: why was INFY bought,EXPLAIN_STOCK_INCLUSION
+answer this: why was INFY not selected,EXPLAIN_STOCK_EXCLUSION
+answer this: write an email for me,UNKNOWN
+"based on my portfolio, am I well diversified",DIVERSIFICATION_QUESTION
+"based on my portfolio, book a restaurant",UNKNOWN
+"based on my portfolio, describe diversification",DIVERSIFICATION_QUESTION
+"based on my portfolio, describe the portfolio construction",ALLOCATION_RATIONALE
+"based on my portfolio, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"based on my portfolio, explain my diversification score",DIVERSIFICATION_QUESTION
+"based on my portfolio, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, explain the overall allocation",ALLOCATION_RATIONALE
+"based on my portfolio, explain the overall investment mix",ALLOCATION_RATIONALE
+"based on my portfolio, explain the rejection of LTIM",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, explain the selected mix",ALLOCATION_RATIONALE
+"based on my portfolio, explain the selection of LTIM",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, explain why we do not own M&M",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, explain why we own M&M",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"based on my portfolio, give me the portfolio rationale",ALLOCATION_RATIONALE
+"based on my portfolio, give me world news",UNKNOWN
+"based on my portfolio, help me buy a phone",UNKNOWN
+"based on my portfolio, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"based on my portfolio, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"based on my portfolio, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"based on my portfolio, how do I bake bread",UNKNOWN
+"based on my portfolio, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"based on my portfolio, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, how spread out are my investments",DIVERSIFICATION_QUESTION
+"based on my portfolio, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, how would a 5% crash affect me",HYPOTHETICAL_SHOCK
+"based on my portfolio, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"based on my portfolio, is one sector dominating",DIVERSIFICATION_QUESTION
+"based on my portfolio, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, justify including INFY",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, justify leaving out INFY",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, play some music",UNKNOWN
+"based on my portfolio, reason for excluding MARUTI",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, reason for holding MARUTI",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, reoptimize after a 5% decline",HYPOTHETICAL_SHOCK
+"based on my portfolio, run a declines scenario",HYPOTHETICAL_SHOCK
+"based on my portfolio, run an inflation shock",HYPOTHETICAL_SHOCK
+"based on my portfolio, set an alarm",UNKNOWN
+"based on my portfolio, show a real market shock result",HYPOTHETICAL_SHOCK
+"based on my portfolio, show movie times",UNKNOWN
+"based on my portfolio, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"based on my portfolio, simulate a 25% market declines",HYPOTHETICAL_SHOCK
+"based on my portfolio, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"based on my portfolio, stress test a market crashes",HYPOTHETICAL_SHOCK
+"based on my portfolio, stress the Pharma sector",HYPOTHETICAL_SHOCK
+"based on my portfolio, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, summarize the optimization decision",ALLOCATION_RATIONALE
+"based on my portfolio, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"based on my portfolio, tell me a joke",UNKNOWN
+"based on my portfolio, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"based on my portfolio, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, tell me why RELIANCE is excluded",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, tell me why RELIANCE is included",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, translate this sentence",UNKNOWN
+"based on my portfolio, what determined the allocation",ALLOCATION_RATIONALE
+"based on my portfolio, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"based on my portfolio, what drove these weights",ALLOCATION_RATIONALE
+"based on my portfolio, what happens during a crash",HYPOTHETICAL_SHOCK
+"based on my portfolio, what if inflation rises 10%",HYPOTHETICAL_SHOCK
+"based on my portfolio, what if interest rates rise 25%",HYPOTHETICAL_SHOCK
+"based on my portfolio, what if the Automobile sector crashes",HYPOTHETICAL_SHOCK
+"based on my portfolio, what if the market falls",HYPOTHETICAL_SHOCK
+"based on my portfolio, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"based on my portfolio, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, what is quantum physics",UNKNOWN
+"based on my portfolio, what is the capital of france",UNKNOWN
+"based on my portfolio, what is the concentration level",DIVERSIFICATION_QUESTION
+"based on my portfolio, what is the exclusion rationale for BHARTIARTL",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, what is the inclusion rationale for BHARTIARTL",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"based on my portfolio, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, what is the weather today",UNKNOWN
+"based on my portfolio, what is your favorite color",UNKNOWN
+"based on my portfolio, what kept ASIANPAINT out",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"based on my portfolio, what made ASIANPAINT get selected",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, what prevented a TCS position",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, what supports the TCS position",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, who won the football match",UNKNOWN
+"based on my portfolio, why are the weights like this",ALLOCATION_RATIONALE
+"based on my portfolio, why did I get these holdings",ALLOCATION_RATIONALE
+"based on my portfolio, why did the optimizer choose HDFCBANK",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why did the optimizer reject HDFCBANK",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why did you exclude NTPC",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why did you include NTPC",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why does my allocation contain TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why does my allocation omit TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why is DIVISLAB missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why is DIVISLAB one of my holdings",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why is SUNPHARMA in my portfolio",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why is SUNPHARMA not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why is money allocated to ITC",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why is no money allocated to ITC",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"based on my portfolio, why this combination of stocks",ALLOCATION_RATIONALE
+"based on my portfolio, why was INDUSINDBK bought",EXPLAIN_STOCK_INCLUSION
+"based on my portfolio, why was INDUSINDBK not selected",EXPLAIN_STOCK_EXCLUSION
+"based on my portfolio, write an email for me",UNKNOWN
+book a restaurant,UNKNOWN
+can you am I well diversified,DIVERSIFICATION_QUESTION
+can you book a restaurant,UNKNOWN
+can you describe diversification,DIVERSIFICATION_QUESTION
+can you describe the portfolio construction,ALLOCATION_RATIONALE
+can you describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+can you do I hold enough different assets,DIVERSIFICATION_QUESTION
+can you explain my diversification score,DIVERSIFICATION_QUESTION
+can you explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+can you explain the overall allocation,ALLOCATION_RATIONALE
+can you explain the overall investment mix,ALLOCATION_RATIONALE
+can you explain the rejection of ITC,EXPLAIN_STOCK_EXCLUSION
+can you explain the selected mix,ALLOCATION_RATIONALE
+can you explain the selection of ITC,EXPLAIN_STOCK_INCLUSION
+can you explain why we do not own ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+can you explain why we own ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+can you give me a risk summary,PORTFOLIO_RISK_SUMMARY
+can you give me the concentration breakdown,DIVERSIFICATION_QUESTION
+can you give me the portfolio rationale,ALLOCATION_RATIONALE
+can you give me world news,UNKNOWN
+can you help me buy a phone,UNKNOWN
+can you how balanced is the portfolio,DIVERSIFICATION_QUESTION
+can you how did the optimizer allocate my money,ALLOCATION_RATIONALE
+can you how diversified is my portfolio,DIVERSIFICATION_QUESTION
+can you how do I bake bread,UNKNOWN
+can you how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+can you how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+can you how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+can you how spread out are my investments,DIVERSIFICATION_QUESTION
+can you how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+can you how would a 25% crash affect me,HYPOTHETICAL_SHOCK
+can you is my allocation concentrated,DIVERSIFICATION_QUESTION
+can you is one sector dominating,DIVERSIFICATION_QUESTION
+can you is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+can you justify including EICHERMOT,EXPLAIN_STOCK_INCLUSION
+can you justify leaving out EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+can you play some music,UNKNOWN
+can you reason for excluding M&M,EXPLAIN_STOCK_EXCLUSION
+can you reason for holding M&M,EXPLAIN_STOCK_INCLUSION
+can you reoptimize after a 25% decline,HYPOTHETICAL_SHOCK
+can you run a drops scenario,HYPOTHETICAL_SHOCK
+can you run an inflation shock,HYPOTHETICAL_SHOCK
+can you set an alarm,UNKNOWN
+can you show a real market shock result,HYPOTHETICAL_SHOCK
+can you show movie times,UNKNOWN
+can you show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+can you show stock and sector concentration,DIVERSIFICATION_QUESTION
+can you simulate a 20% market drops,HYPOTHETICAL_SHOCK
+can you simulate an interest rate increase,HYPOTHETICAL_SHOCK
+can you stress test a market falls,HYPOTHETICAL_SHOCK
+can you stress the Automobile sector,HYPOTHETICAL_SHOCK
+can you summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+can you summarize the optimization decision,ALLOCATION_RATIONALE
+can you summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+can you tell me a joke,UNKNOWN
+can you tell me about sector diversification,DIVERSIFICATION_QUESTION
+can you tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+can you tell me why AXISBANK is excluded,EXPLAIN_STOCK_EXCLUSION
+can you tell me why AXISBANK is included,EXPLAIN_STOCK_INCLUSION
+can you translate this sentence,UNKNOWN
+can you what determined the allocation,ALLOCATION_RATIONALE
+can you what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+can you what does the diversification metric mean,DIVERSIFICATION_QUESTION
+can you what drove these weights,ALLOCATION_RATIONALE
+can you what happens during a crash,HYPOTHETICAL_SHOCK
+can you what if inflation rises 5%,HYPOTHETICAL_SHOCK
+can you what if interest rates rise 20%,HYPOTHETICAL_SHOCK
+can you what if the Financial Services sector crashes,HYPOTHETICAL_SHOCK
+can you what if the market declines,HYPOTHETICAL_SHOCK
+can you what is my portfolio diversity,DIVERSIFICATION_QUESTION
+can you what is my volatility,PORTFOLIO_RISK_SUMMARY
+can you what is quantum physics,UNKNOWN
+can you what is the capital of france,UNKNOWN
+can you what is the concentration level,DIVERSIFICATION_QUESTION
+can you what is the exclusion rationale for NTPC,EXPLAIN_STOCK_EXCLUSION
+can you what is the inclusion rationale for NTPC,EXPLAIN_STOCK_INCLUSION
+can you what is the logic behind the allocation,ALLOCATION_RATIONALE
+can you what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+can you what is the realized risk,PORTFOLIO_RISK_SUMMARY
+can you what is the weather today,UNKNOWN
+can you what is your favorite color,UNKNOWN
+can you what kept BHARTIARTL out,EXPLAIN_STOCK_EXCLUSION
+can you what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+can you what made BHARTIARTL get selected,EXPLAIN_STOCK_INCLUSION
+can you what prevented a BPCL position,EXPLAIN_STOCK_EXCLUSION
+can you what supports the BPCL position,EXPLAIN_STOCK_INCLUSION
+can you who won the football match,UNKNOWN
+can you why are the weights like this,ALLOCATION_RATIONALE
+can you why did I get these holdings,ALLOCATION_RATIONALE
+can you why did the optimizer choose HINDALCO,EXPLAIN_STOCK_INCLUSION
+can you why did the optimizer reject HINDALCO,EXPLAIN_STOCK_EXCLUSION
+can you why did you exclude INFY,EXPLAIN_STOCK_EXCLUSION
+can you why did you include INFY,EXPLAIN_STOCK_INCLUSION
+can you why does my allocation contain WIPRO,EXPLAIN_STOCK_INCLUSION
+can you why does my allocation omit WIPRO,EXPLAIN_STOCK_EXCLUSION
+can you why is HDFCBANK in my portfolio,EXPLAIN_STOCK_INCLUSION
+can you why is HDFCBANK not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+can you why is LTIM missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+can you why is LTIM one of my holdings,EXPLAIN_STOCK_INCLUSION
+can you why is money allocated to SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+can you why is no money allocated to SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+can you why is the portfolio allocated this way,ALLOCATION_RATIONALE
+can you why this combination of stocks,ALLOCATION_RATIONALE
+can you why was DIVISLAB bought,EXPLAIN_STOCK_INCLUSION
+can you why was DIVISLAB not selected,EXPLAIN_STOCK_EXCLUSION
+can you write an email for me,UNKNOWN
+clearly am I well diversified,DIVERSIFICATION_QUESTION
+clearly book a restaurant,UNKNOWN
+clearly describe diversification,DIVERSIFICATION_QUESTION
+clearly describe the portfolio construction,ALLOCATION_RATIONALE
+clearly describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+clearly do I hold enough different assets,DIVERSIFICATION_QUESTION
+clearly explain my diversification score,DIVERSIFICATION_QUESTION
+clearly explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+clearly explain the overall allocation,ALLOCATION_RATIONALE
+clearly explain the overall investment mix,ALLOCATION_RATIONALE
+clearly explain the rejection of MARUTI,EXPLAIN_STOCK_EXCLUSION
+clearly explain the selected mix,ALLOCATION_RATIONALE
+clearly explain the selection of MARUTI,EXPLAIN_STOCK_INCLUSION
+clearly explain why we do not own BPCL,EXPLAIN_STOCK_EXCLUSION
+clearly explain why we own BPCL,EXPLAIN_STOCK_INCLUSION
+clearly give me a risk summary,PORTFOLIO_RISK_SUMMARY
+clearly give me the concentration breakdown,DIVERSIFICATION_QUESTION
+clearly give me the portfolio rationale,ALLOCATION_RATIONALE
+clearly give me world news,UNKNOWN
+clearly help me buy a phone,UNKNOWN
+clearly how balanced is the portfolio,DIVERSIFICATION_QUESTION
+clearly how did the optimizer allocate my money,ALLOCATION_RATIONALE
+clearly how diversified is my portfolio,DIVERSIFICATION_QUESTION
+clearly how do I bake bread,UNKNOWN
+clearly how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+clearly how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+clearly how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+clearly how spread out are my investments,DIVERSIFICATION_QUESTION
+clearly how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+clearly how would a 20% crash affect me,HYPOTHETICAL_SHOCK
+clearly is my allocation concentrated,DIVERSIFICATION_QUESTION
+clearly is one sector dominating,DIVERSIFICATION_QUESTION
+clearly is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+clearly justify including DIVISLAB,EXPLAIN_STOCK_INCLUSION
+clearly justify leaving out DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+clearly play some music,UNKNOWN
+clearly reason for excluding TCS,EXPLAIN_STOCK_EXCLUSION
+clearly reason for holding TCS,EXPLAIN_STOCK_INCLUSION
+clearly reoptimize after a 20% decline,HYPOTHETICAL_SHOCK
+clearly run a falls scenario,HYPOTHETICAL_SHOCK
+clearly run an inflation shock,HYPOTHETICAL_SHOCK
+clearly set an alarm,UNKNOWN
+clearly show a real market shock result,HYPOTHETICAL_SHOCK
+clearly show movie times,UNKNOWN
+clearly show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+clearly show stock and sector concentration,DIVERSIFICATION_QUESTION
+clearly simulate a 15% market falls,HYPOTHETICAL_SHOCK
+clearly simulate an interest rate increase,HYPOTHETICAL_SHOCK
+clearly stress test a market drops,HYPOTHETICAL_SHOCK
+clearly stress the Financial Services sector,HYPOTHETICAL_SHOCK
+clearly summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+clearly summarize the optimization decision,ALLOCATION_RATIONALE
+clearly summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+clearly tell me a joke,UNKNOWN
+clearly tell me about sector diversification,DIVERSIFICATION_QUESTION
+clearly tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+clearly tell me why INFY is excluded,EXPLAIN_STOCK_EXCLUSION
+clearly tell me why INFY is included,EXPLAIN_STOCK_INCLUSION
+clearly translate this sentence,UNKNOWN
+clearly what determined the allocation,ALLOCATION_RATIONALE
+clearly what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+clearly what does the diversification metric mean,DIVERSIFICATION_QUESTION
+clearly what drove these weights,ALLOCATION_RATIONALE
+clearly what happens during a crash,HYPOTHETICAL_SHOCK
+clearly what if inflation rises 25%,HYPOTHETICAL_SHOCK
+clearly what if interest rates rise 15%,HYPOTHETICAL_SHOCK
+clearly what if the Energy sector crashes,HYPOTHETICAL_SHOCK
+clearly what if the market crashes,HYPOTHETICAL_SHOCK
+clearly what is my portfolio diversity,DIVERSIFICATION_QUESTION
+clearly what is my volatility,PORTFOLIO_RISK_SUMMARY
+clearly what is quantum physics,UNKNOWN
+clearly what is the capital of france,UNKNOWN
+clearly what is the concentration level,DIVERSIFICATION_QUESTION
+clearly what is the exclusion rationale for WIPRO,EXPLAIN_STOCK_EXCLUSION
+clearly what is the inclusion rationale for WIPRO,EXPLAIN_STOCK_INCLUSION
+clearly what is the logic behind the allocation,ALLOCATION_RATIONALE
+clearly what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+clearly what is the realized risk,PORTFOLIO_RISK_SUMMARY
+clearly what is the weather today,UNKNOWN
+clearly what is your favorite color,UNKNOWN
+clearly what kept TATASTEEL out,EXPLAIN_STOCK_EXCLUSION
+clearly what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+clearly what made TATASTEEL get selected,EXPLAIN_STOCK_INCLUSION
+clearly what prevented a ITC position,EXPLAIN_STOCK_EXCLUSION
+clearly what supports the ITC position,EXPLAIN_STOCK_INCLUSION
+clearly who won the football match,UNKNOWN
+clearly why are the weights like this,ALLOCATION_RATIONALE
+clearly why did I get these holdings,ALLOCATION_RATIONALE
+clearly why did the optimizer choose BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+clearly why did the optimizer reject BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+clearly why did you exclude INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+clearly why did you include INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+clearly why does my allocation contain HDFCBANK,EXPLAIN_STOCK_INCLUSION
+clearly why does my allocation omit HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+clearly why is ASIANPAINT in my portfolio,EXPLAIN_STOCK_INCLUSION
+clearly why is ASIANPAINT not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+clearly why is AXISBANK missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+clearly why is AXISBANK one of my holdings,EXPLAIN_STOCK_INCLUSION
+clearly why is money allocated to M&M,EXPLAIN_STOCK_INCLUSION
+clearly why is no money allocated to M&M,EXPLAIN_STOCK_EXCLUSION
+clearly why is the portfolio allocated this way,ALLOCATION_RATIONALE
+clearly why this combination of stocks,ALLOCATION_RATIONALE
+clearly why was RELIANCE bought,EXPLAIN_STOCK_INCLUSION
+clearly why was RELIANCE not selected,EXPLAIN_STOCK_EXCLUSION
+clearly write an email for me,UNKNOWN
+could you am I well diversified,DIVERSIFICATION_QUESTION
+could you book a restaurant,UNKNOWN
+could you describe diversification,DIVERSIFICATION_QUESTION
+could you describe the portfolio construction,ALLOCATION_RATIONALE
+could you describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+could you do I hold enough different assets,DIVERSIFICATION_QUESTION
+could you explain my diversification score,DIVERSIFICATION_QUESTION
+could you explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+could you explain the overall allocation,ALLOCATION_RATIONALE
+could you explain the overall investment mix,ALLOCATION_RATIONALE
+could you explain the rejection of BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+could you explain the selected mix,ALLOCATION_RATIONALE
+could you explain the selection of BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+could you explain why we do not own INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+could you explain why we own INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+could you give me a risk summary,PORTFOLIO_RISK_SUMMARY
+could you give me the concentration breakdown,DIVERSIFICATION_QUESTION
+could you give me the portfolio rationale,ALLOCATION_RATIONALE
+could you give me world news,UNKNOWN
+could you help me buy a phone,UNKNOWN
+could you how balanced is the portfolio,DIVERSIFICATION_QUESTION
+could you how did the optimizer allocate my money,ALLOCATION_RATIONALE
+could you how diversified is my portfolio,DIVERSIFICATION_QUESTION
+could you how do I bake bread,UNKNOWN
+could you how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+could you how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+could you how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+could you how spread out are my investments,DIVERSIFICATION_QUESTION
+could you how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+could you how would a 5% crash affect me,HYPOTHETICAL_SHOCK
+could you is my allocation concentrated,DIVERSIFICATION_QUESTION
+could you is one sector dominating,DIVERSIFICATION_QUESTION
+could you is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+could you justify including SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+could you justify leaving out SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+could you play some music,UNKNOWN
+could you reason for excluding WIPRO,EXPLAIN_STOCK_EXCLUSION
+could you reason for holding WIPRO,EXPLAIN_STOCK_INCLUSION
+could you reoptimize after a 5% decline,HYPOTHETICAL_SHOCK
+could you run a crashes scenario,HYPOTHETICAL_SHOCK
+could you run an inflation shock,HYPOTHETICAL_SHOCK
+could you set an alarm,UNKNOWN
+could you show a real market shock result,HYPOTHETICAL_SHOCK
+could you show movie times,UNKNOWN
+could you show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+could you show stock and sector concentration,DIVERSIFICATION_QUESTION
+could you simulate a 25% market crashes,HYPOTHETICAL_SHOCK
+could you simulate an interest rate increase,HYPOTHETICAL_SHOCK
+could you stress test a market declines,HYPOTHETICAL_SHOCK
+could you stress the Pharma sector,HYPOTHETICAL_SHOCK
+could you summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+could you summarize the optimization decision,ALLOCATION_RATIONALE
+could you summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+could you tell me a joke,UNKNOWN
+could you tell me about sector diversification,DIVERSIFICATION_QUESTION
+could you tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+could you tell me why BPCL is excluded,EXPLAIN_STOCK_EXCLUSION
+could you tell me why BPCL is included,EXPLAIN_STOCK_INCLUSION
+could you translate this sentence,UNKNOWN
+could you what determined the allocation,ALLOCATION_RATIONALE
+could you what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+could you what does the diversification metric mean,DIVERSIFICATION_QUESTION
+could you what drove these weights,ALLOCATION_RATIONALE
+could you what happens during a crash,HYPOTHETICAL_SHOCK
+could you what if inflation rises 10%,HYPOTHETICAL_SHOCK
+could you what if interest rates rise 25%,HYPOTHETICAL_SHOCK
+could you what if the Automobile sector crashes,HYPOTHETICAL_SHOCK
+could you what if the market drops,HYPOTHETICAL_SHOCK
+could you what is my portfolio diversity,DIVERSIFICATION_QUESTION
+could you what is my volatility,PORTFOLIO_RISK_SUMMARY
+could you what is quantum physics,UNKNOWN
+could you what is the capital of france,UNKNOWN
+could you what is the concentration level,DIVERSIFICATION_QUESTION
+could you what is the exclusion rationale for LTIM,EXPLAIN_STOCK_EXCLUSION
+could you what is the inclusion rationale for LTIM,EXPLAIN_STOCK_INCLUSION
+could you what is the logic behind the allocation,ALLOCATION_RATIONALE
+could you what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+could you what is the realized risk,PORTFOLIO_RISK_SUMMARY
+could you what is the weather today,UNKNOWN
+could you what is your favorite color,UNKNOWN
+could you what kept DIVISLAB out,EXPLAIN_STOCK_EXCLUSION
+could you what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+could you what made DIVISLAB get selected,EXPLAIN_STOCK_INCLUSION
+could you what prevented a HINDALCO position,EXPLAIN_STOCK_EXCLUSION
+could you what supports the HINDALCO position,EXPLAIN_STOCK_INCLUSION
+could you who won the football match,UNKNOWN
+could you why are the weights like this,ALLOCATION_RATIONALE
+could you why did I get these holdings,ALLOCATION_RATIONALE
+could you why did the optimizer choose EICHERMOT,EXPLAIN_STOCK_INCLUSION
+could you why did the optimizer reject EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+could you why did you exclude ITC,EXPLAIN_STOCK_EXCLUSION
+could you why did you include ITC,EXPLAIN_STOCK_INCLUSION
+could you why does my allocation contain AXISBANK,EXPLAIN_STOCK_INCLUSION
+could you why does my allocation omit AXISBANK,EXPLAIN_STOCK_EXCLUSION
+could you why is ASIANPAINT missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+could you why is ASIANPAINT one of my holdings,EXPLAIN_STOCK_INCLUSION
+could you why is INFY in my portfolio,EXPLAIN_STOCK_INCLUSION
+could you why is INFY not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+could you why is money allocated to NTPC,EXPLAIN_STOCK_INCLUSION
+could you why is no money allocated to NTPC,EXPLAIN_STOCK_EXCLUSION
+could you why is the portfolio allocated this way,ALLOCATION_RATIONALE
+could you why this combination of stocks,ALLOCATION_RATIONALE
+could you why was M&M bought,EXPLAIN_STOCK_INCLUSION
+could you why was M&M not selected,EXPLAIN_STOCK_EXCLUSION
+could you write an email for me,UNKNOWN
+describe diversification,DIVERSIFICATION_QUESTION
+describe the portfolio construction,ALLOCATION_RATIONALE
+describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+do I hold enough different assets,DIVERSIFICATION_QUESTION
+explain my diversification score,DIVERSIFICATION_QUESTION
+explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+explain the overall allocation,ALLOCATION_RATIONALE
+explain the overall investment mix,ALLOCATION_RATIONALE
+explain the rejection of HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+explain the selected mix,ALLOCATION_RATIONALE
+explain the selection of HDFCBANK,EXPLAIN_STOCK_INCLUSION
+explain why we do not own NTPC,EXPLAIN_STOCK_EXCLUSION
+explain why we own NTPC,EXPLAIN_STOCK_INCLUSION
+"for my report, am I well diversified",DIVERSIFICATION_QUESTION
+"for my report, book a restaurant",UNKNOWN
+"for my report, describe diversification",DIVERSIFICATION_QUESTION
+"for my report, describe the portfolio construction",ALLOCATION_RATIONALE
+"for my report, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"for my report, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"for my report, explain my diversification score",DIVERSIFICATION_QUESTION
+"for my report, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"for my report, explain the overall allocation",ALLOCATION_RATIONALE
+"for my report, explain the overall investment mix",ALLOCATION_RATIONALE
+"for my report, explain the rejection of RELIANCE",EXPLAIN_STOCK_EXCLUSION
+"for my report, explain the selected mix",ALLOCATION_RATIONALE
+"for my report, explain the selection of RELIANCE",EXPLAIN_STOCK_INCLUSION
+"for my report, explain why we do not own EICHERMOT",EXPLAIN_STOCK_EXCLUSION
+"for my report, explain why we own EICHERMOT",EXPLAIN_STOCK_INCLUSION
+"for my report, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"for my report, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"for my report, give me the portfolio rationale",ALLOCATION_RATIONALE
+"for my report, give me world news",UNKNOWN
+"for my report, help me buy a phone",UNKNOWN
+"for my report, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"for my report, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"for my report, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"for my report, how do I bake bread",UNKNOWN
+"for my report, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"for my report, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"for my report, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"for my report, how spread out are my investments",DIVERSIFICATION_QUESTION
+"for my report, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"for my report, how would a 5% crash affect me",HYPOTHETICAL_SHOCK
+"for my report, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"for my report, is one sector dominating",DIVERSIFICATION_QUESTION
+"for my report, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"for my report, justify including WIPRO",EXPLAIN_STOCK_INCLUSION
+"for my report, justify leaving out WIPRO",EXPLAIN_STOCK_EXCLUSION
+"for my report, play some music",UNKNOWN
+"for my report, reason for excluding INFY",EXPLAIN_STOCK_EXCLUSION
+"for my report, reason for holding INFY",EXPLAIN_STOCK_INCLUSION
+"for my report, reoptimize after a 5% decline",HYPOTHETICAL_SHOCK
+"for my report, run a drops scenario",HYPOTHETICAL_SHOCK
+"for my report, run an inflation shock",HYPOTHETICAL_SHOCK
+"for my report, set an alarm",UNKNOWN
+"for my report, show a real market shock result",HYPOTHETICAL_SHOCK
+"for my report, show movie times",UNKNOWN
+"for my report, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"for my report, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"for my report, simulate a 25% market drops",HYPOTHETICAL_SHOCK
+"for my report, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"for my report, stress test a market falls",HYPOTHETICAL_SHOCK
+"for my report, stress the Pharma sector",HYPOTHETICAL_SHOCK
+"for my report, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"for my report, summarize the optimization decision",ALLOCATION_RATIONALE
+"for my report, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"for my report, tell me a joke",UNKNOWN
+"for my report, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"for my report, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"for my report, tell me why BHARTIARTL is excluded",EXPLAIN_STOCK_EXCLUSION
+"for my report, tell me why BHARTIARTL is included",EXPLAIN_STOCK_INCLUSION
+"for my report, translate this sentence",UNKNOWN
+"for my report, what determined the allocation",ALLOCATION_RATIONALE
+"for my report, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"for my report, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"for my report, what drove these weights",ALLOCATION_RATIONALE
+"for my report, what happens during a crash",HYPOTHETICAL_SHOCK
+"for my report, what if inflation rises 10%",HYPOTHETICAL_SHOCK
+"for my report, what if interest rates rise 25%",HYPOTHETICAL_SHOCK
+"for my report, what if the Automobile sector crashes",HYPOTHETICAL_SHOCK
+"for my report, what if the market declines",HYPOTHETICAL_SHOCK
+"for my report, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"for my report, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"for my report, what is quantum physics",UNKNOWN
+"for my report, what is the capital of france",UNKNOWN
+"for my report, what is the concentration level",DIVERSIFICATION_QUESTION
+"for my report, what is the exclusion rationale for BPCL",EXPLAIN_STOCK_EXCLUSION
+"for my report, what is the inclusion rationale for BPCL",EXPLAIN_STOCK_INCLUSION
+"for my report, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"for my report, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"for my report, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"for my report, what is the weather today",UNKNOWN
+"for my report, what is your favorite color",UNKNOWN
+"for my report, what kept TCS out",EXPLAIN_STOCK_EXCLUSION
+"for my report, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"for my report, what made TCS get selected",EXPLAIN_STOCK_INCLUSION
+"for my report, what prevented a DIVISLAB position",EXPLAIN_STOCK_EXCLUSION
+"for my report, what supports the DIVISLAB position",EXPLAIN_STOCK_INCLUSION
+"for my report, who won the football match",UNKNOWN
+"for my report, why are the weights like this",ALLOCATION_RATIONALE
+"for my report, why did I get these holdings",ALLOCATION_RATIONALE
+"for my report, why did the optimizer choose M&M",EXPLAIN_STOCK_INCLUSION
+"for my report, why did the optimizer reject M&M",EXPLAIN_STOCK_EXCLUSION
+"for my report, why did you exclude TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"for my report, why did you include TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"for my report, why does my allocation contain ITC",EXPLAIN_STOCK_INCLUSION
+"for my report, why does my allocation omit ITC",EXPLAIN_STOCK_EXCLUSION
+"for my report, why is HINDALCO missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"for my report, why is HINDALCO one of my holdings",EXPLAIN_STOCK_INCLUSION
+"for my report, why is MARUTI in my portfolio",EXPLAIN_STOCK_INCLUSION
+"for my report, why is MARUTI not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"for my report, why is money allocated to AXISBANK",EXPLAIN_STOCK_INCLUSION
+"for my report, why is no money allocated to AXISBANK",EXPLAIN_STOCK_EXCLUSION
+"for my report, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"for my report, why this combination of stocks",ALLOCATION_RATIONALE
+"for my report, why was HDFCBANK bought",EXPLAIN_STOCK_INCLUSION
+"for my report, why was HDFCBANK not selected",EXPLAIN_STOCK_EXCLUSION
+"for my report, write an email for me",UNKNOWN
+"for review, am I well diversified",DIVERSIFICATION_QUESTION
+"for review, book a restaurant",UNKNOWN
+"for review, describe diversification",DIVERSIFICATION_QUESTION
+"for review, describe the portfolio construction",ALLOCATION_RATIONALE
+"for review, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"for review, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"for review, explain my diversification score",DIVERSIFICATION_QUESTION
+"for review, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"for review, explain the overall allocation",ALLOCATION_RATIONALE
+"for review, explain the overall investment mix",ALLOCATION_RATIONALE
+"for review, explain the rejection of TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"for review, explain the selected mix",ALLOCATION_RATIONALE
+"for review, explain the selection of TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"for review, explain why we do not own HINDALCO",EXPLAIN_STOCK_EXCLUSION
+"for review, explain why we own HINDALCO",EXPLAIN_STOCK_INCLUSION
+"for review, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"for review, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"for review, give me the portfolio rationale",ALLOCATION_RATIONALE
+"for review, give me world news",UNKNOWN
+"for review, help me buy a phone",UNKNOWN
+"for review, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"for review, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"for review, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"for review, how do I bake bread",UNKNOWN
+"for review, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"for review, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"for review, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"for review, how spread out are my investments",DIVERSIFICATION_QUESTION
+"for review, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"for review, how would a 25% crash affect me",HYPOTHETICAL_SHOCK
+"for review, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"for review, is one sector dominating",DIVERSIFICATION_QUESTION
+"for review, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"for review, justify including M&M",EXPLAIN_STOCK_INCLUSION
+"for review, justify leaving out M&M",EXPLAIN_STOCK_EXCLUSION
+"for review, play some music",UNKNOWN
+"for review, reason for excluding HDFCBANK",EXPLAIN_STOCK_EXCLUSION
+"for review, reason for holding HDFCBANK",EXPLAIN_STOCK_INCLUSION
+"for review, reoptimize after a 25% decline",HYPOTHETICAL_SHOCK
+"for review, run a declines scenario",HYPOTHETICAL_SHOCK
+"for review, run an inflation shock",HYPOTHETICAL_SHOCK
+"for review, set an alarm",UNKNOWN
+"for review, show a real market shock result",HYPOTHETICAL_SHOCK
+"for review, show movie times",UNKNOWN
+"for review, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"for review, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"for review, simulate a 20% market declines",HYPOTHETICAL_SHOCK
+"for review, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"for review, stress test a market crashes",HYPOTHETICAL_SHOCK
+"for review, stress the Automobile sector",HYPOTHETICAL_SHOCK
+"for review, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"for review, summarize the optimization decision",ALLOCATION_RATIONALE
+"for review, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"for review, tell me a joke",UNKNOWN
+"for review, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"for review, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"for review, tell me why ITC is excluded",EXPLAIN_STOCK_EXCLUSION
+"for review, tell me why ITC is included",EXPLAIN_STOCK_INCLUSION
+"for review, translate this sentence",UNKNOWN
+"for review, what determined the allocation",ALLOCATION_RATIONALE
+"for review, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"for review, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"for review, what drove these weights",ALLOCATION_RATIONALE
+"for review, what happens during a crash",HYPOTHETICAL_SHOCK
+"for review, what if inflation rises 5%",HYPOTHETICAL_SHOCK
+"for review, what if interest rates rise 20%",HYPOTHETICAL_SHOCK
+"for review, what if the Financial Services sector crashes",HYPOTHETICAL_SHOCK
+"for review, what if the market falls",HYPOTHETICAL_SHOCK
+"for review, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"for review, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"for review, what is quantum physics",UNKNOWN
+"for review, what is the capital of france",UNKNOWN
+"for review, what is the concentration level",DIVERSIFICATION_QUESTION
+"for review, what is the exclusion rationale for AXISBANK",EXPLAIN_STOCK_EXCLUSION
+"for review, what is the inclusion rationale for AXISBANK",EXPLAIN_STOCK_INCLUSION
+"for review, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"for review, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"for review, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"for review, what is the weather today",UNKNOWN
+"for review, what is your favorite color",UNKNOWN
+"for review, what kept RELIANCE out",EXPLAIN_STOCK_EXCLUSION
+"for review, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"for review, what made RELIANCE get selected",EXPLAIN_STOCK_INCLUSION
+"for review, what prevented a BHARTIARTL position",EXPLAIN_STOCK_EXCLUSION
+"for review, what supports the BHARTIARTL position",EXPLAIN_STOCK_INCLUSION
+"for review, who won the football match",UNKNOWN
+"for review, why are the weights like this",ALLOCATION_RATIONALE
+"for review, why did I get these holdings",ALLOCATION_RATIONALE
+"for review, why did the optimizer choose DIVISLAB",EXPLAIN_STOCK_INCLUSION
+"for review, why did the optimizer reject DIVISLAB",EXPLAIN_STOCK_EXCLUSION
+"for review, why did you exclude MARUTI",EXPLAIN_STOCK_EXCLUSION
+"for review, why did you include MARUTI",EXPLAIN_STOCK_INCLUSION
+"for review, why does my allocation contain INFY",EXPLAIN_STOCK_INCLUSION
+"for review, why does my allocation omit INFY",EXPLAIN_STOCK_EXCLUSION
+"for review, why is BPCL missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"for review, why is BPCL one of my holdings",EXPLAIN_STOCK_INCLUSION
+"for review, why is INDUSINDBK in my portfolio",EXPLAIN_STOCK_INCLUSION
+"for review, why is INDUSINDBK not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"for review, why is money allocated to WIPRO",EXPLAIN_STOCK_INCLUSION
+"for review, why is no money allocated to WIPRO",EXPLAIN_STOCK_EXCLUSION
+"for review, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"for review, why this combination of stocks",ALLOCATION_RATIONALE
+"for review, why was TCS bought",EXPLAIN_STOCK_INCLUSION
+"for review, why was TCS not selected",EXPLAIN_STOCK_EXCLUSION
+"for review, write an email for me",UNKNOWN
+"for this snapshot, am I well diversified",DIVERSIFICATION_QUESTION
+"for this snapshot, book a restaurant",UNKNOWN
+"for this snapshot, describe diversification",DIVERSIFICATION_QUESTION
+"for this snapshot, describe the portfolio construction",ALLOCATION_RATIONALE
+"for this snapshot, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"for this snapshot, explain my diversification score",DIVERSIFICATION_QUESTION
+"for this snapshot, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, explain the overall allocation",ALLOCATION_RATIONALE
+"for this snapshot, explain the overall investment mix",ALLOCATION_RATIONALE
+"for this snapshot, explain the rejection of WIPRO",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, explain the selected mix",ALLOCATION_RATIONALE
+"for this snapshot, explain the selection of WIPRO",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, explain why we do not own RELIANCE",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, explain why we own RELIANCE",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"for this snapshot, give me the portfolio rationale",ALLOCATION_RATIONALE
+"for this snapshot, give me world news",UNKNOWN
+"for this snapshot, help me buy a phone",UNKNOWN
+"for this snapshot, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"for this snapshot, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"for this snapshot, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"for this snapshot, how do I bake bread",UNKNOWN
+"for this snapshot, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"for this snapshot, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, how spread out are my investments",DIVERSIFICATION_QUESTION
+"for this snapshot, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, how would a 20% crash affect me",HYPOTHETICAL_SHOCK
+"for this snapshot, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"for this snapshot, is one sector dominating",DIVERSIFICATION_QUESTION
+"for this snapshot, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, justify including ASIANPAINT",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, justify leaving out ASIANPAINT",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, play some music",UNKNOWN
+"for this snapshot, reason for excluding HINDALCO",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, reason for holding HINDALCO",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, reoptimize after a 20% decline",HYPOTHETICAL_SHOCK
+"for this snapshot, run a drops scenario",HYPOTHETICAL_SHOCK
+"for this snapshot, run an inflation shock",HYPOTHETICAL_SHOCK
+"for this snapshot, set an alarm",UNKNOWN
+"for this snapshot, show a real market shock result",HYPOTHETICAL_SHOCK
+"for this snapshot, show movie times",UNKNOWN
+"for this snapshot, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"for this snapshot, simulate a 15% market drops",HYPOTHETICAL_SHOCK
+"for this snapshot, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"for this snapshot, stress test a market falls",HYPOTHETICAL_SHOCK
+"for this snapshot, stress the Financial Services sector",HYPOTHETICAL_SHOCK
+"for this snapshot, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, summarize the optimization decision",ALLOCATION_RATIONALE
+"for this snapshot, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"for this snapshot, tell me a joke",UNKNOWN
+"for this snapshot, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"for this snapshot, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, tell me why SUNPHARMA is excluded",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, tell me why SUNPHARMA is included",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, translate this sentence",UNKNOWN
+"for this snapshot, what determined the allocation",ALLOCATION_RATIONALE
+"for this snapshot, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"for this snapshot, what drove these weights",ALLOCATION_RATIONALE
+"for this snapshot, what happens during a crash",HYPOTHETICAL_SHOCK
+"for this snapshot, what if inflation rises 25%",HYPOTHETICAL_SHOCK
+"for this snapshot, what if interest rates rise 15%",HYPOTHETICAL_SHOCK
+"for this snapshot, what if the Energy sector crashes",HYPOTHETICAL_SHOCK
+"for this snapshot, what if the market declines",HYPOTHETICAL_SHOCK
+"for this snapshot, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"for this snapshot, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, what is quantum physics",UNKNOWN
+"for this snapshot, what is the capital of france",UNKNOWN
+"for this snapshot, what is the concentration level",DIVERSIFICATION_QUESTION
+"for this snapshot, what is the exclusion rationale for MARUTI",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, what is the inclusion rationale for MARUTI",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"for this snapshot, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, what is the weather today",UNKNOWN
+"for this snapshot, what is your favorite color",UNKNOWN
+"for this snapshot, what kept AXISBANK out",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"for this snapshot, what made AXISBANK get selected",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, what prevented a NTPC position",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, what supports the NTPC position",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, who won the football match",UNKNOWN
+"for this snapshot, why are the weights like this",ALLOCATION_RATIONALE
+"for this snapshot, why did I get these holdings",ALLOCATION_RATIONALE
+"for this snapshot, why did the optimizer choose LTIM",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why did the optimizer reject LTIM",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why did you exclude M&M",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why did you include M&M",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why does my allocation contain EICHERMOT",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why does my allocation omit EICHERMOT",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why is DIVISLAB in my portfolio",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why is DIVISLAB not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why is TATASTEEL missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why is TATASTEEL one of my holdings",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why is money allocated to INDUSINDBK",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why is no money allocated to INDUSINDBK",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"for this snapshot, why this combination of stocks",ALLOCATION_RATIONALE
+"for this snapshot, why was BPCL bought",EXPLAIN_STOCK_INCLUSION
+"for this snapshot, why was BPCL not selected",EXPLAIN_STOCK_EXCLUSION
+"for this snapshot, write an email for me",UNKNOWN
+"from stored results, am I well diversified",DIVERSIFICATION_QUESTION
+"from stored results, book a restaurant",UNKNOWN
+"from stored results, describe diversification",DIVERSIFICATION_QUESTION
+"from stored results, describe the portfolio construction",ALLOCATION_RATIONALE
+"from stored results, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"from stored results, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"from stored results, explain my diversification score",DIVERSIFICATION_QUESTION
+"from stored results, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"from stored results, explain the overall allocation",ALLOCATION_RATIONALE
+"from stored results, explain the overall investment mix",ALLOCATION_RATIONALE
+"from stored results, explain the rejection of ASIANPAINT",EXPLAIN_STOCK_EXCLUSION
+"from stored results, explain the selected mix",ALLOCATION_RATIONALE
+"from stored results, explain the selection of ASIANPAINT",EXPLAIN_STOCK_INCLUSION
+"from stored results, explain why we do not own WIPRO",EXPLAIN_STOCK_EXCLUSION
+"from stored results, explain why we own WIPRO",EXPLAIN_STOCK_INCLUSION
+"from stored results, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"from stored results, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"from stored results, give me the portfolio rationale",ALLOCATION_RATIONALE
+"from stored results, give me world news",UNKNOWN
+"from stored results, help me buy a phone",UNKNOWN
+"from stored results, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"from stored results, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"from stored results, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"from stored results, how do I bake bread",UNKNOWN
+"from stored results, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"from stored results, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"from stored results, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"from stored results, how spread out are my investments",DIVERSIFICATION_QUESTION
+"from stored results, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"from stored results, how would a 10% crash affect me",HYPOTHETICAL_SHOCK
+"from stored results, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"from stored results, is one sector dominating",DIVERSIFICATION_QUESTION
+"from stored results, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"from stored results, justify including ITC",EXPLAIN_STOCK_INCLUSION
+"from stored results, justify leaving out ITC",EXPLAIN_STOCK_EXCLUSION
+"from stored results, play some music",UNKNOWN
+"from stored results, reason for excluding TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"from stored results, reason for holding TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"from stored results, reoptimize after a 10% decline",HYPOTHETICAL_SHOCK
+"from stored results, run a drops scenario",HYPOTHETICAL_SHOCK
+"from stored results, run an inflation shock",HYPOTHETICAL_SHOCK
+"from stored results, set an alarm",UNKNOWN
+"from stored results, show a real market shock result",HYPOTHETICAL_SHOCK
+"from stored results, show movie times",UNKNOWN
+"from stored results, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"from stored results, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"from stored results, simulate a 5% market drops",HYPOTHETICAL_SHOCK
+"from stored results, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"from stored results, stress test a market falls",HYPOTHETICAL_SHOCK
+"from stored results, stress the IT sector",HYPOTHETICAL_SHOCK
+"from stored results, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"from stored results, summarize the optimization decision",ALLOCATION_RATIONALE
+"from stored results, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"from stored results, tell me a joke",UNKNOWN
+"from stored results, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"from stored results, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"from stored results, tell me why TCS is excluded",EXPLAIN_STOCK_EXCLUSION
+"from stored results, tell me why TCS is included",EXPLAIN_STOCK_INCLUSION
+"from stored results, translate this sentence",UNKNOWN
+"from stored results, what determined the allocation",ALLOCATION_RATIONALE
+"from stored results, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"from stored results, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"from stored results, what drove these weights",ALLOCATION_RATIONALE
+"from stored results, what happens during a crash",HYPOTHETICAL_SHOCK
+"from stored results, what if inflation rises 15%",HYPOTHETICAL_SHOCK
+"from stored results, what if interest rates rise 5%",HYPOTHETICAL_SHOCK
+"from stored results, what if the Pharma sector crashes",HYPOTHETICAL_SHOCK
+"from stored results, what if the market declines",HYPOTHETICAL_SHOCK
+"from stored results, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"from stored results, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"from stored results, what is quantum physics",UNKNOWN
+"from stored results, what is the capital of france",UNKNOWN
+"from stored results, what is the concentration level",DIVERSIFICATION_QUESTION
+"from stored results, what is the exclusion rationale for DIVISLAB",EXPLAIN_STOCK_EXCLUSION
+"from stored results, what is the inclusion rationale for DIVISLAB",EXPLAIN_STOCK_INCLUSION
+"from stored results, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"from stored results, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"from stored results, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"from stored results, what is the weather today",UNKNOWN
+"from stored results, what is your favorite color",UNKNOWN
+"from stored results, what kept INDUSINDBK out",EXPLAIN_STOCK_EXCLUSION
+"from stored results, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"from stored results, what made INDUSINDBK get selected",EXPLAIN_STOCK_INCLUSION
+"from stored results, what prevented a HDFCBANK position",EXPLAIN_STOCK_EXCLUSION
+"from stored results, what supports the HDFCBANK position",EXPLAIN_STOCK_INCLUSION
+"from stored results, who won the football match",UNKNOWN
+"from stored results, why are the weights like this",ALLOCATION_RATIONALE
+"from stored results, why did I get these holdings",ALLOCATION_RATIONALE
+"from stored results, why did the optimizer choose INFY",EXPLAIN_STOCK_INCLUSION
+"from stored results, why did the optimizer reject INFY",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why did you exclude LTIM",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why did you include LTIM",EXPLAIN_STOCK_INCLUSION
+"from stored results, why does my allocation contain RELIANCE",EXPLAIN_STOCK_INCLUSION
+"from stored results, why does my allocation omit RELIANCE",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why is M&M missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why is M&M one of my holdings",EXPLAIN_STOCK_INCLUSION
+"from stored results, why is NTPC in my portfolio",EXPLAIN_STOCK_INCLUSION
+"from stored results, why is NTPC not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why is money allocated to BHARTIARTL",EXPLAIN_STOCK_INCLUSION
+"from stored results, why is no money allocated to BHARTIARTL",EXPLAIN_STOCK_EXCLUSION
+"from stored results, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"from stored results, why this combination of stocks",ALLOCATION_RATIONALE
+"from stored results, why was MARUTI bought",EXPLAIN_STOCK_INCLUSION
+"from stored results, why was MARUTI not selected",EXPLAIN_STOCK_EXCLUSION
+"from stored results, write an email for me",UNKNOWN
+"from the optimizer, am I well diversified",DIVERSIFICATION_QUESTION
+"from the optimizer, book a restaurant",UNKNOWN
+"from the optimizer, describe diversification",DIVERSIFICATION_QUESTION
+"from the optimizer, describe the portfolio construction",ALLOCATION_RATIONALE
+"from the optimizer, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"from the optimizer, explain my diversification score",DIVERSIFICATION_QUESTION
+"from the optimizer, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, explain the overall allocation",ALLOCATION_RATIONALE
+"from the optimizer, explain the overall investment mix",ALLOCATION_RATIONALE
+"from the optimizer, explain the rejection of BPCL",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, explain the selected mix",ALLOCATION_RATIONALE
+"from the optimizer, explain the selection of BPCL",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, explain why we do not own HDFCBANK",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, explain why we own HDFCBANK",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"from the optimizer, give me the portfolio rationale",ALLOCATION_RATIONALE
+"from the optimizer, give me world news",UNKNOWN
+"from the optimizer, help me buy a phone",UNKNOWN
+"from the optimizer, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"from the optimizer, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"from the optimizer, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"from the optimizer, how do I bake bread",UNKNOWN
+"from the optimizer, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"from the optimizer, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, how spread out are my investments",DIVERSIFICATION_QUESTION
+"from the optimizer, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, how would a 5% crash affect me",HYPOTHETICAL_SHOCK
+"from the optimizer, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"from the optimizer, is one sector dominating",DIVERSIFICATION_QUESTION
+"from the optimizer, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, justify including MARUTI",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, justify leaving out MARUTI",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, play some music",UNKNOWN
+"from the optimizer, reason for excluding SUNPHARMA",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, reason for holding SUNPHARMA",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, reoptimize after a 5% decline",HYPOTHETICAL_SHOCK
+"from the optimizer, run a falls scenario",HYPOTHETICAL_SHOCK
+"from the optimizer, run an inflation shock",HYPOTHETICAL_SHOCK
+"from the optimizer, set an alarm",UNKNOWN
+"from the optimizer, show a real market shock result",HYPOTHETICAL_SHOCK
+"from the optimizer, show movie times",UNKNOWN
+"from the optimizer, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"from the optimizer, simulate a 25% market falls",HYPOTHETICAL_SHOCK
+"from the optimizer, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"from the optimizer, stress test a market drops",HYPOTHETICAL_SHOCK
+"from the optimizer, stress the Pharma sector",HYPOTHETICAL_SHOCK
+"from the optimizer, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, summarize the optimization decision",ALLOCATION_RATIONALE
+"from the optimizer, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"from the optimizer, tell me a joke",UNKNOWN
+"from the optimizer, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"from the optimizer, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, tell me why LTIM is excluded",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, tell me why LTIM is included",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, translate this sentence",UNKNOWN
+"from the optimizer, what determined the allocation",ALLOCATION_RATIONALE
+"from the optimizer, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"from the optimizer, what drove these weights",ALLOCATION_RATIONALE
+"from the optimizer, what happens during a crash",HYPOTHETICAL_SHOCK
+"from the optimizer, what if inflation rises 10%",HYPOTHETICAL_SHOCK
+"from the optimizer, what if interest rates rise 25%",HYPOTHETICAL_SHOCK
+"from the optimizer, what if the Automobile sector crashes",HYPOTHETICAL_SHOCK
+"from the optimizer, what if the market crashes",HYPOTHETICAL_SHOCK
+"from the optimizer, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"from the optimizer, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, what is quantum physics",UNKNOWN
+"from the optimizer, what is the capital of france",UNKNOWN
+"from the optimizer, what is the concentration level",DIVERSIFICATION_QUESTION
+"from the optimizer, what is the exclusion rationale for RELIANCE",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, what is the inclusion rationale for RELIANCE",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"from the optimizer, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, what is the weather today",UNKNOWN
+"from the optimizer, what is your favorite color",UNKNOWN
+"from the optimizer, what kept HINDALCO out",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"from the optimizer, what made HINDALCO get selected",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, what prevented a ASIANPAINT position",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, what supports the ASIANPAINT position",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, who won the football match",UNKNOWN
+"from the optimizer, why are the weights like this",ALLOCATION_RATIONALE
+"from the optimizer, why did I get these holdings",ALLOCATION_RATIONALE
+"from the optimizer, why did the optimizer choose INDUSINDBK",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why did the optimizer reject INDUSINDBK",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why did you exclude AXISBANK",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why did you include AXISBANK",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why does my allocation contain NTPC",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why does my allocation omit NTPC",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why is TCS missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why is TCS one of my holdings",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why is WIPRO in my portfolio",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why is WIPRO not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why is money allocated to TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why is no money allocated to TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"from the optimizer, why this combination of stocks",ALLOCATION_RATIONALE
+"from the optimizer, why was EICHERMOT bought",EXPLAIN_STOCK_INCLUSION
+"from the optimizer, why was EICHERMOT not selected",EXPLAIN_STOCK_EXCLUSION
+"from the optimizer, write an email for me",UNKNOWN
+give me a risk summary,PORTFOLIO_RISK_SUMMARY
+give me the concentration breakdown,DIVERSIFICATION_QUESTION
+give me the portfolio rationale,ALLOCATION_RATIONALE
+give me world news,UNKNOWN
+help me buy a phone,UNKNOWN
+help me understand: am I well diversified,DIVERSIFICATION_QUESTION
+help me understand: book a restaurant,UNKNOWN
+help me understand: describe diversification,DIVERSIFICATION_QUESTION
+help me understand: describe the portfolio construction,ALLOCATION_RATIONALE
+help me understand: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+help me understand: do I hold enough different assets,DIVERSIFICATION_QUESTION
+help me understand: explain my diversification score,DIVERSIFICATION_QUESTION
+help me understand: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+help me understand: explain the overall allocation,ALLOCATION_RATIONALE
+help me understand: explain the overall investment mix,ALLOCATION_RATIONALE
+help me understand: explain the rejection of M&M,EXPLAIN_STOCK_EXCLUSION
+help me understand: explain the selected mix,ALLOCATION_RATIONALE
+help me understand: explain the selection of M&M,EXPLAIN_STOCK_INCLUSION
+help me understand: explain why we do not own TATASTEEL,EXPLAIN_STOCK_EXCLUSION
+help me understand: explain why we own TATASTEEL,EXPLAIN_STOCK_INCLUSION
+help me understand: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+help me understand: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+help me understand: give me the portfolio rationale,ALLOCATION_RATIONALE
+help me understand: give me world news,UNKNOWN
+help me understand: help me buy a phone,UNKNOWN
+help me understand: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+help me understand: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+help me understand: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+help me understand: how do I bake bread,UNKNOWN
+help me understand: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+help me understand: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+help me understand: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+help me understand: how spread out are my investments,DIVERSIFICATION_QUESTION
+help me understand: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+help me understand: how would a 15% crash affect me,HYPOTHETICAL_SHOCK
+help me understand: is my allocation concentrated,DIVERSIFICATION_QUESTION
+help me understand: is one sector dominating,DIVERSIFICATION_QUESTION
+help me understand: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+help me understand: justify including LTIM,EXPLAIN_STOCK_INCLUSION
+help me understand: justify leaving out LTIM,EXPLAIN_STOCK_EXCLUSION
+help me understand: play some music,UNKNOWN
+help me understand: reason for excluding BPCL,EXPLAIN_STOCK_EXCLUSION
+help me understand: reason for holding BPCL,EXPLAIN_STOCK_INCLUSION
+help me understand: reoptimize after a 15% decline,HYPOTHETICAL_SHOCK
+help me understand: run a declines scenario,HYPOTHETICAL_SHOCK
+help me understand: run an inflation shock,HYPOTHETICAL_SHOCK
+help me understand: set an alarm,UNKNOWN
+help me understand: show a real market shock result,HYPOTHETICAL_SHOCK
+help me understand: show movie times,UNKNOWN
+help me understand: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+help me understand: show stock and sector concentration,DIVERSIFICATION_QUESTION
+help me understand: simulate a 10% market declines,HYPOTHETICAL_SHOCK
+help me understand: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+help me understand: stress test a market crashes,HYPOTHETICAL_SHOCK
+help me understand: stress the Energy sector,HYPOTHETICAL_SHOCK
+help me understand: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+help me understand: summarize the optimization decision,ALLOCATION_RATIONALE
+help me understand: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+help me understand: tell me a joke,UNKNOWN
+help me understand: tell me about sector diversification,DIVERSIFICATION_QUESTION
+help me understand: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+help me understand: tell me why EICHERMOT is excluded,EXPLAIN_STOCK_EXCLUSION
+help me understand: tell me why EICHERMOT is included,EXPLAIN_STOCK_INCLUSION
+help me understand: translate this sentence,UNKNOWN
+help me understand: what determined the allocation,ALLOCATION_RATIONALE
+help me understand: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+help me understand: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+help me understand: what drove these weights,ALLOCATION_RATIONALE
+help me understand: what happens during a crash,HYPOTHETICAL_SHOCK
+help me understand: what if inflation rises 20%,HYPOTHETICAL_SHOCK
+help me understand: what if interest rates rise 10%,HYPOTHETICAL_SHOCK
+help me understand: what if the IT sector crashes,HYPOTHETICAL_SHOCK
+help me understand: what if the market falls,HYPOTHETICAL_SHOCK
+help me understand: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+help me understand: what is my volatility,PORTFOLIO_RISK_SUMMARY
+help me understand: what is quantum physics,UNKNOWN
+help me understand: what is the capital of france,UNKNOWN
+help me understand: what is the concentration level,DIVERSIFICATION_QUESTION
+help me understand: what is the exclusion rationale for INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+help me understand: what is the inclusion rationale for INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+help me understand: what is the logic behind the allocation,ALLOCATION_RATIONALE
+help me understand: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+help me understand: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+help me understand: what is the weather today,UNKNOWN
+help me understand: what is your favorite color,UNKNOWN
+help me understand: what kept WIPRO out,EXPLAIN_STOCK_EXCLUSION
+help me understand: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+help me understand: what made WIPRO get selected,EXPLAIN_STOCK_INCLUSION
+help me understand: what prevented a SUNPHARMA position,EXPLAIN_STOCK_EXCLUSION
+help me understand: what supports the SUNPHARMA position,EXPLAIN_STOCK_INCLUSION
+help me understand: who won the football match,UNKNOWN
+help me understand: why are the weights like this,ALLOCATION_RATIONALE
+help me understand: why did I get these holdings,ALLOCATION_RATIONALE
+help me understand: why did the optimizer choose NTPC,EXPLAIN_STOCK_INCLUSION
+help me understand: why did the optimizer reject NTPC,EXPLAIN_STOCK_EXCLUSION
+help me understand: why did you exclude DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+help me understand: why did you include DIVISLAB,EXPLAIN_STOCK_INCLUSION
+help me understand: why does my allocation contain HINDALCO,EXPLAIN_STOCK_INCLUSION
+help me understand: why does my allocation omit HINDALCO,EXPLAIN_STOCK_EXCLUSION
+help me understand: why is BHARTIARTL in my portfolio,EXPLAIN_STOCK_INCLUSION
+help me understand: why is BHARTIARTL not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+help me understand: why is MARUTI missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+help me understand: why is MARUTI one of my holdings,EXPLAIN_STOCK_INCLUSION
+help me understand: why is money allocated to ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+help me understand: why is no money allocated to ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+help me understand: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+help me understand: why this combination of stocks,ALLOCATION_RATIONALE
+help me understand: why was AXISBANK bought,EXPLAIN_STOCK_INCLUSION
+help me understand: why was AXISBANK not selected,EXPLAIN_STOCK_EXCLUSION
+help me understand: write an email for me,UNKNOWN
+how balanced is the portfolio,DIVERSIFICATION_QUESTION
+how did the optimizer allocate my money,ALLOCATION_RATIONALE
+how diversified is my portfolio,DIVERSIFICATION_QUESTION
+how do I bake bread,UNKNOWN
+how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+how spread out are my investments,DIVERSIFICATION_QUESTION
+how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+how would a 15% crash affect me,HYPOTHETICAL_SHOCK
+"in simple terms, am I well diversified",DIVERSIFICATION_QUESTION
+"in simple terms, book a restaurant",UNKNOWN
+"in simple terms, describe diversification",DIVERSIFICATION_QUESTION
+"in simple terms, describe the portfolio construction",ALLOCATION_RATIONALE
+"in simple terms, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"in simple terms, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"in simple terms, explain my diversification score",DIVERSIFICATION_QUESTION
+"in simple terms, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"in simple terms, explain the overall allocation",ALLOCATION_RATIONALE
+"in simple terms, explain the overall investment mix",ALLOCATION_RATIONALE
+"in simple terms, explain the rejection of HINDALCO",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, explain the selected mix",ALLOCATION_RATIONALE
+"in simple terms, explain the selection of HINDALCO",EXPLAIN_STOCK_INCLUSION
+"in simple terms, explain why we do not own INFY",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, explain why we own INFY",EXPLAIN_STOCK_INCLUSION
+"in simple terms, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"in simple terms, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"in simple terms, give me the portfolio rationale",ALLOCATION_RATIONALE
+"in simple terms, give me world news",UNKNOWN
+"in simple terms, help me buy a phone",UNKNOWN
+"in simple terms, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"in simple terms, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"in simple terms, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"in simple terms, how do I bake bread",UNKNOWN
+"in simple terms, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"in simple terms, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"in simple terms, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"in simple terms, how spread out are my investments",DIVERSIFICATION_QUESTION
+"in simple terms, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"in simple terms, how would a 10% crash affect me",HYPOTHETICAL_SHOCK
+"in simple terms, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"in simple terms, is one sector dominating",DIVERSIFICATION_QUESTION
+"in simple terms, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"in simple terms, justify including TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"in simple terms, justify leaving out TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, play some music",UNKNOWN
+"in simple terms, reason for excluding NTPC",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, reason for holding NTPC",EXPLAIN_STOCK_INCLUSION
+"in simple terms, reoptimize after a 10% decline",HYPOTHETICAL_SHOCK
+"in simple terms, run a declines scenario",HYPOTHETICAL_SHOCK
+"in simple terms, run an inflation shock",HYPOTHETICAL_SHOCK
+"in simple terms, set an alarm",UNKNOWN
+"in simple terms, show a real market shock result",HYPOTHETICAL_SHOCK
+"in simple terms, show movie times",UNKNOWN
+"in simple terms, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"in simple terms, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"in simple terms, simulate a 5% market declines",HYPOTHETICAL_SHOCK
+"in simple terms, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"in simple terms, stress test a market crashes",HYPOTHETICAL_SHOCK
+"in simple terms, stress the IT sector",HYPOTHETICAL_SHOCK
+"in simple terms, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"in simple terms, summarize the optimization decision",ALLOCATION_RATIONALE
+"in simple terms, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"in simple terms, tell me a joke",UNKNOWN
+"in simple terms, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"in simple terms, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"in simple terms, tell me why ASIANPAINT is excluded",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, tell me why ASIANPAINT is included",EXPLAIN_STOCK_INCLUSION
+"in simple terms, translate this sentence",UNKNOWN
+"in simple terms, what determined the allocation",ALLOCATION_RATIONALE
+"in simple terms, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"in simple terms, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"in simple terms, what drove these weights",ALLOCATION_RATIONALE
+"in simple terms, what happens during a crash",HYPOTHETICAL_SHOCK
+"in simple terms, what if inflation rises 15%",HYPOTHETICAL_SHOCK
+"in simple terms, what if interest rates rise 5%",HYPOTHETICAL_SHOCK
+"in simple terms, what if the Pharma sector crashes",HYPOTHETICAL_SHOCK
+"in simple terms, what if the market falls",HYPOTHETICAL_SHOCK
+"in simple terms, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"in simple terms, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"in simple terms, what is quantum physics",UNKNOWN
+"in simple terms, what is the capital of france",UNKNOWN
+"in simple terms, what is the concentration level",DIVERSIFICATION_QUESTION
+"in simple terms, what is the exclusion rationale for TCS",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, what is the inclusion rationale for TCS",EXPLAIN_STOCK_INCLUSION
+"in simple terms, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"in simple terms, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"in simple terms, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"in simple terms, what is the weather today",UNKNOWN
+"in simple terms, what is your favorite color",UNKNOWN
+"in simple terms, what kept EICHERMOT out",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"in simple terms, what made EICHERMOT get selected",EXPLAIN_STOCK_INCLUSION
+"in simple terms, what prevented a INDUSINDBK position",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, what supports the INDUSINDBK position",EXPLAIN_STOCK_INCLUSION
+"in simple terms, who won the football match",UNKNOWN
+"in simple terms, why are the weights like this",ALLOCATION_RATIONALE
+"in simple terms, why did I get these holdings",ALLOCATION_RATIONALE
+"in simple terms, why did the optimizer choose MARUTI",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why did the optimizer reject MARUTI",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why did you exclude BPCL",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why did you include BPCL",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why does my allocation contain LTIM",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why does my allocation omit LTIM",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why is AXISBANK in my portfolio",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why is AXISBANK not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why is HDFCBANK missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why is HDFCBANK one of my holdings",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why is money allocated to RELIANCE",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why is no money allocated to RELIANCE",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"in simple terms, why this combination of stocks",ALLOCATION_RATIONALE
+"in simple terms, why was SUNPHARMA bought",EXPLAIN_STOCK_INCLUSION
+"in simple terms, why was SUNPHARMA not selected",EXPLAIN_STOCK_EXCLUSION
+"in simple terms, write an email for me",UNKNOWN
+is my allocation concentrated,DIVERSIFICATION_QUESTION
+is one sector dominating,DIVERSIFICATION_QUESTION
+is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+justify including BPCL,EXPLAIN_STOCK_INCLUSION
+justify leaving out BPCL,EXPLAIN_STOCK_EXCLUSION
+play some music,UNKNOWN
+please am I well diversified,DIVERSIFICATION_QUESTION
+please book a restaurant,UNKNOWN
+please describe diversification,DIVERSIFICATION_QUESTION
+please describe the portfolio construction,ALLOCATION_RATIONALE
+please describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+please do I hold enough different assets,DIVERSIFICATION_QUESTION
+please explain my diversification score,DIVERSIFICATION_QUESTION
+please explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+please explain the overall allocation,ALLOCATION_RATIONALE
+please explain the overall investment mix,ALLOCATION_RATIONALE
+please explain the rejection of INFY,EXPLAIN_STOCK_EXCLUSION
+please explain the selected mix,ALLOCATION_RATIONALE
+please explain the selection of INFY,EXPLAIN_STOCK_INCLUSION
+please explain why we do not own LTIM,EXPLAIN_STOCK_EXCLUSION
+please explain why we own LTIM,EXPLAIN_STOCK_INCLUSION
+please give me a risk summary,PORTFOLIO_RISK_SUMMARY
+please give me the concentration breakdown,DIVERSIFICATION_QUESTION
+please give me the portfolio rationale,ALLOCATION_RATIONALE
+please give me world news,UNKNOWN
+please help me buy a phone,UNKNOWN
+please how balanced is the portfolio,DIVERSIFICATION_QUESTION
+please how did the optimizer allocate my money,ALLOCATION_RATIONALE
+please how diversified is my portfolio,DIVERSIFICATION_QUESTION
+please how do I bake bread,UNKNOWN
+please how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+please how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+please how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+please how spread out are my investments,DIVERSIFICATION_QUESTION
+please how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+please how would a 20% crash affect me,HYPOTHETICAL_SHOCK
+please is my allocation concentrated,DIVERSIFICATION_QUESTION
+please is one sector dominating,DIVERSIFICATION_QUESTION
+please is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+please justify including HINDALCO,EXPLAIN_STOCK_INCLUSION
+please justify leaving out HINDALCO,EXPLAIN_STOCK_EXCLUSION
+please play some music,UNKNOWN
+please reason for excluding DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+please reason for holding DIVISLAB,EXPLAIN_STOCK_INCLUSION
+please reoptimize after a 20% decline,HYPOTHETICAL_SHOCK
+please run a declines scenario,HYPOTHETICAL_SHOCK
+please run an inflation shock,HYPOTHETICAL_SHOCK
+please set an alarm,UNKNOWN
+please show a real market shock result,HYPOTHETICAL_SHOCK
+please show movie times,UNKNOWN
+please show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+please show stock and sector concentration,DIVERSIFICATION_QUESTION
+please simulate a 15% market declines,HYPOTHETICAL_SHOCK
+please simulate an interest rate increase,HYPOTHETICAL_SHOCK
+please stress test a market crashes,HYPOTHETICAL_SHOCK
+please stress the Financial Services sector,HYPOTHETICAL_SHOCK
+please summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+please summarize the optimization decision,ALLOCATION_RATIONALE
+please summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+please tell me a joke,UNKNOWN
+please tell me about sector diversification,DIVERSIFICATION_QUESTION
+please tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+please tell me why WIPRO is excluded,EXPLAIN_STOCK_EXCLUSION
+please tell me why WIPRO is included,EXPLAIN_STOCK_INCLUSION
+please translate this sentence,UNKNOWN
+please what determined the allocation,ALLOCATION_RATIONALE
+please what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+please what does the diversification metric mean,DIVERSIFICATION_QUESTION
+please what drove these weights,ALLOCATION_RATIONALE
+please what happens during a crash,HYPOTHETICAL_SHOCK
+please what if inflation rises 25%,HYPOTHETICAL_SHOCK
+please what if interest rates rise 15%,HYPOTHETICAL_SHOCK
+please what if the Energy sector crashes,HYPOTHETICAL_SHOCK
+please what if the market falls,HYPOTHETICAL_SHOCK
+please what is my portfolio diversity,DIVERSIFICATION_QUESTION
+please what is my volatility,PORTFOLIO_RISK_SUMMARY
+please what is quantum physics,UNKNOWN
+please what is the capital of france,UNKNOWN
+please what is the concentration level,DIVERSIFICATION_QUESTION
+please what is the exclusion rationale for SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+please what is the inclusion rationale for SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+please what is the logic behind the allocation,ALLOCATION_RATIONALE
+please what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+please what is the realized risk,PORTFOLIO_RISK_SUMMARY
+please what is the weather today,UNKNOWN
+please what is your favorite color,UNKNOWN
+please what kept ITC out,EXPLAIN_STOCK_EXCLUSION
+please what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+please what made ITC get selected,EXPLAIN_STOCK_INCLUSION
+please what prevented a AXISBANK position,EXPLAIN_STOCK_EXCLUSION
+please what supports the AXISBANK position,EXPLAIN_STOCK_INCLUSION
+please who won the football match,UNKNOWN
+please why are the weights like this,ALLOCATION_RATIONALE
+please why did I get these holdings,ALLOCATION_RATIONALE
+please why did the optimizer choose BPCL,EXPLAIN_STOCK_INCLUSION
+please why did the optimizer reject BPCL,EXPLAIN_STOCK_EXCLUSION
+please why did you exclude HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+please why did you include HDFCBANK,EXPLAIN_STOCK_INCLUSION
+please why does my allocation contain M&M,EXPLAIN_STOCK_INCLUSION
+please why does my allocation omit M&M,EXPLAIN_STOCK_EXCLUSION
+please why is NTPC missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+please why is NTPC one of my holdings,EXPLAIN_STOCK_INCLUSION
+please why is TCS in my portfolio,EXPLAIN_STOCK_INCLUSION
+please why is TCS not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+please why is money allocated to EICHERMOT,EXPLAIN_STOCK_INCLUSION
+please why is no money allocated to EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+please why is the portfolio allocated this way,ALLOCATION_RATIONALE
+please why this combination of stocks,ALLOCATION_RATIONALE
+please why was BHARTIARTL bought,EXPLAIN_STOCK_INCLUSION
+please why was BHARTIARTL not selected,EXPLAIN_STOCK_EXCLUSION
+please write an email for me,UNKNOWN
+quickly am I well diversified,DIVERSIFICATION_QUESTION
+quickly book a restaurant,UNKNOWN
+quickly describe diversification,DIVERSIFICATION_QUESTION
+quickly describe the portfolio construction,ALLOCATION_RATIONALE
+quickly describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+quickly do I hold enough different assets,DIVERSIFICATION_QUESTION
+quickly explain my diversification score,DIVERSIFICATION_QUESTION
+quickly explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+quickly explain the overall allocation,ALLOCATION_RATIONALE
+quickly explain the overall investment mix,ALLOCATION_RATIONALE
+quickly explain the rejection of INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+quickly explain the selected mix,ALLOCATION_RATIONALE
+quickly explain the selection of INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+quickly explain why we do not own AXISBANK,EXPLAIN_STOCK_EXCLUSION
+quickly explain why we own AXISBANK,EXPLAIN_STOCK_INCLUSION
+quickly give me a risk summary,PORTFOLIO_RISK_SUMMARY
+quickly give me the concentration breakdown,DIVERSIFICATION_QUESTION
+quickly give me the portfolio rationale,ALLOCATION_RATIONALE
+quickly give me world news,UNKNOWN
+quickly help me buy a phone,UNKNOWN
+quickly how balanced is the portfolio,DIVERSIFICATION_QUESTION
+quickly how did the optimizer allocate my money,ALLOCATION_RATIONALE
+quickly how diversified is my portfolio,DIVERSIFICATION_QUESTION
+quickly how do I bake bread,UNKNOWN
+quickly how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+quickly how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+quickly how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+quickly how spread out are my investments,DIVERSIFICATION_QUESTION
+quickly how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+quickly how would a 15% crash affect me,HYPOTHETICAL_SHOCK
+quickly is my allocation concentrated,DIVERSIFICATION_QUESTION
+quickly is one sector dominating,DIVERSIFICATION_QUESTION
+quickly is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+quickly justify including BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+quickly justify leaving out BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+quickly play some music,UNKNOWN
+quickly reason for excluding RELIANCE,EXPLAIN_STOCK_EXCLUSION
+quickly reason for holding RELIANCE,EXPLAIN_STOCK_INCLUSION
+quickly reoptimize after a 15% decline,HYPOTHETICAL_SHOCK
+quickly run a crashes scenario,HYPOTHETICAL_SHOCK
+quickly run an inflation shock,HYPOTHETICAL_SHOCK
+quickly set an alarm,UNKNOWN
+quickly show a real market shock result,HYPOTHETICAL_SHOCK
+quickly show movie times,UNKNOWN
+quickly show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+quickly show stock and sector concentration,DIVERSIFICATION_QUESTION
+quickly simulate a 10% market crashes,HYPOTHETICAL_SHOCK
+quickly simulate an interest rate increase,HYPOTHETICAL_SHOCK
+quickly stress test a market declines,HYPOTHETICAL_SHOCK
+quickly stress the Energy sector,HYPOTHETICAL_SHOCK
+quickly summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+quickly summarize the optimization decision,ALLOCATION_RATIONALE
+quickly summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+quickly tell me a joke,UNKNOWN
+quickly tell me about sector diversification,DIVERSIFICATION_QUESTION
+quickly tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+quickly tell me why HDFCBANK is excluded,EXPLAIN_STOCK_EXCLUSION
+quickly tell me why HDFCBANK is included,EXPLAIN_STOCK_INCLUSION
+quickly translate this sentence,UNKNOWN
+quickly what determined the allocation,ALLOCATION_RATIONALE
+quickly what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+quickly what does the diversification metric mean,DIVERSIFICATION_QUESTION
+quickly what drove these weights,ALLOCATION_RATIONALE
+quickly what happens during a crash,HYPOTHETICAL_SHOCK
+quickly what if inflation rises 20%,HYPOTHETICAL_SHOCK
+quickly what if interest rates rise 10%,HYPOTHETICAL_SHOCK
+quickly what if the IT sector crashes,HYPOTHETICAL_SHOCK
+quickly what if the market drops,HYPOTHETICAL_SHOCK
+quickly what is my portfolio diversity,DIVERSIFICATION_QUESTION
+quickly what is my volatility,PORTFOLIO_RISK_SUMMARY
+quickly what is quantum physics,UNKNOWN
+quickly what is the capital of france,UNKNOWN
+quickly what is the concentration level,DIVERSIFICATION_QUESTION
+quickly what is the exclusion rationale for M&M,EXPLAIN_STOCK_EXCLUSION
+quickly what is the inclusion rationale for M&M,EXPLAIN_STOCK_INCLUSION
+quickly what is the logic behind the allocation,ALLOCATION_RATIONALE
+quickly what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+quickly what is the realized risk,PORTFOLIO_RISK_SUMMARY
+quickly what is the weather today,UNKNOWN
+quickly what is your favorite color,UNKNOWN
+quickly what kept MARUTI out,EXPLAIN_STOCK_EXCLUSION
+quickly what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+quickly what made MARUTI get selected,EXPLAIN_STOCK_INCLUSION
+quickly what prevented a INFY position,EXPLAIN_STOCK_EXCLUSION
+quickly what supports the INFY position,EXPLAIN_STOCK_INCLUSION
+quickly who won the football match,UNKNOWN
+quickly why are the weights like this,ALLOCATION_RATIONALE
+quickly why did I get these holdings,ALLOCATION_RATIONALE
+quickly why did the optimizer choose ITC,EXPLAIN_STOCK_INCLUSION
+quickly why did the optimizer reject ITC,EXPLAIN_STOCK_EXCLUSION
+quickly why did you exclude ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+quickly why did you include ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+quickly why does my allocation contain TCS,EXPLAIN_STOCK_INCLUSION
+quickly why does my allocation omit TCS,EXPLAIN_STOCK_EXCLUSION
+quickly why is LTIM in my portfolio,EXPLAIN_STOCK_INCLUSION
+quickly why is LTIM not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+quickly why is WIPRO missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+quickly why is WIPRO one of my holdings,EXPLAIN_STOCK_INCLUSION
+quickly why is money allocated to DIVISLAB,EXPLAIN_STOCK_INCLUSION
+quickly why is no money allocated to DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+quickly why is the portfolio allocated this way,ALLOCATION_RATIONALE
+quickly why this combination of stocks,ALLOCATION_RATIONALE
+quickly why was TATASTEEL bought,EXPLAIN_STOCK_INCLUSION
+quickly why was TATASTEEL not selected,EXPLAIN_STOCK_EXCLUSION
+quickly write an email for me,UNKNOWN
+reason for excluding BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+reason for holding BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+reoptimize after a 15% decline,HYPOTHETICAL_SHOCK
+run a falls scenario,HYPOTHETICAL_SHOCK
+run an inflation shock,HYPOTHETICAL_SHOCK
+set an alarm,UNKNOWN
+show a real market shock result,HYPOTHETICAL_SHOCK
+show me: am I well diversified,DIVERSIFICATION_QUESTION
+show me: book a restaurant,UNKNOWN
+show me: describe diversification,DIVERSIFICATION_QUESTION
+show me: describe the portfolio construction,ALLOCATION_RATIONALE
+show me: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+show me: do I hold enough different assets,DIVERSIFICATION_QUESTION
+show me: explain my diversification score,DIVERSIFICATION_QUESTION
+show me: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+show me: explain the overall allocation,ALLOCATION_RATIONALE
+show me: explain the overall investment mix,ALLOCATION_RATIONALE
+show me: explain the rejection of EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+show me: explain the selected mix,ALLOCATION_RATIONALE
+show me: explain the selection of EICHERMOT,EXPLAIN_STOCK_INCLUSION
+show me: explain why we do not own ITC,EXPLAIN_STOCK_EXCLUSION
+show me: explain why we own ITC,EXPLAIN_STOCK_INCLUSION
+show me: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+show me: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+show me: give me the portfolio rationale,ALLOCATION_RATIONALE
+show me: give me world news,UNKNOWN
+show me: help me buy a phone,UNKNOWN
+show me: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+show me: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+show me: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+show me: how do I bake bread,UNKNOWN
+show me: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+show me: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+show me: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+show me: how spread out are my investments,DIVERSIFICATION_QUESTION
+show me: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+show me: how would a 15% crash affect me,HYPOTHETICAL_SHOCK
+show me: is my allocation concentrated,DIVERSIFICATION_QUESTION
+show me: is one sector dominating,DIVERSIFICATION_QUESTION
+show me: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+show me: justify including RELIANCE,EXPLAIN_STOCK_INCLUSION
+show me: justify leaving out RELIANCE,EXPLAIN_STOCK_EXCLUSION
+show me: play some music,UNKNOWN
+show me: reason for excluding LTIM,EXPLAIN_STOCK_EXCLUSION
+show me: reason for holding LTIM,EXPLAIN_STOCK_INCLUSION
+show me: reoptimize after a 15% decline,HYPOTHETICAL_SHOCK
+show me: run a drops scenario,HYPOTHETICAL_SHOCK
+show me: run an inflation shock,HYPOTHETICAL_SHOCK
+show me: set an alarm,UNKNOWN
+show me: show a real market shock result,HYPOTHETICAL_SHOCK
+show me: show movie times,UNKNOWN
+show me: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+show me: show stock and sector concentration,DIVERSIFICATION_QUESTION
+show me: simulate a 10% market drops,HYPOTHETICAL_SHOCK
+show me: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+show me: stress test a market falls,HYPOTHETICAL_SHOCK
+show me: stress the Energy sector,HYPOTHETICAL_SHOCK
+show me: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+show me: summarize the optimization decision,ALLOCATION_RATIONALE
+show me: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+show me: tell me a joke,UNKNOWN
+show me: tell me about sector diversification,DIVERSIFICATION_QUESTION
+show me: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+show me: tell me why INDUSINDBK is excluded,EXPLAIN_STOCK_EXCLUSION
+show me: tell me why INDUSINDBK is included,EXPLAIN_STOCK_INCLUSION
+show me: translate this sentence,UNKNOWN
+show me: what determined the allocation,ALLOCATION_RATIONALE
+show me: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+show me: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+show me: what drove these weights,ALLOCATION_RATIONALE
+show me: what happens during a crash,HYPOTHETICAL_SHOCK
+show me: what if inflation rises 20%,HYPOTHETICAL_SHOCK
+show me: what if interest rates rise 10%,HYPOTHETICAL_SHOCK
+show me: what if the IT sector crashes,HYPOTHETICAL_SHOCK
+show me: what if the market declines,HYPOTHETICAL_SHOCK
+show me: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+show me: what is my volatility,PORTFOLIO_RISK_SUMMARY
+show me: what is quantum physics,UNKNOWN
+show me: what is the capital of france,UNKNOWN
+show me: what is the concentration level,DIVERSIFICATION_QUESTION
+show me: what is the exclusion rationale for HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+show me: what is the inclusion rationale for HDFCBANK,EXPLAIN_STOCK_INCLUSION
+show me: what is the logic behind the allocation,ALLOCATION_RATIONALE
+show me: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+show me: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+show me: what is the weather today,UNKNOWN
+show me: what is your favorite color,UNKNOWN
+show me: what kept SUNPHARMA out,EXPLAIN_STOCK_EXCLUSION
+show me: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+show me: what made SUNPHARMA get selected,EXPLAIN_STOCK_INCLUSION
+show me: what prevented a MARUTI position,EXPLAIN_STOCK_EXCLUSION
+show me: what supports the MARUTI position,EXPLAIN_STOCK_INCLUSION
+show me: who won the football match,UNKNOWN
+show me: why are the weights like this,ALLOCATION_RATIONALE
+show me: why did I get these holdings,ALLOCATION_RATIONALE
+show me: why did the optimizer choose TATASTEEL,EXPLAIN_STOCK_INCLUSION
+show me: why did the optimizer reject TATASTEEL,EXPLAIN_STOCK_EXCLUSION
+show me: why did you exclude HINDALCO,EXPLAIN_STOCK_EXCLUSION
+show me: why did you include HINDALCO,EXPLAIN_STOCK_INCLUSION
+show me: why does my allocation contain ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+show me: why does my allocation omit ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+show me: why is BPCL in my portfolio,EXPLAIN_STOCK_INCLUSION
+show me: why is BPCL not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+show me: why is INFY missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+show me: why is INFY one of my holdings,EXPLAIN_STOCK_INCLUSION
+show me: why is money allocated to TCS,EXPLAIN_STOCK_INCLUSION
+show me: why is no money allocated to TCS,EXPLAIN_STOCK_EXCLUSION
+show me: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+show me: why this combination of stocks,ALLOCATION_RATIONALE
+show me: why was NTPC bought,EXPLAIN_STOCK_INCLUSION
+show me: why was NTPC not selected,EXPLAIN_STOCK_EXCLUSION
+show me: write an email for me,UNKNOWN
+show movie times,UNKNOWN
+show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+show stock and sector concentration,DIVERSIFICATION_QUESTION
+simulate a 10% market falls,HYPOTHETICAL_SHOCK
+simulate an interest rate increase,HYPOTHETICAL_SHOCK
+stress test a market drops,HYPOTHETICAL_SHOCK
+stress the Energy sector,HYPOTHETICAL_SHOCK
+summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+summarize the optimization decision,ALLOCATION_RATIONALE
+summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+tell me a joke,UNKNOWN
+tell me about sector diversification,DIVERSIFICATION_QUESTION
+tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+tell me why M&M is excluded,EXPLAIN_STOCK_EXCLUSION
+tell me why M&M is included,EXPLAIN_STOCK_INCLUSION
+tell me: am I well diversified,DIVERSIFICATION_QUESTION
+tell me: book a restaurant,UNKNOWN
+tell me: describe diversification,DIVERSIFICATION_QUESTION
+tell me: describe the portfolio construction,ALLOCATION_RATIONALE
+tell me: describe the portfolio risk level,PORTFOLIO_RISK_SUMMARY
+tell me: do I hold enough different assets,DIVERSIFICATION_QUESTION
+tell me: explain my diversification score,DIVERSIFICATION_QUESTION
+tell me: explain my risk numbers,PORTFOLIO_RISK_SUMMARY
+tell me: explain the overall allocation,ALLOCATION_RATIONALE
+tell me: explain the overall investment mix,ALLOCATION_RATIONALE
+tell me: explain the rejection of SUNPHARMA,EXPLAIN_STOCK_EXCLUSION
+tell me: explain the selected mix,ALLOCATION_RATIONALE
+tell me: explain the selection of SUNPHARMA,EXPLAIN_STOCK_INCLUSION
+tell me: explain why we do not own BHARTIARTL,EXPLAIN_STOCK_EXCLUSION
+tell me: explain why we own BHARTIARTL,EXPLAIN_STOCK_INCLUSION
+tell me: give me a risk summary,PORTFOLIO_RISK_SUMMARY
+tell me: give me the concentration breakdown,DIVERSIFICATION_QUESTION
+tell me: give me the portfolio rationale,ALLOCATION_RATIONALE
+tell me: give me world news,UNKNOWN
+tell me: help me buy a phone,UNKNOWN
+tell me: how balanced is the portfolio,DIVERSIFICATION_QUESTION
+tell me: how did the optimizer allocate my money,ALLOCATION_RATIONALE
+tell me: how diversified is my portfolio,DIVERSIFICATION_QUESTION
+tell me: how do I bake bread,UNKNOWN
+tell me: how does the portfolio change in a crash,HYPOTHETICAL_SHOCK
+tell me: how much risk am I taking,PORTFOLIO_RISK_SUMMARY
+tell me: how risky is my portfolio,PORTFOLIO_RISK_SUMMARY
+tell me: how spread out are my investments,DIVERSIFICATION_QUESTION
+tell me: how volatile are these holdings,PORTFOLIO_RISK_SUMMARY
+tell me: how would a 20% crash affect me,HYPOTHETICAL_SHOCK
+tell me: is my allocation concentrated,DIVERSIFICATION_QUESTION
+tell me: is one sector dominating,DIVERSIFICATION_QUESTION
+tell me: is this portfolio high risk,PORTFOLIO_RISK_SUMMARY
+tell me: justify including TCS,EXPLAIN_STOCK_INCLUSION
+tell me: justify leaving out TCS,EXPLAIN_STOCK_EXCLUSION
+tell me: play some music,UNKNOWN
+tell me: reason for excluding ASIANPAINT,EXPLAIN_STOCK_EXCLUSION
+tell me: reason for holding ASIANPAINT,EXPLAIN_STOCK_INCLUSION
+tell me: reoptimize after a 20% decline,HYPOTHETICAL_SHOCK
+tell me: run a crashes scenario,HYPOTHETICAL_SHOCK
+tell me: run an inflation shock,HYPOTHETICAL_SHOCK
+tell me: set an alarm,UNKNOWN
+tell me: show a real market shock result,HYPOTHETICAL_SHOCK
+tell me: show movie times,UNKNOWN
+tell me: show my sharpe and volatility,PORTFOLIO_RISK_SUMMARY
+tell me: show stock and sector concentration,DIVERSIFICATION_QUESTION
+tell me: simulate a 15% market crashes,HYPOTHETICAL_SHOCK
+tell me: simulate an interest rate increase,HYPOTHETICAL_SHOCK
+tell me: stress test a market declines,HYPOTHETICAL_SHOCK
+tell me: stress the Financial Services sector,HYPOTHETICAL_SHOCK
+tell me: summarize my portfolio risk,PORTFOLIO_RISK_SUMMARY
+tell me: summarize the optimization decision,ALLOCATION_RATIONALE
+tell me: summarize why this portfolio was chosen,ALLOCATION_RATIONALE
+tell me: tell me a joke,UNKNOWN
+tell me: tell me about sector diversification,DIVERSIFICATION_QUESTION
+tell me: tell me the risk metrics,PORTFOLIO_RISK_SUMMARY
+tell me: tell me why MARUTI is excluded,EXPLAIN_STOCK_EXCLUSION
+tell me: tell me why MARUTI is included,EXPLAIN_STOCK_INCLUSION
+tell me: translate this sentence,UNKNOWN
+tell me: what determined the allocation,ALLOCATION_RATIONALE
+tell me: what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+tell me: what does the diversification metric mean,DIVERSIFICATION_QUESTION
+tell me: what drove these weights,ALLOCATION_RATIONALE
+tell me: what happens during a crash,HYPOTHETICAL_SHOCK
+tell me: what if inflation rises 25%,HYPOTHETICAL_SHOCK
+tell me: what if interest rates rise 15%,HYPOTHETICAL_SHOCK
+tell me: what if the Energy sector crashes,HYPOTHETICAL_SHOCK
+tell me: what if the market drops,HYPOTHETICAL_SHOCK
+tell me: what is my portfolio diversity,DIVERSIFICATION_QUESTION
+tell me: what is my volatility,PORTFOLIO_RISK_SUMMARY
+tell me: what is quantum physics,UNKNOWN
+tell me: what is the capital of france,UNKNOWN
+tell me: what is the concentration level,DIVERSIFICATION_QUESTION
+tell me: what is the exclusion rationale for INFY,EXPLAIN_STOCK_EXCLUSION
+tell me: what is the inclusion rationale for INFY,EXPLAIN_STOCK_INCLUSION
+tell me: what is the logic behind the allocation,ALLOCATION_RATIONALE
+tell me: what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+tell me: what is the realized risk,PORTFOLIO_RISK_SUMMARY
+tell me: what is the weather today,UNKNOWN
+tell me: what is your favorite color,UNKNOWN
+tell me: what kept NTPC out,EXPLAIN_STOCK_EXCLUSION
+tell me: what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+tell me: what made NTPC get selected,EXPLAIN_STOCK_INCLUSION
+tell me: what prevented a TATASTEEL position,EXPLAIN_STOCK_EXCLUSION
+tell me: what supports the TATASTEEL position,EXPLAIN_STOCK_INCLUSION
+tell me: who won the football match,UNKNOWN
+tell me: why are the weights like this,ALLOCATION_RATIONALE
+tell me: why did I get these holdings,ALLOCATION_RATIONALE
+tell me: why did the optimizer choose RELIANCE,EXPLAIN_STOCK_INCLUSION
+tell me: why did the optimizer reject RELIANCE,EXPLAIN_STOCK_EXCLUSION
+tell me: why did you exclude EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+tell me: why did you include EICHERMOT,EXPLAIN_STOCK_INCLUSION
+tell me: why does my allocation contain INDUSINDBK,EXPLAIN_STOCK_INCLUSION
+tell me: why does my allocation omit INDUSINDBK,EXPLAIN_STOCK_EXCLUSION
+tell me: why is HINDALCO in my portfolio,EXPLAIN_STOCK_INCLUSION
+tell me: why is HINDALCO not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+tell me: why is ITC missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+tell me: why is ITC one of my holdings,EXPLAIN_STOCK_INCLUSION
+tell me: why is money allocated to HDFCBANK,EXPLAIN_STOCK_INCLUSION
+tell me: why is no money allocated to HDFCBANK,EXPLAIN_STOCK_EXCLUSION
+tell me: why is the portfolio allocated this way,ALLOCATION_RATIONALE
+tell me: why this combination of stocks,ALLOCATION_RATIONALE
+tell me: why was LTIM bought,EXPLAIN_STOCK_INCLUSION
+tell me: why was LTIM not selected,EXPLAIN_STOCK_EXCLUSION
+tell me: write an email for me,UNKNOWN
+translate this sentence,UNKNOWN
+"using my data, am I well diversified",DIVERSIFICATION_QUESTION
+"using my data, book a restaurant",UNKNOWN
+"using my data, describe diversification",DIVERSIFICATION_QUESTION
+"using my data, describe the portfolio construction",ALLOCATION_RATIONALE
+"using my data, describe the portfolio risk level",PORTFOLIO_RISK_SUMMARY
+"using my data, do I hold enough different assets",DIVERSIFICATION_QUESTION
+"using my data, explain my diversification score",DIVERSIFICATION_QUESTION
+"using my data, explain my risk numbers",PORTFOLIO_RISK_SUMMARY
+"using my data, explain the overall allocation",ALLOCATION_RATIONALE
+"using my data, explain the overall investment mix",ALLOCATION_RATIONALE
+"using my data, explain the rejection of AXISBANK",EXPLAIN_STOCK_EXCLUSION
+"using my data, explain the selected mix",ALLOCATION_RATIONALE
+"using my data, explain the selection of AXISBANK",EXPLAIN_STOCK_INCLUSION
+"using my data, explain why we do not own TCS",EXPLAIN_STOCK_EXCLUSION
+"using my data, explain why we own TCS",EXPLAIN_STOCK_INCLUSION
+"using my data, give me a risk summary",PORTFOLIO_RISK_SUMMARY
+"using my data, give me the concentration breakdown",DIVERSIFICATION_QUESTION
+"using my data, give me the portfolio rationale",ALLOCATION_RATIONALE
+"using my data, give me world news",UNKNOWN
+"using my data, help me buy a phone",UNKNOWN
+"using my data, how balanced is the portfolio",DIVERSIFICATION_QUESTION
+"using my data, how did the optimizer allocate my money",ALLOCATION_RATIONALE
+"using my data, how diversified is my portfolio",DIVERSIFICATION_QUESTION
+"using my data, how do I bake bread",UNKNOWN
+"using my data, how does the portfolio change in a crash",HYPOTHETICAL_SHOCK
+"using my data, how much risk am I taking",PORTFOLIO_RISK_SUMMARY
+"using my data, how risky is my portfolio",PORTFOLIO_RISK_SUMMARY
+"using my data, how spread out are my investments",DIVERSIFICATION_QUESTION
+"using my data, how volatile are these holdings",PORTFOLIO_RISK_SUMMARY
+"using my data, how would a 25% crash affect me",HYPOTHETICAL_SHOCK
+"using my data, is my allocation concentrated",DIVERSIFICATION_QUESTION
+"using my data, is one sector dominating",DIVERSIFICATION_QUESTION
+"using my data, is this portfolio high risk",PORTFOLIO_RISK_SUMMARY
+"using my data, justify including INDUSINDBK",EXPLAIN_STOCK_INCLUSION
+"using my data, justify leaving out INDUSINDBK",EXPLAIN_STOCK_EXCLUSION
+"using my data, play some music",UNKNOWN
+"using my data, reason for excluding EICHERMOT",EXPLAIN_STOCK_EXCLUSION
+"using my data, reason for holding EICHERMOT",EXPLAIN_STOCK_INCLUSION
+"using my data, reoptimize after a 25% decline",HYPOTHETICAL_SHOCK
+"using my data, run a crashes scenario",HYPOTHETICAL_SHOCK
+"using my data, run an inflation shock",HYPOTHETICAL_SHOCK
+"using my data, set an alarm",UNKNOWN
+"using my data, show a real market shock result",HYPOTHETICAL_SHOCK
+"using my data, show movie times",UNKNOWN
+"using my data, show my sharpe and volatility",PORTFOLIO_RISK_SUMMARY
+"using my data, show stock and sector concentration",DIVERSIFICATION_QUESTION
+"using my data, simulate a 20% market crashes",HYPOTHETICAL_SHOCK
+"using my data, simulate an interest rate increase",HYPOTHETICAL_SHOCK
+"using my data, stress test a market declines",HYPOTHETICAL_SHOCK
+"using my data, stress the Automobile sector",HYPOTHETICAL_SHOCK
+"using my data, summarize my portfolio risk",PORTFOLIO_RISK_SUMMARY
+"using my data, summarize the optimization decision",ALLOCATION_RATIONALE
+"using my data, summarize why this portfolio was chosen",ALLOCATION_RATIONALE
+"using my data, tell me a joke",UNKNOWN
+"using my data, tell me about sector diversification",DIVERSIFICATION_QUESTION
+"using my data, tell me the risk metrics",PORTFOLIO_RISK_SUMMARY
+"using my data, tell me why NTPC is excluded",EXPLAIN_STOCK_EXCLUSION
+"using my data, tell me why NTPC is included",EXPLAIN_STOCK_INCLUSION
+"using my data, translate this sentence",UNKNOWN
+"using my data, what determined the allocation",ALLOCATION_RATIONALE
+"using my data, what does analytics say about risk",PORTFOLIO_RISK_SUMMARY
+"using my data, what does the diversification metric mean",DIVERSIFICATION_QUESTION
+"using my data, what drove these weights",ALLOCATION_RATIONALE
+"using my data, what happens during a crash",HYPOTHETICAL_SHOCK
+"using my data, what if inflation rises 5%",HYPOTHETICAL_SHOCK
+"using my data, what if interest rates rise 20%",HYPOTHETICAL_SHOCK
+"using my data, what if the Financial Services sector crashes",HYPOTHETICAL_SHOCK
+"using my data, what if the market drops",HYPOTHETICAL_SHOCK
+"using my data, what is my portfolio diversity",DIVERSIFICATION_QUESTION
+"using my data, what is my volatility",PORTFOLIO_RISK_SUMMARY
+"using my data, what is quantum physics",UNKNOWN
+"using my data, what is the capital of france",UNKNOWN
+"using my data, what is the concentration level",DIVERSIFICATION_QUESTION
+"using my data, what is the exclusion rationale for TATASTEEL",EXPLAIN_STOCK_EXCLUSION
+"using my data, what is the inclusion rationale for TATASTEEL",EXPLAIN_STOCK_INCLUSION
+"using my data, what is the logic behind the allocation",ALLOCATION_RATIONALE
+"using my data, what is the maximum drawdown",PORTFOLIO_RISK_SUMMARY
+"using my data, what is the realized risk",PORTFOLIO_RISK_SUMMARY
+"using my data, what is the weather today",UNKNOWN
+"using my data, what is your favorite color",UNKNOWN
+"using my data, what kept BPCL out",EXPLAIN_STOCK_EXCLUSION
+"using my data, what losses did the backtest show",PORTFOLIO_RISK_SUMMARY
+"using my data, what made BPCL get selected",EXPLAIN_STOCK_INCLUSION
+"using my data, what prevented a LTIM position",EXPLAIN_STOCK_EXCLUSION
+"using my data, what supports the LTIM position",EXPLAIN_STOCK_INCLUSION
+"using my data, who won the football match",UNKNOWN
+"using my data, why are the weights like this",ALLOCATION_RATIONALE
+"using my data, why did I get these holdings",ALLOCATION_RATIONALE
+"using my data, why did the optimizer choose ASIANPAINT",EXPLAIN_STOCK_INCLUSION
+"using my data, why did the optimizer reject ASIANPAINT",EXPLAIN_STOCK_EXCLUSION
+"using my data, why did you exclude WIPRO",EXPLAIN_STOCK_EXCLUSION
+"using my data, why did you include WIPRO",EXPLAIN_STOCK_INCLUSION
+"using my data, why does my allocation contain SUNPHARMA",EXPLAIN_STOCK_INCLUSION
+"using my data, why does my allocation omit SUNPHARMA",EXPLAIN_STOCK_EXCLUSION
+"using my data, why is M&M in my portfolio",EXPLAIN_STOCK_INCLUSION
+"using my data, why is M&M not in my portfolio",EXPLAIN_STOCK_EXCLUSION
+"using my data, why is RELIANCE missing from my holdings",EXPLAIN_STOCK_EXCLUSION
+"using my data, why is RELIANCE one of my holdings",EXPLAIN_STOCK_INCLUSION
+"using my data, why is money allocated to MARUTI",EXPLAIN_STOCK_INCLUSION
+"using my data, why is no money allocated to MARUTI",EXPLAIN_STOCK_EXCLUSION
+"using my data, why is the portfolio allocated this way",ALLOCATION_RATIONALE
+"using my data, why this combination of stocks",ALLOCATION_RATIONALE
+"using my data, why was HINDALCO bought",EXPLAIN_STOCK_INCLUSION
+"using my data, why was HINDALCO not selected",EXPLAIN_STOCK_EXCLUSION
+"using my data, write an email for me",UNKNOWN
+what determined the allocation,ALLOCATION_RATIONALE
+what does analytics say about risk,PORTFOLIO_RISK_SUMMARY
+what does the diversification metric mean,DIVERSIFICATION_QUESTION
+what drove these weights,ALLOCATION_RATIONALE
+what happens during a crash,HYPOTHETICAL_SHOCK
+what if inflation rises 20%,HYPOTHETICAL_SHOCK
+what if interest rates rise 10%,HYPOTHETICAL_SHOCK
+what if the IT sector crashes,HYPOTHETICAL_SHOCK
+what if the market crashes,HYPOTHETICAL_SHOCK
+what is my portfolio diversity,DIVERSIFICATION_QUESTION
+what is my volatility,PORTFOLIO_RISK_SUMMARY
+what is quantum physics,UNKNOWN
+what is the capital of france,UNKNOWN
+what is the concentration level,DIVERSIFICATION_QUESTION
+what is the exclusion rationale for EICHERMOT,EXPLAIN_STOCK_EXCLUSION
+what is the inclusion rationale for EICHERMOT,EXPLAIN_STOCK_INCLUSION
+what is the logic behind the allocation,ALLOCATION_RATIONALE
+what is the maximum drawdown,PORTFOLIO_RISK_SUMMARY
+what is the realized risk,PORTFOLIO_RISK_SUMMARY
+what is the weather today,UNKNOWN
+what is your favorite color,UNKNOWN
+what kept INFY out,EXPLAIN_STOCK_EXCLUSION
+what losses did the backtest show,PORTFOLIO_RISK_SUMMARY
+what made INFY get selected,EXPLAIN_STOCK_INCLUSION
+what prevented a WIPRO position,EXPLAIN_STOCK_EXCLUSION
+what supports the WIPRO position,EXPLAIN_STOCK_INCLUSION
+who won the football match,UNKNOWN
+why are the weights like this,ALLOCATION_RATIONALE
+why did I get these holdings,ALLOCATION_RATIONALE
+why did the optimizer choose AXISBANK,EXPLAIN_STOCK_INCLUSION
+why did the optimizer reject AXISBANK,EXPLAIN_STOCK_EXCLUSION
+why did you exclude TCS,EXPLAIN_STOCK_EXCLUSION
+why did you include TCS,EXPLAIN_STOCK_INCLUSION
+why does my allocation contain DIVISLAB,EXPLAIN_STOCK_INCLUSION
+why does my allocation omit DIVISLAB,EXPLAIN_STOCK_EXCLUSION
+why is RELIANCE in my portfolio,EXPLAIN_STOCK_INCLUSION
+why is RELIANCE not in my portfolio,EXPLAIN_STOCK_EXCLUSION
+why is SUNPHARMA missing from my holdings,EXPLAIN_STOCK_EXCLUSION
+why is SUNPHARMA one of my holdings,EXPLAIN_STOCK_INCLUSION
+why is money allocated to HINDALCO,EXPLAIN_STOCK_INCLUSION
+why is no money allocated to HINDALCO,EXPLAIN_STOCK_EXCLUSION
+why is the portfolio allocated this way,ALLOCATION_RATIONALE
+why this combination of stocks,ALLOCATION_RATIONALE
+why was ITC bought,EXPLAIN_STOCK_INCLUSION
+why was ITC not selected,EXPLAIN_STOCK_EXCLUSION
+write an email for me,UNKNOWN

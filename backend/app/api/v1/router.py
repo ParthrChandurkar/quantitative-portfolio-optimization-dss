@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.v1 import (
     analytics,
+    assistant,
     auth,
     me,
     optimization,
@@ -22,6 +23,7 @@ for router in (
     optimization.router,
     scenarios.router,
     analytics.router,
+    assistant.router,
     reports.router,
 ):
     api_router.include_router(router)

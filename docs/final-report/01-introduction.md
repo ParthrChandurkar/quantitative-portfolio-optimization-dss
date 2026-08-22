@@ -4,7 +4,7 @@
 
 ## Project Scope: OR Foundation + AI Personalization Layer
 
-The implemented system is a complete Operations Research decision-support foundation comprising continuous and mixed-integer portfolio optimization, quantitative explanations, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a trained, leakage-safe gradient-boosting expected-return estimator as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a questionnaire-based classifier trained to reproduce an explicit synthetic-label rubric and uses its predicted category to recommend visible, editable OR constraints. Broader behavior- and outcome-trained personalization remains future work and is not attributed to the present system.
+The implemented system is a complete Operations Research decision-support foundation comprising continuous and mixed-integer portfolio optimization, quantitative explanations, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a trained, leakage-safe gradient-boosting expected-return estimator as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a questionnaire-based classifier trained to reproduce an explicit synthetic-label rubric and uses its predicted category to recommend visible, editable OR constraints. AI Phase 3 adds an offline TF-IDF intent classifier whose deterministic answers expose their stored explanation, analytics, or scenario grounding. No external generative model is used. Broader behavior- and outcome-trained personalization remains future work and is not attributed to the present system.
 
 ## Project context and problem
 
@@ -45,5 +45,6 @@ Finding and correcting look-ahead bias in Phase 9C strengthens the contribution:
 - Compare seven scenario families against a preserved baseline.
 - Present fit estimates beside realized out-of-sample analytics.
 - Generate downloadable methodology-labeled PDFs in rupees.
+- Answer supported portfolio questions through an offline, confidence-gated NLP router with auditable source fields.
 
 The formal FR/NFR baseline remains in `docs/phase1-requirements/`; this report describes what was actually built.

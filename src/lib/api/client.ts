@@ -140,6 +140,20 @@ export type WalkForwardRun = {
 }
 export type ReportRecord = { id: string; snapshot_id: string; report_type: string; file_path: string; generated_at?: string; download_url: string; size_bytes?: number }
 
+export type AssistantGrounding = {
+  source: string
+  fields: string[]
+  values: Record<string, unknown>
+}
+
+export type AssistantAnswer = {
+  intent: 'EXPLAIN_STOCK_INCLUSION' | 'EXPLAIN_STOCK_EXCLUSION' | 'PORTFOLIO_RISK_SUMMARY' | 'ALLOCATION_RATIONALE' | 'HYPOTHETICAL_SHOCK' | 'DIVERSIFICATION_QUESTION' | 'UNKNOWN'
+  confidence: number
+  answer: string
+  grounding: AssistantGrounding[]
+  is_fallback: boolean
+}
+
 export type Stock = {
   id: string
   symbol: string
@@ -231,6 +245,7 @@ export interface OptiVestApi {
   generateReport(portfolioId: string, snapshotId: string, reportType: string): Promise<ReportRecord>
   reports(): Promise<ReportRecord[]>
   downloadReport(id: string): Promise<Blob>
+  askAssistant(portfolioId: string, question: string): Promise<AssistantAnswer>
 }
 
 export class ApiClient implements OptiVestApi {
@@ -336,6 +351,8 @@ export class ApiClient implements OptiVestApi {
   generateReport = (portfolioId: string, snapshotId: string, reportType: string) =>
     this.request<ReportRecord>(`/portfolios/${portfolioId}/snapshots/${snapshotId}/reports`, { method: 'POST', body: JSON.stringify({ report_type: reportType }) })
   reports = () => this.request<ReportRecord[]>('/reports')
+  askAssistant = (portfolioId: string, question: string) =>
+    this.request<AssistantAnswer>(`/portfolios/${portfolioId}/assistant/ask`, { method: 'POST', body: JSON.stringify({ question }) })
 
   async downloadReport(id: string): Promise<Blob> {
     const tokens = this.tokenStore.get()

@@ -8,7 +8,7 @@ OptiVest is an explainable investment-planning and constrained Nifty-50 portfoli
 
 ## Project Scope: OR Foundation + AI Personalization Layer
 
-The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a leakage-safe gradient-boosting return forecast as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a transparent rubric-trained risk classifier that recommends visible, editable optimization defaults after onboarding. The classifier learns synthetic rubric labels—not observed investor outcomes—and broader behavioral personalization remains future work.
+The fully implemented foundation is an Operations Research decision-support engine: continuous and mixed-integer portfolio optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. AI Phase 1 adds a leakage-safe gradient-boosting return forecast as a selectable alternative to the unchanged historical-mean input. AI Phase 2 adds a transparent rubric-trained risk classifier that recommends visible, editable optimization defaults after onboarding. AI Phase 3 adds an offline intent classifier that routes portfolio questions to deterministic answers grounded in stored system results. The classifiers learn synthetic labels—not observed investor outcomes or conversations—and broader behavioral personalization remains future work.
 
 ![OptiVest analytics](docs/final-report/screenshots/05-analytics-out-of-sample.png)
 
@@ -18,6 +18,7 @@ The fully implemented foundation is an Operations Research decision-support engi
 - Continuous mean-variance QP with SciPy, cardinality-constrained mean absolute deviation with PuLP/CBC, and CP-SAT support selection with OR-Tools.
 - Stable constraint checks, binding-constraint logs, marginal contributions, deterministic explanations, seven re-solved scenario families, historical analytics, and generated PDFs.
 - JWT access/refresh authentication, ownership checks, React Query server state, a structurally enforced out-of-sample split, and rolling walk-forward re-estimation.
+- Offline portfolio Q&A with a seven-intent TF-IDF/logistic-regression router, auditable deterministic answers, and real scenario re-solving for shock questions.
 
 ## Technology stack
 
@@ -101,13 +102,14 @@ npm test
 npm run test:coverage
 ```
 
-Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 15 August 2026 stretch-phase run produced 168 passed and 3 environment-gated skips, 89.09% combined backend coverage, and 35/35 frontend tests with 84.32% statement and 96.42% line coverage. All three gated tests pass against the loaded database. The configured 90% backend global target is not yet met. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
+Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI Phase 3 run against that database produced 205 passed and 0 skipped backend tests with 90% combined coverage; the focused assistant suite measured 90.29%. The frontend produced 43/43 passing tests with 83% statement and 96% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
 
 ## Final report and conversion
 
 - [Final report chapters](docs/final-report/)
 - [Methodology integrity notes](docs/methodology-notes.md)
 - [Requirements](docs/phase1-requirements/)
+- [Grounded assistant methodology](docs/ai-personalization/assistant-methodology.md)
 
 With Pandoc, XeLaTeX, and `mermaid-filter` installed:
 

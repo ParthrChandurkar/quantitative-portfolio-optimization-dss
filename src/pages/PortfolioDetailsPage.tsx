@@ -1,12 +1,43 @@
 import { Activity, BrainCircuit, BriefcaseBusiness, Gauge, TrendingUp } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
+import { AssistantPanel } from '../components/AssistantPanel'
 import { EmptyState, PageError, PageLoading } from '../components/PageState'
 import { Metric } from '../components/Metric'
 import { useApi } from '../lib/api/context'
 import { money, number, percent } from '../lib/format'
 import { loadSelection, saveSelection } from '../lib/selection'
 
-const colors=['#60a5fa','#34d399','#a78bfa','#fbbf24','#fb7185','#22d3ee','#c084fc','#f97316','#94a3b8']
+const colors = ['#60a5fa', '#34d399', '#a78bfa', '#fbbf24', '#fb7185', '#22d3ee', '#c084fc', '#f97316', '#94a3b8']
 
-export function PortfolioDetailsPage(){const api=useApi(),params=useParams();const saved=loadSelection();const portfolioId=params.portfolioId??saved?.portfolioId;const portfolio=useQuery({queryKey:['portfolio',portfolioId],queryFn:()=>api.portfolio(portfolioId!),enabled:Boolean(portfolioId)});if(!portfolioId)return <EmptyState>Select or optimize a portfolio from the <Link to="/builder">Portfolio Builder</Link>.</EmptyState>;if(portfolio.isLoading)return <PageLoading label="Loading persisted holdings and explanations…"/>;if(portfolio.error)return <PageError error={portfolio.error} retry={()=>portfolio.refetch()}/>;const data=portfolio.data!,snapshot=data.latest_snapshot;if(!snapshot)return <EmptyState>{data.name} has no solved snapshot yet. <Link to={`/builder?portfolio=${data.id}`}>Optimize it now.</Link></EmptyState>;saveSelection({portfolioId:data.id,snapshotId:snapshot.id});const holdings=snapshot.holdings??[], explanations=snapshot.explanations?.included??[];const requested=params.snapshotId;if(requested&&requested!==snapshot.id)return <PageError error={new Error('The requested snapshot is not the latest portfolio snapshot exposed by the API.')}/>;return <><section className="page-intro"><div><p className="eyebrow">PERSISTED OPTIMIZATION SNAPSHOT</p><h2>{data.name}</h2><p>{snapshot.label} · {new Date(snapshot.created_at).toLocaleString('en-IN')}</p></div><Link className="secondary" to={`/analytics/${data.id}/${snapshot.id}`}>Open analytics</Link></section><section className="metric-grid"><Metric label="BUDGET" value={money(snapshot.budget_inr??holdings.reduce((s,h)=>s+h.allocated_amount_inr,0))} detail={`${holdings.length} selected holdings`} icon={BriefcaseBusiness}/><Metric label="EXPECTED RETURN" value={percent(snapshot.expected_return)} detail="Annualized model estimate" icon={TrendingUp}/><Metric label="VOLATILITY" value={percent(snapshot.expected_volatility)} detail="Annualized model estimate" icon={Activity}/><Metric label="SHARPE RATIO" value={number(snapshot.sharpe_ratio)} detail={`Diversification ${number(snapshot.diversification_score,1)}/100`} icon={Gauge}/></section><section className="card result"><div className="card-head"><div><span>REAL HOLDINGS</span><h3>Optimized allocation</h3></div></div><div className="result-table"><div className="table-head"><span>ASSET</span><span>WEIGHT</span><span>VALUE / SHARES</span></div>{holdings.map((h,index)=><div key={h.symbol}><span><i style={{background:colors[index%colors.length]}}/><b>{h.symbol}</b><small>{h.sector}</small></span><span><div className="mini-bar"><i style={{width:`${h.weight*100}%`,background:colors[index%colors.length]}}/></div><b>{percent(h.weight)}</b></span><span>{money(h.allocated_amount_inr)} · {number(h.shares,3)}</span></div>)}</div></section><section className="card explanations"><div className="card-head"><div><span>WHY?</span><h3>Real optimization narratives</h3></div><BrainCircuit/></div>{explanations.length===0?<EmptyState>No explanation rows were persisted.</EmptyState>:explanations.map((item,index)=><div className="explanation" key={`${item.symbol}-${index}`}><div className="rank">{String(index+1).padStart(2,'0')}</div><div className="ticker"><i style={{background:colors[index%colors.length]}}/><span><b>{item.symbol}</b><small>{item.primary_reason}</small></span></div><p>{item.narrative_text}</p><div className="model-score"><span>RISK CONTRIB.</span><b>{percent(item.marginal_risk_contribution)}</b></div></div>)}</section></>}
+export function PortfolioDetailsPage() {
+  const api = useApi()
+  const params = useParams()
+  const saved = loadSelection()
+  const portfolioId = params.portfolioId ?? saved?.portfolioId
+  const portfolio = useQuery({ queryKey: ['portfolio', portfolioId], queryFn: () => api.portfolio(portfolioId!), enabled: Boolean(portfolioId) })
+  if (!portfolioId) return <EmptyState>Select or optimize a portfolio from the <Link to="/builder">Portfolio Builder</Link>.</EmptyState>
+  if (portfolio.isLoading) return <PageLoading label="Loading persisted holdings and explanations…"/>
+  if (portfolio.error) return <PageError error={portfolio.error} retry={() => portfolio.refetch()}/>
+
+  const data = portfolio.data!
+  const snapshot = data.latest_snapshot
+  if (!snapshot) return <EmptyState>{data.name} has no solved snapshot yet. <Link to={`/builder?portfolio=${data.id}`}>Optimize it now.</Link></EmptyState>
+  saveSelection({ portfolioId: data.id, snapshotId: snapshot.id })
+  const holdings = snapshot.holdings ?? []
+  const explanations = snapshot.explanations?.included ?? []
+  if (params.snapshotId && params.snapshotId !== snapshot.id) return <PageError error={new Error('The requested snapshot is not the latest portfolio snapshot exposed by the API.')}/>
+
+  return <>
+    <section className="page-intro"><div><p className="eyebrow">PERSISTED OPTIMIZATION SNAPSHOT</p><h2>{data.name}</h2><p>{snapshot.label} · {new Date(snapshot.created_at).toLocaleString('en-IN')}</p></div><Link className="secondary" to={`/analytics/${data.id}/${snapshot.id}`}>Open analytics</Link></section>
+    <section className="metric-grid">
+      <Metric label="BUDGET" value={money(snapshot.budget_inr ?? holdings.reduce((sum, holding) => sum + holding.allocated_amount_inr, 0))} detail={`${holdings.length} selected holdings`} icon={BriefcaseBusiness}/>
+      <Metric label="EXPECTED RETURN" value={percent(snapshot.expected_return)} detail="Annualized model estimate" icon={TrendingUp}/>
+      <Metric label="VOLATILITY" value={percent(snapshot.expected_volatility)} detail="Annualized model estimate" icon={Activity}/>
+      <Metric label="SHARPE RATIO" value={number(snapshot.sharpe_ratio)} detail={`Diversification ${number(snapshot.diversification_score, 1)}/100`} icon={Gauge}/>
+    </section>
+    <section className="card result"><div className="card-head"><div><span>REAL HOLDINGS</span><h3>Optimized allocation</h3></div></div><div className="result-table"><div className="table-head"><span>ASSET</span><span>WEIGHT</span><span>VALUE / SHARES</span></div>{holdings.map((holding, index) => <div key={holding.symbol}><span><i style={{ background: colors[index % colors.length] }}/><b>{holding.symbol}</b><small>{holding.sector}</small></span><span><div className="mini-bar"><i style={{ width: `${holding.weight * 100}%`, background: colors[index % colors.length] }}/></div><b>{percent(holding.weight)}</b></span><span>{money(holding.allocated_amount_inr)} · {number(holding.shares, 3)}</span></div>)}</div></section>
+    <section className="card explanations"><div className="card-head"><div><span>WHY?</span><h3>Real optimization narratives</h3></div><BrainCircuit/></div>{explanations.length === 0 ? <EmptyState>No explanation rows were persisted.</EmptyState> : explanations.map((item, index) => <div className="explanation" key={`${item.symbol}-${index}`}><div className="rank">{String(index + 1).padStart(2, '0')}</div><div className="ticker"><i style={{ background: colors[index % colors.length] }}/><span><b>{item.symbol}</b><small>{item.primary_reason}</small></span></div><p>{item.narrative_text}</p><div className="model-score"><span>RISK CONTRIB.</span><b>{percent(item.marginal_risk_contribution)}</b></div></div>)}</section>
+    <AssistantPanel portfolioId={data.id}/>
+  </>
+}

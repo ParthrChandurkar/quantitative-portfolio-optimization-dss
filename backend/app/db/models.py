@@ -77,6 +77,7 @@ class User(UUIDPrimaryKeyMixin, Base):
     reports: Mapped[list[Report]] = relationship(back_populates="user")
     refresh_tokens: Mapped[list[RefreshToken]] = relationship(back_populates="user")
     risk_profiles: Mapped[list[UserRiskProfile]] = relationship(back_populates="user")
+    assistant_query_logs: Mapped[list[AssistantQueryLog]] = relationship(back_populates="user")
 
 
 class RefreshToken(UUIDPrimaryKeyMixin, Base):
@@ -225,6 +226,9 @@ class Portfolio(UUIDPrimaryKeyMixin, Base):
     optimization_runs: Mapped[list[OptimizationRun]] = relationship(back_populates="portfolio")
     snapshots: Mapped[list[PortfolioSnapshot]] = relationship(back_populates="portfolio")
     walk_forward_runs: Mapped[list[WalkForwardRun]] = relationship(
+        back_populates="portfolio"
+    )
+    assistant_query_logs: Mapped[list[AssistantQueryLog]] = relationship(
         back_populates="portfolio"
     )
 
@@ -463,6 +467,33 @@ class UserRiskProfile(UUIDPrimaryKeyMixin, Base):
     )
 
     user: Mapped[User] = relationship(back_populates="risk_profiles")
+
+
+class AssistantQueryLog(UUIDPrimaryKeyMixin, Base):
+    """Audit log for every answered or safely-fallback portfolio question."""
+
+    __tablename__ = "assistant_query_logs"
+    __table_args__ = (
+        Index("ix_assistant_query_logs_user_created_at", "user_id", "created_at"),
+        Index("ix_assistant_query_logs_portfolio_created_at", "portfolio_id", "created_at"),
+    )
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    portfolio_id: Mapped[uuid.UUID] = mapped_column(
+        UUID, ForeignKey("portfolios.id", ondelete="CASCADE"), nullable=False
+    )
+    question_text: Mapped[str] = mapped_column(Text, nullable=False)
+    classified_intent: Mapped[str] = mapped_column(String(64), nullable=False)
+    confidence: Mapped[Decimal] = mapped_column(METRIC, nullable=False)
+    answer_text: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    user: Mapped[User] = relationship(back_populates="assistant_query_logs")
+    portfolio: Mapped[Portfolio] = relationship(back_populates="assistant_query_logs")
 
 
 class WalkForwardRun(UUIDPrimaryKeyMixin, Base):
