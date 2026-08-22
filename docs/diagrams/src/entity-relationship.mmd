@@ -1,0 +1,136 @@
+---
+title: OptiVest Current Entity-Relationship Model — Seven Migrations
+---
+erDiagram
+    USERS ||--o{ REFRESH_TOKENS : owns
+    REFRESH_TOKENS o|--o| REFRESH_TOKENS : replaces
+    USERS ||--o{ PORTFOLIOS : owns
+    USERS ||--o{ REPORTS : generates
+    USERS ||--o{ USER_RISK_PROFILES : completes
+    USERS ||--o{ ASSISTANT_QUERY_LOGS : asks
+    USERS ||--o{ ALERTS : receives
+
+    SECTORS ||--o{ STOCKS : classifies
+    STOCKS ||--o{ STOCK_PRICES : has
+    STOCKS ||--o{ STOCK_FUNDAMENTALS : has
+    STOCKS ||--o{ STOCK_TECHNICAL_INDICATORS : has
+    STOCKS ||--o{ PORTFOLIO_HOLDINGS : allocated_as
+    STOCKS o|--o{ EXPLANATION_ITEMS : referenced_by
+    STOCKS o|--o{ ALERTS : concerns
+
+    PORTFOLIOS ||--o{ OPTIMIZATION_RUNS : executes
+    PORTFOLIOS ||--o{ PORTFOLIO_SNAPSHOTS : saves
+    PORTFOLIOS ||--o{ WALK_FORWARD_RUNS : validates
+    PORTFOLIOS ||--o{ ASSISTANT_QUERY_LOGS : grounds
+    PORTFOLIOS ||--o{ ALERTS : groups
+
+    OPTIMIZATION_RUNS ||--o{ PORTFOLIO_SNAPSHOTS : produces
+    OPTIMIZATION_RUNS ||--o{ EXPLANATION_ITEMS : explains
+    OPTIMIZATION_RUNS ||--o{ CONSTRAINT_LOG : audits
+
+    PORTFOLIO_SNAPSHOTS ||--o{ PORTFOLIO_HOLDINGS : contains
+    PORTFOLIO_SNAPSHOTS ||--o{ SCENARIO_RUNS : baseline_for
+    PORTFOLIO_SNAPSHOTS o|--o{ SCENARIO_RUNS : result_of
+    PORTFOLIO_SNAPSHOTS ||--o{ REPORTS : documented_by
+    PORTFOLIO_SNAPSHOTS o|--o{ ALERTS : grounds
+
+    USERS {
+        uuid id PK
+        string email UK
+    }
+    REFRESH_TOKENS {
+        uuid id PK
+        uuid user_id FK
+        uuid replaced_by_token_id FK
+    }
+    SECTORS {
+        uuid id PK
+        string name UK
+    }
+    STOCKS {
+        uuid id PK
+        uuid sector_id FK
+        string symbol UK
+    }
+    STOCK_PRICES {
+        uuid id PK
+        uuid stock_id FK
+        date trade_date UK
+    }
+    STOCK_FUNDAMENTALS {
+        uuid id PK
+        uuid stock_id FK
+        date as_of_date UK
+    }
+    STOCK_TECHNICAL_INDICATORS {
+        uuid id PK
+        uuid stock_id FK
+        date trade_date UK
+    }
+    PORTFOLIOS {
+        uuid id PK
+        uuid user_id FK
+    }
+    OPTIMIZATION_RUNS {
+        uuid id PK
+        uuid portfolio_id FK
+    }
+    PORTFOLIO_SNAPSHOTS {
+        uuid id PK
+        uuid portfolio_id FK
+        uuid optimization_run_id FK
+    }
+    PORTFOLIO_HOLDINGS {
+        uuid id PK
+        uuid snapshot_id FK
+        uuid stock_id FK
+    }
+    EXPLANATION_ITEMS {
+        uuid id PK
+        uuid optimization_run_id FK
+        uuid stock_id FK
+    }
+    CONSTRAINT_LOG {
+        uuid id PK
+        uuid optimization_run_id FK
+    }
+    SCENARIO_RUNS {
+        uuid id PK
+        uuid base_snapshot_id FK
+        uuid resulting_snapshot_id FK
+    }
+    REPORTS {
+        uuid id PK
+        uuid user_id FK
+        uuid snapshot_id FK
+    }
+    COVARIANCE_CACHE {
+        uuid id PK
+        string universe_hash UK
+        date as_of_date UK
+    }
+    WALK_FORWARD_RUNS {
+        uuid id PK
+        uuid portfolio_id FK
+    }
+    ML_FORECAST_RUNS {
+        uuid id PK
+        date estimation_end_date
+        string model_artifact_path
+    }
+    USER_RISK_PROFILES {
+        uuid id PK
+        uuid user_id FK
+    }
+    ASSISTANT_QUERY_LOGS {
+        uuid id PK
+        uuid user_id FK
+        uuid portfolio_id FK
+    }
+    ALERTS {
+        uuid id PK
+        uuid user_id FK
+        uuid portfolio_id FK
+        uuid snapshot_id FK
+        uuid stock_id FK
+    }

@@ -4,44 +4,17 @@
 
 ## Implemented architecture
 
-```mermaid
-flowchart LR
-    U[React / TypeScript UI] -->|JWT + JSON| A[FastAPI / Pydantic]
-    A --> S[Ownership-aware services]
-    S --> O[SciPy / PuLP / OR-Tools]
-    S --> E[Explanations / scenarios / analytics]
-    S --> R[Jinja2 / WeasyPrint]
-    S --> D[(PostgreSQL 16)]
-    K[Kaggle Nifty CSV] --> T[Idempotent ETL]
-    T --> D
-    D --> C[Covariance cache + exact dates]
-    C --> O
-```
+![OptiVest implemented system architecture](../diagrams/system-architecture.svg)
+
+The auto-layout source is maintained in [`system-architecture.mmd`](../diagrams/src/system-architecture.mmd) and can be regenerated using the pinned commands in the [diagram asset guide](../diagrams/README.md).
 
 The repository-root `src/` Vite app uses React Query for server state and a single typed client. FastAPI routes delegate to services; SQLAlchemy uses async sessions, while solver/PDF work leaves the event loop. Optimization returns framework-independent typed results used by explainability, scenarios, analytics and reports.
 
 ## Entity relationships
 
-```mermaid
-erDiagram
-    USERS ||--o{ REFRESH_TOKENS : owns
-    USERS ||--o{ PORTFOLIOS : owns
-    USERS ||--o{ REPORTS : generates
-    SECTORS ||--o{ STOCKS : classifies
-    STOCKS ||--o{ STOCK_PRICES : has
-    STOCKS ||--o{ STOCK_FUNDAMENTALS : has
-    STOCKS ||--o{ STOCK_TECHNICAL_INDICATORS : has
-    PORTFOLIOS ||--o{ OPTIMIZATION_RUNS : executes
-    PORTFOLIOS ||--o{ PORTFOLIO_SNAPSHOTS : saves
-    PORTFOLIOS ||--o{ WALK_FORWARD_RUNS : validates
-    OPTIMIZATION_RUNS ||--o{ PORTFOLIO_SNAPSHOTS : produces
-    PORTFOLIO_SNAPSHOTS ||--o{ PORTFOLIO_HOLDINGS : contains
-    STOCKS ||--o{ PORTFOLIO_HOLDINGS : allocates
-    OPTIMIZATION_RUNS ||--o{ EXPLANATION_ITEMS : explains
-    OPTIMIZATION_RUNS ||--o{ CONSTRAINT_LOG : audits
-    PORTFOLIO_SNAPSHOTS ||--o{ SCENARIO_RUNS : baseline
-    PORTFOLIO_SNAPSHOTS ||--o{ REPORTS : documents
-```
+![OptiVest current entity-relationship model](../diagrams/entity-relationship.svg)
+
+The rendered ERD represents all seven migrations. Its maintainable Mermaid source is [`entity-relationship.mmd`](../diagrams/src/entity-relationship.mmd).
 
 All application keys are UUIDs. Money is PostgreSQL `Numeric` in INR. Market tables have natural-key uniqueness and descending date indexes.
 
@@ -63,8 +36,12 @@ All application keys are UUIDs. Money is PostgreSQL `Numeric` in INR. Market tab
 | `reports` | User, snapshot, type, path and generation time. |
 | `covariance_cache` | Unique universe/lookback/as-of matrices and aligned dates. |
 | `walk_forward_runs` | Frequency, lookback, constraint snapshot and complete rolling result JSONB (`0003`). |
+| `ml_forecast_runs` | Leakage-safe forecast cutoff, artifact path, feature importances and training row count (`0004`). |
+| `user_risk_profiles` | Questionnaire answers, predicted category, confidence and editable defaults (`0005`). |
+| `assistant_query_logs` | Grounded question, routed intent, confidence and deterministic answer (`0006`). |
+| `alerts` | Deduplicated drift or anomaly evidence, severity and acknowledgement state (`0007`). |
 
-The live database has 17 application tables plus `alembic_version`.
+The live database has 21 application tables plus `alembic_version`.
 
 ## Complete API route table
 

@@ -19,6 +19,18 @@
 | Frontend tests | 47/47 |
 | Frontend coverage | 83.00% statements / 96.00% lines |
 
+## 🏛️ System Architecture
+
+![OptiVest system architecture](docs/diagrams/system-architecture.svg)
+
+The rendered architecture follows the real repository boundaries: the React client calls ownership-aware FastAPI services, the completed OR core and additive AI layer remain visibly separated, and both operate on the same audited PostgreSQL foundation. See the [diagram sources and regeneration commands](docs/diagrams/README.md).
+
+## 🔄 How It Works
+
+![OptiVest optimize request flow](docs/diagrams/optimize-request-flow.svg)
+
+A successful optimization request builds real market inputs, runs the selected solver, generates explanations, and commits the complete snapshot before returning it. The alert check is deliberately dashed because it executes as a post-response background task and does not delay the user-facing solve result.
+
 ## 🎯 Overview
 
 This is not a tutorial or fixture-only demonstration. The running system uses PostgreSQL data loaded from 287,310 real market rows, solves and explains portfolios over a 49-stock universe, re-solves explicit stress scenarios, validates performance on dates excluded from estimation, and generates auditable PDF reports. During development, a look-ahead-biased backtest was detected, documented, and replaced with a structurally disjoint out-of-sample evaluation.

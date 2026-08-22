@@ -8,6 +8,10 @@ The AI layer is additive to the completed OR decision-support core. It does not 
 
 The four deployed ML models are a gradient-boosting return regressor, a logistic-regression risk classifier, a TF-IDF/logistic-regression intent classifier, and per-stock Isolation Forest anomaly detectors. The three dedicated AI-facing experiences are questionnaire onboarding, grounded portfolio Q&A, and personalized alerts.
 
+![OptiVest AI and ML pipeline connected to the OR core](../diagrams/ai-ml-pipeline.svg)
+
+The diagram is generated from [`ai-ml-pipeline.mmd`](../diagrams/src/ai-ml-pipeline.mmd). It shows the additive boundary explicitly: AI-derived inputs and user-facing intelligence connect to the established OR engine without replacing its feasibility rules or solver checks.
+
 ## AI Phase 1: ML-Based Return Forecasting Input
 
 ### Method

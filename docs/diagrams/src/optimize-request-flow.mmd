@@ -1,0 +1,48 @@
+---
+title: POST /portfolios/{id}/optimize — Request Flow
+---
+flowchart LR
+    REQ(["React client<br/>constraints + INR budget"]):::external
+    ROUTE["FastAPI route<br/>auth + ownership"]:::sync
+    SERVICE["optimization_service<br/>optimize_portfolio()"]:::sync
+    BUILD["Build inputs<br/>mu · Sigma · constraints"]:::sync
+    SOLVE["engine.solve()<br/>selected OR solver"]:::orcore
+    EXPLAIN["build_explanations()<br/>reasons + constraints"]:::orcore
+    WRITE["Persist full solution<br/>run · snapshot · holdings"]:::data
+    RESPONSE["Solved response<br/>snapshot ID + explanations"]:::positive
+    UI(["React holdings<br/>and Why? panel"]):::external
+    DB[("PostgreSQL 16")]:::data
+
+    REQ --> ROUTE --> SERVICE --> BUILD
+    BUILD --> SOLVE --> EXPLAIN --> WRITE
+    WRITE --> RESPONSE --> UI
+    BUILD <-->|market + portfolio reads| DB
+    WRITE -->|atomic commit| DB
+
+    ALERT["FastAPI BackgroundTask<br/>check_alerts_in_background()"]:::background
+    DETECT["Risk drift + held-stock<br/>anomaly checks"]:::background
+    ALERTDB["Persist deduplicated alerts<br/>GET /me/alerts"]:::data
+
+    RESPONSE -. "after response" .-> ALERT
+    ALERT -.-> DETECT
+    DETECT -.-> DB
+    DETECT -.-> ALERTDB
+    ALERTDB -.-> DB
+
+    subgraph KEY["Legend"]
+        direction TB
+        KSYNC["Synchronous request path"]:::sync
+        KOR["OR / explainability"]:::orcore
+        KBG["Post-response background path"]:::background
+        KDATA["Persistence"]:::data
+    end
+
+    DB ~~~ KSYNC
+
+    classDef sync fill:#FFFFFF,color:#0B0E13,stroke:#64748B,stroke-width:2px;
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2px;
+    classDef background fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2px,stroke-dasharray:6 4;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2px;
+    classDef positive fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:3px;
+    classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
+    style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px

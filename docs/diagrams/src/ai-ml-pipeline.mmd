@@ -1,0 +1,76 @@
+---
+title: OptiVest AI / ML Pipeline Connected to the OR Core
+---
+flowchart TB
+    DB[("Real PostgreSQL market data<br/>prices · technicals · fundamentals")]:::data
+    ANSWERS["Six-answer risk questionnaire"]:::external
+    QUESTION["Investor portfolio question"]:::external
+
+    subgraph AIMODELS["AI Layer — Models and Personalization"]
+        direction LR
+        FEATURES["Shared feature engineering<br/>ml/features.py · 12 market features"]:::ai
+        FORECAST["Return forecaster<br/>GradientBoostingRegressor"]:::ai
+        RISK["Risk classifier<br/>multinomial Logistic Regression"]:::ai
+        INTENT["Intent classifier<br/>TF-IDF + Logistic Regression"]:::ai
+        ANOMALY["Anomaly detector<br/>per-stock Isolation Forest"]:::ai
+    end
+
+    subgraph ORCORE["Operations Research Core"]
+        direction LR
+        SCENARIOS["Scenario simulator<br/>shock transform"]:::orcore
+        OPT["Optimizer<br/>historical mean or optional ML mu"]:::orcore
+        EXPLAIN["Explainability<br/>reasons + constraints"]:::orcore
+        ANALYTICS["Analytics<br/>OOS backtest + risk + frontier"]:::orcore
+
+        SCENARIOS -->|re-solve| OPT
+        OPT --> EXPLAIN
+        OPT --> ANALYTICS
+    end
+
+    SNAPSHOT[("Persisted OR outputs<br/>snapshot · explanations · analytics")]:::data
+
+    subgraph AIEXPERIENCES["AI Layer — Grounded User Experiences"]
+        direction LR
+        ASSISTANT["Grounded answer composer<br/>deterministic templates only"]:::ai
+        ALERTS["Personalized alerts<br/>deduplicated + numerically grounded"]:::ai
+    end
+
+    UI["React UI<br/>defaults · answers · alerts"]:::frontend
+
+    DB --> FEATURES
+    FEATURES --> FORECAST
+    FEATURES --> ANOMALY
+    ANSWERS --> RISK
+    QUESTION --> INTENT
+    FORECAST -->|optional expected-return vector| OPT
+    RISK -->|editable stock, sector, risk defaults| OPT
+    INTENT -->|shock intent| SCENARIOS
+    EXPLAIN --> SNAPSHOT
+    ANALYTICS --> SNAPSHOT
+    SNAPSHOT --> ASSISTANT
+    INTENT --> ASSISTANT
+    ANOMALY --> ALERTS
+    SNAPSHOT --> ALERTS
+    RISK -->|visible recommendation| UI
+    ASSISTANT --> UI
+    ALERTS --> UI
+
+    subgraph KEY["Legend"]
+        direction LR
+        KOR["OR Core"]:::orcore
+        KAI["AI / ML Layer"]:::ai
+        KDATA["Persisted real data"]:::data
+        KUI["User-facing surface"]:::frontend
+    end
+
+    UI ~~~ KOR
+
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2px;
+    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2px;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2px;
+    classDef frontend fill:#131722,color:#E7E9EE,stroke:#3E7BFA,stroke-width:2px;
+    classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
+    style ORCORE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2px
+    style AIMODELS fill:#FFFAF0,stroke:#F59E0B,stroke-width:2px
+    style AIEXPERIENCES fill:#FFFAF0,stroke:#F59E0B,stroke-width:2px
+    style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px

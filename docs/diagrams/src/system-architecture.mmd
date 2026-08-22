@@ -1,0 +1,68 @@
+---
+title: OptiVest System Architecture
+---
+flowchart TB
+    USER([Investor / Faculty Reviewer]):::external
+    UI["React 19 + TypeScript 5.9<br/>Vite · React Query · Typed API Client"]:::frontend
+    API["FastAPI + Pydantic API Layer<br/>JWT authentication · ownership checks"]:::service
+    SVC["Service Orchestration<br/>async sessions · background-task scheduling"]:::service
+
+    subgraph ORCORE["Operations Research Core"]
+        direction LR
+        OPT["Optimization<br/>SciPy SLSQP · PuLP/CBC · OR-Tools CP-SAT"]:::orcore
+        EXP["Explainability<br/>constraints · contributions · narratives"]:::orcore
+        SCN["Scenarios<br/>seven shock transforms + re-solve"]:::orcore
+        ANA["Analytics<br/>OOS backtests · frontier · risk metrics"]:::orcore
+        REP["Reports<br/>Jinja2 + WeasyPrint PDFs"]:::orcore
+    end
+
+    subgraph AILAYER["AI / Personalization Layer"]
+        direction LR
+        ML["ML Forecasting<br/>Gradient Boosting return model"]:::ai
+        PERS["Personalization<br/>Logistic Regression risk profile"]:::ai
+        AST["Assistant<br/>TF-IDF + Logistic Regression intents"]:::ai
+        ALT["Alerts<br/>drift rules + Isolation Forest"]:::ai
+    end
+
+    DB[("PostgreSQL 16<br/>21 application tables")]:::data
+    CSV["Kaggle Nifty CSVs<br/>287,310 raw rows"]:::external
+    ETL["Idempotent ETL<br/>prices · fundamentals · technicals"]:::data
+
+    USER --> UI
+    UI -->|JWT + JSON| API
+    API --> SVC
+    SVC --> OPT
+    SVC --> EXP
+    SVC --> SCN
+    SVC --> ANA
+    SVC --> REP
+    SVC --> ML
+    SVC --> PERS
+    SVC --> AST
+    SVC -. post-response .-> ALT
+    ML -->|optional mu| OPT
+    PERS -->|editable defaults| OPT
+    AST -->|grounded calls| EXP
+    AST -->|real re-solves| SCN
+    SVC -->|async SQLAlchemy transactions| DB
+    CSV --> ETL --> DB
+
+    subgraph KEY["Legend"]
+        direction LR
+        KOR["OR Core"]:::orcore
+        KAI["AI Layer"]:::ai
+        KDATA["Data / persistence"]:::data
+        KEDGE["External / user"]:::external
+    end
+
+    DB ~~~ KOR
+
+    classDef frontend fill:#131722,color:#E7E9EE,stroke:#3E7BFA,stroke-width:2px;
+    classDef service fill:#FFFFFF,color:#0B0E13,stroke:#64748B,stroke-width:2px;
+    classDef orcore fill:#EAF1FF,color:#0B0E13,stroke:#3E7BFA,stroke-width:2px;
+    classDef ai fill:#FFF4DC,color:#0B0E13,stroke:#F59E0B,stroke-width:2px;
+    classDef data fill:#EAF9EF,color:#0B0E13,stroke:#22C55E,stroke-width:2px;
+    classDef external fill:#F7F8FA,color:#0B0E13,stroke:#94A3B8,stroke-width:1.5px;
+    style ORCORE fill:#F5F8FF,stroke:#3E7BFA,stroke-width:2px
+    style AILAYER fill:#FFFAF0,stroke:#F59E0B,stroke-width:2px
+    style KEY fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px
