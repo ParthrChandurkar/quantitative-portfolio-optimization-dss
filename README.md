@@ -1,84 +1,140 @@
 # AI-Driven Personalized Investment Planning and Portfolio Optimization
 
-**Product name:** OptiVest
+**OptiVest** is an institutional-style decision-support system for constructing personalized Nifty portfolios. It combines a real Operations Research engine—continuous and mixed-integer constrained optimization—with an additive AI layer for market-return forecasting, investor risk profiling, grounded portfolio Q&A, and personalized alerts.
 
-OptiVest is an explainable investment-planning and constrained Nifty-50 portfolio-optimization system. It combines real daily market data, SciPy/PuLP/OR-Tools models, scenario re-solving, static and walk-forward out-of-sample analytics, and audit-ready PDF reports in one authenticated web application. All monetary values are Indian rupees (INR).
+This is not a tutorial or fixture-only demonstration. The running system uses PostgreSQL data loaded from 287,310 real market rows, solves and explains portfolios over a 49-stock universe, re-solves explicit stress scenarios, validates performance on dates excluded from estimation, and generates auditable PDF reports. During development, a look-ahead-biased backtest was detected, documented, and replaced with a structurally disjoint out-of-sample evaluation.
 
-> Academic decision support only. OptiVest does not execute trades and is not personalized investment advice.
+> Academic decision support only. OptiVest does not execute trades and is not personalized investment advice. All monetary values are Indian rupees (INR).
 
-## Project Scope: OR Foundation + AI Personalization Layer
+## Quick Facts
 
-The Operations Research foundation and the planned AI personalization layer are now complete. The OR core provides continuous and mixed-integer optimization, numerical explainability, scenario re-solving, and static plus walk-forward validated analytics. On top of it, four production ML models provide a selectable leakage-safe return forecast, rubric-transparent risk classification, offline intent routing, and held-stock anomaly detection. Three user-facing experiences expose personalized onboarding, grounded portfolio Q&A, and profile-aware alerts. The historical-mean estimator remains the default, every recommended constraint stays editable, and synthetic questionnaire/language labels are reported honestly rather than presented as observed investor outcomes. See the [AI personalization chapter](docs/final-report/09-ai-personalization-layer.md).
+| Measure | Verified value |
+|---|---:|
+| Raw historical dataset | 287,310 rows × 25 columns |
+| Loaded universe | 49 stocks |
+| Accepted dated records | 287,263 rows in each price, fundamental, and technical table |
+| Database migrations | 7 Alembic revisions |
+| API surface | 24 paths / 28 HTTP operations |
+| Production ML models | 4 |
+| Backend tests | 228/228 with real PostgreSQL enabled |
+| Backend combined coverage | 90.31% |
+| Frontend tests | 47/47 |
+| Frontend coverage | 83.00% statements / 96.00% lines |
 
-![OptiVest analytics](docs/final-report/screenshots/05-analytics-out-of-sample.png)
+## Operations Research Core
 
-## What is implemented
+- Continuous mean-variance quadratic optimization using SciPy SLSQP.
+- Cardinality-constrained mean absolute deviation MILP using PuLP/CBC.
+- OR-Tools CP-SAT support selection combined with continuous weight optimization.
+- Long-only budget identity, stock-weight limits, sector caps, risk/return targets, cardinality, and minimum-lot constraints.
+- Independent feasibility checks, binding-constraint logs, marginal return/risk contributions, and deterministic “Why?” narratives.
+- Seven scenario families that transform `mu`, covariance, budget, or constraints and then re-solve; results are never produced by merely scaling portfolio value.
+- Efficient-frontier construction plus static and monthly walk-forward out-of-sample backtests using real PostgreSQL prices.
 
-- PostgreSQL storage for 49 stocks and 287,263 dated price, fundamental, and technical rows; the ETL is idempotent and rejects the documented 47 zero-OHLC source rows.
-- Continuous mean-variance QP with SciPy, cardinality-constrained mean absolute deviation with PuLP/CBC, and CP-SAT support selection with OR-Tools.
-- Stable constraint checks, binding-constraint logs, marginal contributions, deterministic explanations, seven re-solved scenario families, historical analytics, and generated PDFs.
-- JWT access/refresh authentication, ownership checks, React Query server state, a structurally enforced out-of-sample split, and rolling walk-forward re-estimation.
-- Offline portfolio Q&A with a seven-intent TF-IDF/logistic-regression router, auditable deterministic answers, and real scenario re-solving for shock questions.
-- Personalized notification alerts for risk/diversification drift and Isolation Forest anomalies in held stocks, with inline grounding and acknowledgment history.
+## AI / Personalization Layer
 
-## Technology stack
+- **ML return forecasting:** a leakage-safe gradient-boosting regressor supplies an optional expected-return vector; historical mean remains the unchanged default.
+- **ML risk profiling:** logistic regression reproduces a transparent questionnaire rubric and recommends visible, editable OR defaults.
+- **Grounded NLP assistant:** TF-IDF plus logistic-regression intent routing answers only from stored explanations, analytics, allocations, and real scenario re-solves—no external LLM is used.
+- **Personalized alerts:** explicit profile-drift rules and per-stock Isolation Forests produce deduplicated, numerically grounded notifications.
+- **Honest evaluation:** the ML forecast underperformed historical mean on the recorded OOS period, and the synthetic-label accuracy caveats for risk and intent classification are retained in the report.
+
+## Verified Product Evidence
+
+The closing real-data walkthrough used a fresh account, personalized moderate-risk defaults (`0.22` risk tolerance, `15%` stock cap, `30%` sector cap), and a ₹10,00,000 budget.
+
+| Result | Historical mean | ML forecast |
+|---|---:|---:|
+| Solver time | 66 ms | 172 ms |
+| Expected return | 41.8578% | 24.8629% |
+| Expected volatility | 15.9253% | 15.4487% |
+| Sharpe ratio | 2.6284 | 1.6094 |
+| Diversification score | 79.50 | 84.00 |
+| Holdings | 7 | 7 |
+
+The historical portfolio held AXISBANK, BPCL, EICHERMOT, HEROMOTOCO, HINDALCO, SBIN, and TATASTEEL. The ML portfolio held ADANIENT, COALINDIA, HCLTECH, INDUSINDBK, ITC, ONGC, and TECHM. A 20% beta-scaled crash re-solve reduced the ML portfolio’s expected return from 24.8629% to 19.1097%, increased volatility from 15.4487% to 16.2793%, and reduced Sharpe from 1.6094 to 1.1739.
+
+The same walkthrough confirmed a zero-overlap 252-observation estimation window and 249-observation evaluation window. Its historical-snapshot periodic backtest finished at ₹10,71,780.92 with 7.2980% annualized realized return, 0.5178 realized Sharpe, and −11.4126% maximum drawdown. All three PDF types downloaded as valid files and contained the mandatory academic disclaimer.
+
+## Methodology and Report
+
+- [Phase requirements and implementation traceability](docs/phase1-requirements/traceability-matrix.md)
+- [Complete final project report](docs/final-report/)
+- [Methodology notes: look-ahead-bias correction and walk-forward findings](docs/methodology-notes.md) — the most important document for understanding the project’s research rigor, including mistakes found and corrected.
+
+## Technology Stack
 
 | Layer | Technology |
 |---|---|
-| Web | React 19, TypeScript 5.9, Vite, React Router, React Query |
+| Frontend | React 19, TypeScript 5.9, Vite, React Router, React Query |
 | API | Python 3.11+, FastAPI, Pydantic, JWT, Argon2 |
 | Data | PostgreSQL 16, SQLAlchemy 2 async ORM, Alembic, asyncpg |
 | OR and analytics | NumPy, SciPy SLSQP, PuLP/CBC, OR-Tools CP-SAT |
-| Reports/tests | Jinja2, WeasyPrint, pytest, pytest-cov, Vitest, Testing Library |
+| AI/ML | scikit-learn gradient boosting, logistic regression, TF-IDF, Isolation Forest |
+| Reports and tests | Jinja2, WeasyPrint, pytest, pytest-cov, Vitest, Testing Library |
 
-## Repository layout
+## Repository Layout
 
 ```text
-backend/                  FastAPI, data, OR, analytics, reports, tests
+backend/                  FastAPI, database, ETL, OR, analytics, AI, reports, tests
 data/raw/                 Local Kaggle CSVs (ignored because of size)
-data/PROFILE_REPORT.md    Real-data reconciliation evidence
-docs/final-report/        Final B.Tech report chapters and screenshots
-docs/phase1-requirements/ Formal FR/NFR source documents
-src/                      Deployable React frontend (repository-root Vite app)
+data/PROFILE_REPORT.md    Full real-data profiling and reconciliation evidence
+docs/ai-personalization/  Model methodologies, evaluation, and limitations
+docs/final-report/        Submission-ready B.Tech report and live screenshots
+docs/phase1-requirements/ Formal FR/NFR definitions and traceability
+src/                      React frontend (the repository root is the Vite project)
 ```
 
-The frontend lives at repository root rather than a separate `frontend/` directory; `src/` is the real Phase 3/9B application.
-
-## Local setup
+## Local Setup
 
 Prerequisites: Node.js 20+, Python 3.11+, Docker Desktop, and Git.
 
-### Database and backend
+### 1. PostgreSQL and Backend
 
 ```bash
 cd backend
 docker compose up -d postgres
 python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/macOS: source .venv/bin/activate
+
+# Windows
+.venv\Scripts\activate
+# Linux/macOS
+# source .venv/bin/activate
+
 pip install -e ".[test]"
 copy .env.example .env                 # Windows
 # cp .env.example .env                 # Linux/macOS
-alembic upgrade head
+
+alembic upgrade head                   # applies revisions 0001 through 0007
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Compose exposes PostgreSQL on host port `5433`. Keep `DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` in `backend/.env` and replace the development JWT secret outside local use.
+Docker Compose exposes PostgreSQL on host port `5433`. The development configuration uses:
 
-### Frontend
+```text
+DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest
+```
+
+Replace the development JWT secret outside local use. The API documentation is available at `http://127.0.0.1:8000/docs`.
+
+### 2. Frontend
+
+From the repository root:
 
 ```bash
 npm install
-# Optional .env.local:
+
+# Optional .env.local override:
 # VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
+
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 Open `http://127.0.0.1:5173`.
 
-## Real Kaggle data ingestion
+## Real Kaggle Data Ingestion
 
-Download `kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals` and place both CSVs in `data/raw/`. The dated historical file is loaded; the summary file remains an aggregate reference.
+Download `kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals` and place both CSV files under `data/raw/`:
 
 ```bash
 kaggle datasets download \
@@ -89,29 +145,32 @@ cd backend
 python -m app.etl.load_nifty_dataset ../data/raw/nifty50_historical_data.csv
 ```
 
-Re-running performs natural-key upserts. The reconciled run produced 49 stocks and 287,263 rows in each dated table; see [the profile report](data/PROFILE_REPORT.md).
+The ETL uses natural-key upserts, so rerunning it is idempotent. It accepts 287,263 dated rows and consistently rejects the documented 47 zero-OHLC source rows. See the [data profile](data/PROFILE_REPORT.md) for headers, mappings, nulls, date coverage, units, and manual return checks.
 
-## Tests and achieved coverage
+## Tests and Coverage
 
 ```bash
 cd backend
 pytest --cov=app --cov-report=term-missing --cov-report=html
-# open backend/htmlcov/index.html
+
+# Include the three real-PostgreSQL integrations:
+# Windows PowerShell
+$env:REAL_DATABASE_URL="postgresql+asyncpg://optivest:optivest@localhost:5433/optivest"
+# Linux/macOS
+# export REAL_DATABASE_URL="postgresql+asyncpg://optivest:optivest@localhost:5433/optivest"
+
+pytest --cov=app --cov-report=term-missing --cov-report=html
 
 cd ..
-npm test
 npm run test:coverage
+npm run build
 ```
 
-Set `REAL_DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest` to include the three loaded-PostgreSQL integration tests. The 22 August 2026 AI-finalization run produced 225 passed and 3 environment-gated skips by default with 90.05% combined coverage; the three real-PostgreSQL tests then passed separately, giving 228/228 behavioral checks when the database is enabled. The frontend produced 47/47 passing tests with 83.00% statement and 96.00% line coverage. On Windows, WeasyPrint 66 requires a modern Pango runtime; the application registers `C:\msys64\mingw64\bin` automatically when that runtime is installed.
+The verified baseline is 225 backend passes plus three environment-gated tests by default; all three pass against the loaded PostgreSQL database. The final database-enabled run passed 228/228 with 90.31% combined backend coverage. Frontend verification is 47/47 tests with 83.00% statement, 70.75% branch, 71.30% function, and 96.00% line coverage.
 
-## Final report and conversion
+On Windows, WeasyPrint 66 requires a modern Pango runtime. The application automatically registers `C:\msys64\mingw64\bin` when that runtime is installed.
 
-- [Final report chapters](docs/final-report/)
-- [Methodology integrity notes](docs/methodology-notes.md)
-- [Requirements](docs/phase1-requirements/)
-- [Grounded assistant methodology](docs/ai-personalization/assistant-methodology.md)
-- [Personalized alert methodology](docs/ai-personalization/alerts-methodology.md)
+## Final Report Conversion
 
 With Pandoc, XeLaTeX, and `mermaid-filter` installed:
 
@@ -124,30 +183,8 @@ pandoc docs/final-report/0*.md \
 
 Use `.docx` as the output and omit `--pdf-engine` for an editable Word submission.
 
-## Build history
+## Methodology Integrity
 
-| Phase | Commit | Delivered capability |
-|---|---|---|
-| Foundation | `d443e94` | Initial repository |
-| Phase 3 UI prototype | `26a4cfc` | Dashboard and page design |
-| Phase 1 | `4287582` | Requirements and traceability |
-| Phase 2 | `ca62e2a` | PostgreSQL schema and ETL |
-| Phase 4 | `1184953` | Optimization engine |
-| Phase 5 | `c7cfdb8` | Explainability layer |
-| Dataset acquisition | `c3b65e2` | Raw-data provenance |
-| Phase 6 | `dec020c` | Scenario simulator |
-| Data checkpoint | `0037ac6` | Real profiling and full load |
-| Phase 7 | `08b5601` | Analytics and real backtest |
-| Phase 8 | `95d1ca0` | PDF generation |
-| Phase 9 | `66cfb74` | Authenticated API and typed client |
-| Phase 9B | `43a89a9` | All pages connected to live data |
-| Phase 9C | `d5fea96` | Out-of-sample split and labels |
+The original Phase 9B walkthrough replayed the same 249 dates used to fit the optimizer and reported fitted quantities as validation evidence. Phase 9C identified this look-ahead bias and enforced an exclusive split: 252 observations ending 29 January 2025 for estimation, followed by 249 observations from 30 January 2025 through 30 January 2026 for evaluation, with zero shared dates.
 
-## Methodology warning
-
-The additive stretch-phase walk-forward run re-estimated and re-optimized over 13
-monthly periods without look-ahead. It ended at ₹10,11,596.09 with 1.1737% annualized
-return, 0.0771 Sharpe, -12.0030% drawdown and total turnover 8.0000. Transaction costs
-are not modeled; see [the full comparison](docs/methodology-notes.md#stretch-phase-walk-forward-re-estimation).
-
-The Phase 9B replay reused all 249 evaluation dates during fitting. Phase 9C identified the look-ahead bias and enforced disjoint windows. The corrected portfolio changed ₹10,00,000 to ₹11,01,423.96 with 10.3141% annualized realized return and 0.6777 realized Sharpe. See [Methodology Integrity](docs/final-report/07-methodology-integrity.md).
+The established corrected static portfolio changed ₹10,00,000 to ₹11,01,423.96, with 10.3141% annualized realized return and 0.6777 realized Sharpe. The separate 13-period historical-mean walk-forward experiment ended at ₹10,11,596.09 with 1.1737% return, 0.0771 Sharpe, −12.0030% drawdown, and 8.0000 turnover. Transaction costs are not modeled. These results are reported as observed outcomes, not tuned demonstrations of superiority.
