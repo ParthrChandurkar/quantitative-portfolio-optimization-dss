@@ -268,7 +268,7 @@ export class ApiClient implements OptiVestApi {
   private refreshPromise: Promise<TokenSet> | null = null
 
   constructor(
-    private readonly baseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api/v1',
+    private readonly baseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000/api/v1',
     private readonly tokenStore: TokenStore = new BrowserTokenStore(),
     private readonly fetcher: typeof fetch = globalThis.fetch.bind(globalThis),
   ) {}
