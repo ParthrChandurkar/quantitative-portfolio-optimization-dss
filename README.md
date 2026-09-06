@@ -79,6 +79,17 @@ All three paths return through the same feasibility checker, metric calculator, 
 - **Personalized risk alerts:** explicit profile-drift thresholds and per-stock 200-tree Isolation Forest models (`contamination=0.02`) evaluate 12 anomaly features and create deduplicated, numerically grounded notifications in the background.
 - **Evidence-first evaluation:** the ML forecast underperformed historical mean on the recorded OOS period, while synthetic-label and rubric-replication caveats for risk and intent classification remain explicit in the report.
 
+### AI Responsibility Boundaries
+
+| AI capability | What it may influence | What remains controlled elsewhere |
+|---|---|---|
+| Return forecast | Optional expected-return vector | Covariance estimation, constraints, feasibility and solver status |
+| Risk classifier | Suggested starting defaults | The user can review and edit every value before optimization |
+| Portfolio assistant | Intent routing and grounded wording | Facts come from stored portfolios, explanations, scenarios and analytics |
+| Anomaly detector | Flags unusual feature states for review | It does not diagnose fraud, predict certain loss or execute a trade |
+
+This separation is intentional: AI supports personalization and interpretation, while the OR layer remains the authority for mathematical allocation feasibility. The platform uses no external generative model and does not present model output as guaranteed investment performance.
+
 ## ✅ Verified Product Evidence
 
 The closing real-data walkthrough used a fresh account, personalized moderate-risk defaults (`0.22` risk tolerance, `15%` stock cap, `30%` sector cap), and a ₹10,00,000 budget.
