@@ -258,6 +258,17 @@ python -m app.etl.load_nifty_dataset ../data/raw/nifty50_historical_data.csv
 
 The ETL uses natural-key upserts, so rerunning it is idempotent. It accepts 287,263 dated rows and consistently rejects the documented 47 zero-OHLC source rows. See the [data profile](data/PROFILE_REPORT.md) for headers, mappings, nulls, date coverage, units, and manual return checks.
 
+### Data-to-Decision Lifecycle
+
+1. The two Kaggle CSV files are profiled for headers, types, nulls, symbols, date coverage and invalid numeric values.
+2. `COLUMN_MAP` reconciles source headers without coupling the database schema to a particular CSV spelling.
+3. ETL validation rejects the documented zero-OHLC rows, computes symbol-wise daily return and performs natural-key upserts.
+4. The optimizer queries a bounded historical window to construct `mu` and covariance; the optional forecast path changes only the declared return estimate.
+5. Runs, snapshots, holdings, explanations, constraints and scenarios are persisted together so every displayed decision has lineage.
+6. Backtests query later PostgreSQL prices, enforce zero date overlap, and report realized evidence separately from fitted expectations.
+
+This lifecycle is deliberately reproducible: rerunning ingestion does not duplicate data, and rerunning analytics cannot silently move an evaluation date into the estimation period.
+
 ## 🧪 Testing & Coverage
 
 ```bash
