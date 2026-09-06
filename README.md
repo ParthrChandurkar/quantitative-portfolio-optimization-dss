@@ -43,6 +43,14 @@ Retail investors can obtain market data from one tool, risk questionnaires from 
 
 The system addresses four practical failures together: concentration hidden behind headline return, recommendations that ignore investable constraints, stress tests that do not recompute the allocation, and backtests that accidentally reuse fitting data. The result is a decision-support workflow that can be inspected from raw price history through optimization, explanation, stress testing, and out-of-sample evaluation.
 
+## 💡 Principal Contributions
+
+1. **One auditable AI-to-OR pipeline:** machine-learning outputs enter through declared expected-return or constraint interfaces, while the optimization engine retains control of feasibility.
+2. **Solver selection matched to the model:** continuous portfolios use covariance-based QP, cardinality requests use a MAD MILP, and the OR-Tools path performs discrete support selection before continuous weighting.
+3. **Explanations derived from the decision:** “Why?” narratives reuse marginal contributions and binding constraints from the solved portfolio rather than attaching generic investment commentary.
+4. **Scenarios that genuinely re-optimize:** every supported shock transforms `mu`, covariance, budget, or constraints and then runs the solver again.
+5. **Methodology integrity as a product feature:** estimation and evaluation dates are structurally separated, labeled in the UI and reports, and extended through walk-forward re-estimation.
+
 ## 🧮 Operations Research Core
 
 - **Continuous mean-variance optimization:** SciPy SLSQP solves the constrained quadratic program, enforcing a fully invested long-only portfolio while minimizing covariance-based risk or meeting the selected return/risk objective.
