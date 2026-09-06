@@ -37,6 +37,12 @@ This is not a tutorial or fixture-only demonstration. The running system uses Po
 
 > Academic decision support only. OptiVest does not execute trades and is not personalized investment advice. All monetary values are Indian rupees (INR).
 
+## ❓ Problem Being Solved
+
+Retail investors can obtain market data from one tool, risk questionnaires from another, and portfolio calculations from a spreadsheet, but those pieces rarely produce one feasible and auditable decision. OptiVest closes that gap by translating a user's budget and preferences into explicit constraints, solving the resulting allocation problem, and showing the evidence behind the result.
+
+The system addresses four practical failures together: concentration hidden behind headline return, recommendations that ignore investable constraints, stress tests that do not recompute the allocation, and backtests that accidentally reuse fitting data. The result is a decision-support workflow that can be inspected from raw price history through optimization, explanation, stress testing, and out-of-sample evaluation.
+
 ## 🧮 Operations Research Core
 
 - **Continuous mean-variance optimization:** SciPy SLSQP solves the constrained quadratic program, enforcing a fully invested long-only portfolio while minimizing covariance-based risk or meeting the selected return/risk objective.
