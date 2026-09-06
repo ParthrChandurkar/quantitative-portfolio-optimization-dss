@@ -182,6 +182,20 @@ OptiVest/
 - [AI personalization methodologies, evaluations, and limitations](docs/ai-personalization/)
 - [Methodology notes: look-ahead-bias correction and walk-forward findings](docs/methodology-notes.md) — the most important document for understanding the project’s research rigor, including mistakes found and corrected.
 
+## 🎓 Faculty Demonstration Path
+
+| Step | Screen or action | Point to explain |
+|---:|---|---|
+| 1 | Create an account and complete risk onboarding | The classifier recommends editable constraints; it does not make the final allocation |
+| 2 | Build a ₹10,00,000 portfolio | Budget, objective, stock cap, sector cap and holding count become OR constraints |
+| 3 | Run optimization and open Portfolio Details | Show real weights, rupee allocations, solver status and grounded “Why?” explanations |
+| 4 | Run a market or sector scenario | The inputs are transformed and the complete constrained model is solved again |
+| 5 | Open Analytics | Contrast fitted metrics with the zero-overlap out-of-sample backtest and efficient frontier |
+| 6 | Ask a portfolio question | The intent model retrieves stored evidence or invokes a real scenario instead of inventing facts |
+| 7 | Generate a PDF report | Confirm the same snapshot, methodology labels and academic disclaimer appear in the download |
+
+A concise viva explanation is: “The system converts investor preferences and real Nifty market history into a mathematically feasible portfolio, explains the solver’s decision, tests it under re-optimized shocks, and validates it on future dates that were excluded from fitting.”
+
 ## 🚀 Getting Started
 
 Prerequisites: Node.js 20+, Python 3.11+, Docker Desktop, and Git.
