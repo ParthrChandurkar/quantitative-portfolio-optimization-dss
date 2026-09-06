@@ -61,6 +61,16 @@ The system addresses four practical failures together: concentration hidden behi
 - **Seven stress scenarios:** market crash, rate increase, inflation, sector crash, budget increase, budget reduction, and risk-profile change transform `mu`, covariance, budget, or constraints before a complete re-solve.
 - **Validation and trade-off analysis:** a 30-point feasible efficient frontier, buy-and-hold and periodic backtests, strict out-of-sample splits, and monthly walk-forward re-estimation use real PostgreSQL prices.
 
+### Solver Decision Guide
+
+| Portfolio requirement | Formulation | Implementation | Why it is selected |
+|---|---|---|---|
+| Continuous long-only weights | Mean-variance quadratic program | SciPy SLSQP | Directly models covariance-based portfolio variance |
+| Explicit holding-count limits | Mean absolute deviation MILP | PuLP with CBC | Binary variables represent whether a stock is selected |
+| Discrete support with continuous weights | Hybrid constraint and quadratic optimization | OR-Tools CP-SAT followed by SciPy | Separates stock selection from final weight refinement |
+
+All three paths return through the same feasibility checker, metric calculator, explanation service, persistence layer, and API contract. This keeps solver comparisons meaningful and prevents one implementation from bypassing a portfolio constraint.
+
 ## 🤖 AI / Personalization Layer
 
 - **ML return forecasting:** a `GradientBoostingRegressor` uses 12 trailing market features to predict forward 21-trading-day adjusted-close returns; `ml_forecast` is optional and historical mean remains the unchanged default.
