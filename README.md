@@ -1,312 +1,93 @@
-# AI-Driven Personalized Investment Planning and Portfolio Optimization
+# OptiVest Portfolio Optimization
 
-**OptiVest** is an institutional-style decision-support system for constructing personalized Nifty portfolios. It combines a real Operations Research engine—continuous and mixed-integer constrained optimization—with an additive AI layer for market-return forecasting, investor risk profiling, grounded portfolio Q&A, and personalized alerts.
+OptiVest is an academic decision-support application for constructing, comparing, and explaining investment portfolios. It combines mathematical optimization, historical market data, scenario analysis, model-assisted personalization, and report generation behind a React and FastAPI interface.
 
-![Backend tests](https://img.shields.io/badge/backend_tests-228_passing-brightgreen) ![Backend coverage](https://img.shields.io/badge/backend_coverage-90.31%25-brightgreen) ![Frontend tests](https://img.shields.io/badge/frontend_tests-47_passing-brightgreen) ![Frontend coverage](https://img.shields.io/badge/frontend_statements-83.00%25-brightgreen) ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white) ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
+OptiVest does not execute trades and does not provide investment advice.
 
-## 📊 Quick Facts
+## Features
 
-| Measure | Verified value |
-|---|---:|
-| Raw historical dataset | 287,310 rows × 25 columns |
-| Loaded universe | 49 stocks |
-| Accepted dated records | 287,263 rows in each price, fundamental, and technical table |
-| Database migrations | 7 Alembic revisions |
-| API surface | 24 paths / 28 HTTP operations |
-| Production ML models | 4 |
-| Backend tests | 228/228 with real PostgreSQL enabled |
-| Backend combined coverage | 90.31% |
-| Frontend tests | 47/47 |
-| Frontend coverage | 83.00% statements / 96.00% lines |
+- Portfolio construction with continuous and cardinality-constrained solvers
+- Risk questionnaire and model-assisted preference defaults
+- Efficient-frontier and portfolio analytics
+- Scenario shocks and portfolio re-optimization
+- Historical out-of-sample evaluation
+- Return forecasting, anomaly detection, and grounded assistant intents
+- Ownership-aware resources and JWT authentication
+- PDF report generation
 
-## 🏛️ System Architecture
+## Architecture
 
-![OptiVest system architecture](docs/diagrams/system-architecture.svg)
+The React client calls a FastAPI API under `backend/`. The backend separates optimization, explainability, scenarios, analytics, reporting, machine learning, personalization, assistant, and alert services. SQLAlchemy models persist market data, users, portfolios, model metadata, scenarios, and reports in PostgreSQL. Alembic manages schema revisions.
 
-The rendered architecture follows the real repository boundaries: the React client calls ownership-aware FastAPI services, the completed OR core and additive AI layer remain visibly separated, and both operate on the same audited PostgreSQL foundation. See the [diagram sources and regeneration commands](docs/diagrams/README.md).
+See [`docs/diagrams/README.md`](docs/diagrams/README.md) for the architecture diagrams and regeneration notes, and [`docs/methodology-notes.md`](docs/methodology-notes.md) for methodological constraints.
 
-## 🔄 How It Works
+## Tech Stack
 
-![OptiVest optimize request flow](docs/diagrams/optimize-request-flow.svg)
+| Layer | Technologies |
+| --- | --- |
+| Frontend | React, TypeScript, Vite, React Router, React Query |
+| API | Python 3.11+, FastAPI, Pydantic |
+| Data | PostgreSQL, SQLAlchemy, Alembic, asyncpg |
+| Optimization | SciPy SLSQP, PuLP/CBC, OR-Tools CP-SAT |
+| Machine learning | scikit-learn |
+| Authentication | JWT access and refresh tokens, Argon2 |
+| Reports | Jinja2 and WeasyPrint |
+| Testing | pytest, Vitest, Testing Library |
 
-A successful optimization request builds real market inputs, runs the selected solver, generates explanations, and commits the complete snapshot before returning it. The alert check is deliberately dashed because it executes as a post-response background task and does not delay the user-facing solve result.
+## Getting Started
 
-## 🎯 Overview
+Prerequisites: Node.js 20 or newer, Python 3.11 or newer, Docker, and Git.
 
-This is not a tutorial or fixture-only demonstration. The running system uses PostgreSQL data loaded from 287,310 real market rows, solves and explains portfolios over a 49-stock universe, re-solves explicit stress scenarios, validates performance on dates excluded from estimation, and generates auditable PDF reports. During development, a look-ahead-biased backtest was detected, documented, and replaced with a structurally disjoint out-of-sample evaluation.
+Start PostgreSQL and the backend:
 
-> Academic decision support only. OptiVest does not execute trades and is not personalized investment advice. All monetary values are Indian rupees (INR).
-
-## ❓ Problem Being Solved
-
-Retail investors can obtain market data from one tool, risk questionnaires from another, and portfolio calculations from a spreadsheet, but those pieces rarely produce one feasible and auditable decision. OptiVest closes that gap by translating a user's budget and preferences into explicit constraints, solving the resulting allocation problem, and showing the evidence behind the result.
-
-The system addresses four practical failures together: concentration hidden behind headline return, recommendations that ignore investable constraints, stress tests that do not recompute the allocation, and backtests that accidentally reuse fitting data. The result is a decision-support workflow that can be inspected from raw price history through optimization, explanation, stress testing, and out-of-sample evaluation.
-
-## 💡 Principal Contributions
-
-1. **One auditable AI-to-OR pipeline:** machine-learning outputs enter through declared expected-return or constraint interfaces, while the optimization engine retains control of feasibility.
-2. **Solver selection matched to the model:** continuous portfolios use covariance-based QP, cardinality requests use a MAD MILP, and the OR-Tools path performs discrete support selection before continuous weighting.
-3. **Explanations derived from the decision:** “Why?” narratives reuse marginal contributions and binding constraints from the solved portfolio rather than attaching generic investment commentary.
-4. **Scenarios that genuinely re-optimize:** every supported shock transforms `mu`, covariance, budget, or constraints and then runs the solver again.
-5. **Methodology integrity as a product feature:** estimation and evaluation dates are structurally separated, labeled in the UI and reports, and extended through walk-forward re-estimation.
-
-## 🧮 Operations Research Core
-
-- **Continuous mean-variance optimization:** SciPy SLSQP solves the constrained quadratic program, enforcing a fully invested long-only portfolio while minimizing covariance-based risk or meeting the selected return/risk objective.
-- **Cardinality-constrained MILP:** PuLP with the CBC solver uses binary holding decisions and mean absolute deviation risk so minimum and maximum holding counts can be modeled explicitly.
-- **Hybrid CP-SAT optimization:** OR-Tools CP-SAT selects the discrete stock support, after which continuous optimization assigns feasible weights to the selected assets.
-- **Realistic investment constraints:** the model applies the budget identity, per-stock weight limits, sector caps, risk/return targets, cardinality, and minimum-lot feasibility in rupee terms.
-- **Auditable decision support:** independent feasibility checks, binding-constraint logs, marginal return/risk contributions, and deterministic “Why?” narratives explain why each asset was selected or limited.
-- **Seven stress scenarios:** market crash, rate increase, inflation, sector crash, budget increase, budget reduction, and risk-profile change transform `mu`, covariance, budget, or constraints before a complete re-solve.
-- **Validation and trade-off analysis:** a 30-point feasible efficient frontier, buy-and-hold and periodic backtests, strict out-of-sample splits, and monthly walk-forward re-estimation use real PostgreSQL prices.
-
-### Solver Decision Guide
-
-| Portfolio requirement | Formulation | Implementation | Why it is selected |
-|---|---|---|---|
-| Continuous long-only weights | Mean-variance quadratic program | SciPy SLSQP | Directly models covariance-based portfolio variance |
-| Explicit holding-count limits | Mean absolute deviation MILP | PuLP with CBC | Binary variables represent whether a stock is selected |
-| Discrete support with continuous weights | Hybrid constraint and quadratic optimization | OR-Tools CP-SAT followed by SciPy | Separates stock selection from final weight refinement |
-
-All three paths return through the same feasibility checker, metric calculator, explanation service, persistence layer, and API contract. This keeps solver comparisons meaningful and prevents one implementation from bypassing a portfolio constraint.
-
-## 🤖 AI / Personalization Layer
-
-- **ML return forecasting:** a `GradientBoostingRegressor` uses 12 trailing market features to predict forward 21-trading-day adjusted-close returns; `ml_forecast` is optional and historical mean remains the unchanged default.
-- **ML risk profiling:** multinomial Logistic Regression, selected against a Random Forest baseline, maps six questionnaire answers to conservative, moderate, or aggressive profiles and recommends visible, editable OR defaults.
-- **Grounded NLP assistant:** TF-IDF unigram/bigram features plus multinomial Logistic Regression route seven intents at a `0.55` confidence threshold; answers come only from stored explanations, analytics, allocations, and real scenario re-solves—no external LLM is used.
-- **Personalized risk alerts:** explicit profile-drift thresholds and per-stock 200-tree Isolation Forest models (`contamination=0.02`) evaluate 12 anomaly features and create deduplicated, numerically grounded notifications in the background.
-- **Evidence-first evaluation:** the ML forecast underperformed historical mean on the recorded OOS period, while synthetic-label and rubric-replication caveats for risk and intent classification remain explicit in the report.
-
-### AI Responsibility Boundaries
-
-| AI capability | What it may influence | What remains controlled elsewhere |
-|---|---|---|
-| Return forecast | Optional expected-return vector | Covariance estimation, constraints, feasibility and solver status |
-| Risk classifier | Suggested starting defaults | The user can review and edit every value before optimization |
-| Portfolio assistant | Intent routing and grounded wording | Facts come from stored portfolios, explanations, scenarios and analytics |
-| Anomaly detector | Flags unusual feature states for review | It does not diagnose fraud, predict certain loss or execute a trade |
-
-This separation is intentional: AI supports personalization and interpretation, while the OR layer remains the authority for mathematical allocation feasibility. The platform uses no external generative model and does not present model output as guaranteed investment performance.
-
-## ✅ Verified Product Evidence
-
-The closing real-data walkthrough used a fresh account, personalized moderate-risk defaults (`0.22` risk tolerance, `15%` stock cap, `30%` sector cap), and a ₹10,00,000 budget.
-
-| Result | Historical mean | ML forecast |
-|---|---:|---:|
-| Solver time | 66 ms | 172 ms |
-| Expected return | 41.8578% | 24.8629% |
-| Expected volatility | 15.9253% | 15.4487% |
-| Sharpe ratio | 2.6284 | 1.6094 |
-| Diversification score | 79.50 | 84.00 |
-| Holdings | 7 | 7 |
-
-The historical portfolio held AXISBANK, BPCL, EICHERMOT, HEROMOTOCO, HINDALCO, SBIN, and TATASTEEL. The ML portfolio held ADANIENT, COALINDIA, HCLTECH, INDUSINDBK, ITC, ONGC, and TECHM. A 20% beta-scaled crash re-solve reduced the ML portfolio’s expected return from 24.8629% to 19.1097%, increased volatility from 15.4487% to 16.2793%, and reduced Sharpe from 1.6094 to 1.1739.
-
-The same walkthrough confirmed a zero-overlap 252-observation estimation window and 249-observation evaluation window. Its historical-snapshot periodic backtest finished at ₹10,71,780.92 with 7.2980% annualized realized return, 0.5178 realized Sharpe, and −11.4126% maximum drawdown. All three PDF types downloaded as valid files and contained the mandatory academic disclaimer.
-
-## 🏗️ Tech Stack
-
-| Layer | Technology | Purpose |
-|---|---|---|
-| Frontend | React 19, TypeScript 5.9, Vite, React Router, React Query | Typed user interface, routing, live server state, and interactive portfolio workflows |
-| Backend API | Python 3.11+, FastAPI, Pydantic | Async API endpoints, request validation, and service orchestration |
-| Database | PostgreSQL 16, SQLAlchemy 2 async ORM, Alembic, asyncpg | Durable market, portfolio, model, analytics, alert, and report data with versioned migrations |
-| OR solvers | SciPy SLSQP, PuLP/CBC, OR-Tools CP-SAT | Continuous QP, cardinality-constrained MILP, and hybrid discrete support selection |
-| ML/AI stack | scikit-learn Gradient Boosting, Logistic Regression, TF-IDF, Isolation Forest | Return forecasts, risk personalization, grounded intent routing, and anomaly detection |
-| Authentication | JWT access/refresh tokens, Argon2 | Password hashing, authenticated sessions, and ownership-protected resources |
-| PDF generation | Jinja2, WeasyPrint | Template-driven portfolio, analytics, and scenario reports |
-| Testing | pytest, pytest-cov, Vitest, Testing Library | Backend integration/unit verification and frontend loading/success/error coverage |
-
-## 📁 Project Structure
-
-The frontend lives at the repository root as a Vite project; the backend is isolated under `backend/`.
-
-```text
-OptiVest/
-├── src/                              React/TypeScript frontend
-│   ├── pages/                        Live API-backed product screens
-│   ├── components/                   Shared UI and state components
-│   └── lib/api/                      Typed backend client
-├── backend/
-│   ├── app/
-│   │   ├── api/                      FastAPI routes and schemas
-│   │   ├── db/                       Async ORM models and sessions
-│   │   ├── optimization/             SciPy, PuLP, and OR-Tools engines
-│   │   ├── explainability/           Decision reasons and narratives
-│   │   ├── scenarios/                Shock transforms and scenario re-solves
-│   │   ├── analytics/                Backtests, frontier, and risk metrics
-│   │   ├── reports/                  Jinja2/WeasyPrint PDF generation
-│   │   ├── ml/                       Return forecasting and anomaly models
-│   │   ├── personalization/          Risk-profile classifier and defaults
-│   │   ├── assistant/                Grounded NLP intent service
-│   │   └── alerts/                   Personalized drift/anomaly alerts
-│   ├── alembic/                      Seven database migrations
-│   └── tests/                        Backend unit and integration tests
-├── data/
-│   ├── raw/                          Local Kaggle CSVs (gitignored)
-│   └── PROFILE_REPORT.md             Real-data reconciliation evidence
-└── docs/
-    ├── phase1-requirements/          Formal FR/NFR definitions
-    ├── ai-personalization/           AI methods, results, and limitations
-    └── final-report/                 Submission-ready B.Tech report
-```
-
-## 🗓️ Project Timeline
-
-| Build stage | Verified increment | Report reference |
-|---|---|---|
-| Phase 1 | Problem analysis, FR/NFR definitions, comparison, novelty, and traceability | [Introduction](docs/final-report/01-introduction.md) |
-| Phase 2 | PostgreSQL schema, SQLAlchemy models, Alembic migrations, and idempotent ETL | [System design](docs/final-report/02-system-design.md) |
-| Phase 3 | React/TypeScript interface and the principal OptiVest workflows | [UI/UX](docs/final-report/03-ui-ux.md) |
-| Phase 4 | Continuous QP, MAD MILP, CP-SAT support selection, constraints, and feasibility checks | [Optimization methodology](docs/final-report/04-optimization-methodology.md) |
-| Phase 5 | Binding constraints, contribution metrics, reason taxonomy, and deterministic narratives | [Decision support](docs/final-report/05-decision-support.md) |
-| Phase 6 | Seven parameterized scenario transforms followed by full optimization re-solves | [Decision support](docs/final-report/05-decision-support.md) |
-| Phase 7 | Growth, real-price backtests, risk metrics, sector analysis, and efficient frontier | [Results and testing](docs/final-report/06-results-and-testing.md) |
-| Phase 8 | Three auditable PDF report types with academic disclaimers | [UI/UX and reports](docs/final-report/03-ui-ux.md) |
-| Phase 9 | JWT auth, API/service wiring, real frontend integration, and OOS correction | [System design](docs/final-report/02-system-design.md) |
-| Phase 10 | Final report assembly, live evidence, methodology disclosure, and fresh verification | [Complete final report](docs/final-report/) |
-| AI Phase 1 | Optional Gradient Boosting return forecast integrated without changing the OR default | [AI personalization layer](docs/final-report/09-ai-personalization-layer.md) |
-| AI Phase 2 | Logistic Regression risk classification and editable personalized defaults | [AI personalization layer](docs/final-report/09-ai-personalization-layer.md) |
-| AI Phase 3 | Grounded seven-intent portfolio assistant with real service calls | [AI personalization layer](docs/final-report/09-ai-personalization-layer.md) |
-| AI Phase 4 | Profile-drift and Isolation Forest anomaly alerts with background execution | [AI personalization layer](docs/final-report/09-ai-personalization-layer.md) |
-| Methodology correction | Phase 9C removed estimation/evaluation overlap and permanently labeled OOS results | [Methodology integrity](docs/final-report/07-methodology-integrity.md) |
-| Walk-forward validation | Monthly re-estimation, turnover reporting, and a 13-period sanity breakdown | [Methodology notes](docs/methodology-notes.md) |
-
-## 📚 Documentation
-
-- [Phase requirements and implementation traceability](docs/phase1-requirements/traceability-matrix.md)
-- [Complete final project report](docs/final-report/)
-- [AI personalization methodologies, evaluations, and limitations](docs/ai-personalization/)
-- [Methodology notes: look-ahead-bias correction and walk-forward findings](docs/methodology-notes.md) — the most important document for understanding the project’s research rigor, including mistakes found and corrected.
-
-## 🎓 Faculty Demonstration Path
-
-| Step | Screen or action | Point to explain |
-|---:|---|---|
-| 1 | Create an account and complete risk onboarding | The classifier recommends editable constraints; it does not make the final allocation |
-| 2 | Build a ₹10,00,000 portfolio | Budget, objective, stock cap, sector cap and holding count become OR constraints |
-| 3 | Run optimization and open Portfolio Details | Show real weights, rupee allocations, solver status and grounded “Why?” explanations |
-| 4 | Run a market or sector scenario | The inputs are transformed and the complete constrained model is solved again |
-| 5 | Open Analytics | Contrast fitted metrics with the zero-overlap out-of-sample backtest and efficient frontier |
-| 6 | Ask a portfolio question | The intent model retrieves stored evidence or invokes a real scenario instead of inventing facts |
-| 7 | Generate a PDF report | Confirm the same snapshot, methodology labels and academic disclaimer appear in the download |
-
-A concise viva explanation is: “The system converts investor preferences and real Nifty market history into a mathematically feasible portfolio, explains the solver’s decision, tests it under re-optimized shocks, and validates it on future dates that were excluded from fitting.”
-
-## 🚀 Getting Started
-
-Prerequisites: Node.js 20+, Python 3.11+, Docker Desktop, and Git.
-
-### 1. PostgreSQL and Backend
-
-```bash
-cd backend
+```powershell
+Set-Location backend
 docker compose up -d postgres
 python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-# Linux/macOS
-# source .venv/bin/activate
-
-pip install -e ".[test]"
-copy .env.example .env                 # Windows
-# cp .env.example .env                 # Linux/macOS
-
-alembic upgrade head                   # applies revisions 0001 through 0007
+.\.venv\Scripts\Activate.ps1
+python -m pip install -e ".[test]"
+Copy-Item .env.example .env
+alembic upgrade head
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Docker Compose exposes PostgreSQL on host port `5433`. The development configuration uses:
+The development database is exposed on port `5433`. Replace the example JWT secret before using a shared environment.
 
-```text
-DATABASE_URL=postgresql+asyncpg://optivest:optivest@localhost:5433/optivest
-```
-
-Replace the development JWT secret outside local use. The API documentation is available at `http://127.0.0.1:8000/docs`.
-
-### 2. Frontend
-
-From the repository root:
+Start the frontend from the repository root:
 
 ```bash
 npm install
-
-# Optional .env.local override:
-# VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
-
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
-Open `http://127.0.0.1:5173`.
+The API documentation is available at `http://127.0.0.1:8000/docs` and the frontend at `http://127.0.0.1:5173`.
 
-## 🗃️ Real Kaggle Data Ingestion
+## Data
 
-Download `kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals` and place both CSV files under `data/raw/`:
+The raw market dataset is not committed. Follow [`data/README.md`](data/README.md) for acquisition, expected schema, ingestion, and reconciliation guidance. Do not present row counts or model performance as current unless they are regenerated from the checked-out data and environment.
+
+## Testing
+
+Backend:
 
 ```bash
-kaggle datasets download \
-  -d kalyan197/nifty50-stocks1999-2026-daily-ohlcv-and-fundamentals \
-  -p data/raw --unzip
-
 cd backend
-python -m app.etl.load_nifty_dataset ../data/raw/nifty50_historical_data.csv
+pytest
 ```
 
-The ETL uses natural-key upserts, so rerunning it is idempotent. It accepts 287,263 dated rows and consistently rejects the documented 47 zero-OHLC source rows. See the [data profile](data/PROFILE_REPORT.md) for headers, mappings, nulls, date coverage, units, and manual return checks.
+Database-gated integration tests require `REAL_DATABASE_URL` pointing to a disposable or development PostgreSQL database.
 
-### Data-to-Decision Lifecycle
-
-1. The two Kaggle CSV files are profiled for headers, types, nulls, symbols, date coverage and invalid numeric values.
-2. `COLUMN_MAP` reconciles source headers without coupling the database schema to a particular CSV spelling.
-3. ETL validation rejects the documented zero-OHLC rows, computes symbol-wise daily return and performs natural-key upserts.
-4. The optimizer queries a bounded historical window to construct `mu` and covariance; the optional forecast path changes only the declared return estimate.
-5. Runs, snapshots, holdings, explanations, constraints and scenarios are persisted together so every displayed decision has lineage.
-6. Backtests query later PostgreSQL prices, enforce zero date overlap, and report realized evidence separately from fitted expectations.
-
-This lifecycle is deliberately reproducible: rerunning ingestion does not duplicate data, and rerunning analytics cannot silently move an evaluation date into the estimation period.
-
-## 🧪 Testing & Coverage
+Frontend:
 
 ```bash
-cd backend
-pytest --cov=app --cov-report=term-missing --cov-report=html
-
-# Include the three real-PostgreSQL integrations:
-# Windows PowerShell
-$env:REAL_DATABASE_URL="postgresql+asyncpg://optivest:optivest@localhost:5433/optivest"
-# Linux/macOS
-# export REAL_DATABASE_URL="postgresql+asyncpg://optivest:optivest@localhost:5433/optivest"
-
-pytest --cov=app --cov-report=term-missing --cov-report=html
-
-cd ..
 npm run test:coverage
 npm run build
 ```
 
-The verified baseline is 225 backend passes plus three environment-gated tests by default; all three pass against the loaded PostgreSQL database. The final database-enabled run passed 228/228 with 90.31% combined backend coverage. Frontend verification is 47/47 tests with 83.00% statement, 70.75% branch, 71.30% function, and 96.00% line coverage.
+## Limitations
 
-On Windows, WeasyPrint 66 requires a modern Pango runtime. The application automatically registers `C:\msys64\mingw64\bin` when that runtime is installed.
+- Results depend on historical inputs and modelling assumptions; they do not predict future returns.
+- The repository requires a separately acquired dataset for full ingestion and analysis.
+- Optimization feasibility depends on the chosen constraints and available assets.
+- Windows PDF generation with WeasyPrint may require an installed Pango runtime.
 
-## 📄 Final Report Conversion
-
-With Pandoc, XeLaTeX, and `mermaid-filter` installed:
-
-```bash
-pandoc docs/final-report/0*.md \
-  --from=gfm+tex_math_dollars --toc --number-sections \
-  --resource-path=docs/final-report --filter mermaid-filter \
-  --pdf-engine=xelatex -o OptiVest-Final-Report.pdf
-```
-
-Use `.docx` as the output and omit `--pdf-engine` for an editable Word submission.
-
-## 🔬 Methodology & Integrity
-
-The original Phase 9B walkthrough replayed the same 249 dates used to fit the optimizer and reported fitted quantities as validation evidence. Phase 9C identified this look-ahead bias and enforced an exclusive split: 252 observations ending 29 January 2025 for estimation, followed by 249 observations from 30 January 2025 through 30 January 2026 for evaluation, with zero shared dates.
-
-The established corrected static portfolio changed ₹10,00,000 to ₹11,01,423.96, with 10.3141% annualized realized return and 0.6777 realized Sharpe. The separate 13-period historical-mean walk-forward experiment ended at ₹10,11,596.09 with 1.1737% return, 0.0771 Sharpe, −12.0030% drawdown, and 8.0000 turnover. Transaction costs are not modeled. These results are reported as observed outcomes, not tuned demonstrations of superiority.
