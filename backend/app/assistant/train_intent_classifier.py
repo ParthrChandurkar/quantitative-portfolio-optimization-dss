@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -20,6 +21,11 @@ from app.assistant.intents import AssistantIntent, IntentPrediction
 DEFAULT_ARTIFACT_PATH = (
     Path(__file__).resolve().parent / "artifacts" / "intent_classifier.joblib"
 )
+
+
+def normalize_question(question: str) -> str:
+    """Normalize equivalent portfolio wording before TF-IDF inference."""
+    return re.sub(r"\bthis portfolio\b", "my portfolio", question, flags=re.I)
 
 
 @dataclass(frozen=True, slots=True)
@@ -98,12 +104,13 @@ def classify_intent(
 ) -> IntentPrediction:
     artifact = joblib.load(artifact_path)
     model = artifact["model"]
-    probabilities_array = model.predict_proba([question])[0]
+    normalized_question = normalize_question(question)
+    probabilities_array = model.predict_proba([normalized_question])[0]
     probabilities = {
         str(label): float(probability)
         for label, probability in zip(model.classes_, probabilities_array, strict=True)
     }
-    label = str(model.predict([question])[0])
+    label = str(model.predict([normalized_question])[0])
     return IntentPrediction(AssistantIntent(label), probabilities[label], probabilities)
 
 

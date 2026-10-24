@@ -34,24 +34,24 @@ function show(runWalkForward: ReturnType<typeof vi.fn>) {
 describe('WalkForwardTab', () => {
   it('shows period progress while the real request is pending', async () => {
     show(vi.fn(() => new Promise(() => undefined)))
-    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Re-optimizing period 1')
+    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward test' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Rebuilding and testing period 1')
   })
 
   it('renders composition, value overlay, and side-by-side metrics', async () => {
     const runWalkForward = vi.fn().mockResolvedValue(result)
     show(runWalkForward)
-    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward' }))
-    expect(await screen.findByText('WALK-FORWARD OUT-OF-SAMPLE BACKTEST')).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward test' }))
+    expect(await screen.findByText('TESTED ONLY ON LATER UNSEEN DATA')).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Walk-forward composition stacked area chart' })).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Cumulative portfolio value comparison' })).toBeInTheDocument()
-    expect(screen.getByText('Verified: every fit date precedes its rebalance')).toBeInTheDocument()
+    expect(screen.getByText('Verified: every training date comes before its test period')).toBeInTheDocument()
     expect(runWalkForward).toHaveBeenCalledWith('portfolio-1', { rebalance_frequency: 'monthly', lookback_days: 252 })
   })
 
   it('uses the shared API error state', async () => {
     show(vi.fn().mockRejectedValue(new Error('walk-forward failed')))
-    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Run walk-forward test' }))
     expect(await screen.findByRole('alert')).toHaveTextContent('walk-forward failed')
   })
 })

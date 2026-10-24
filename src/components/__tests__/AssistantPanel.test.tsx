@@ -24,10 +24,10 @@ describe('AssistantPanel', () => {
   it('submits a question through the typed client and renders grounded evidence', async () => {
     const ask = vi.fn().mockResolvedValue(grounded)
     show(ask)
-    await userEvent.click(screen.getByRole('button', { name: 'Is this portfolio diversified?' }))
+    await userEvent.click(screen.getByRole('button', { name: 'How diversified is my portfolio?' }))
     expect(await screen.findByText(grounded.answer)).toBeInTheDocument()
     expect(screen.getByText(/explainability\.diversification \(overall_score\)/)).toBeInTheDocument()
-    expect(ask).toHaveBeenCalledWith('portfolio-1', 'Is this portfolio diversified?')
+    expect(ask).toHaveBeenCalledWith('portfolio-1', 'How diversified is my portfolio?')
   })
 
   it('shows a pending state while portfolio sources are checked', async () => {

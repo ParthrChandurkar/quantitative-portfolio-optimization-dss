@@ -87,6 +87,42 @@ async def test_low_confidence_returns_unknown_without_loading_sources(
     assert result.is_fallback is True
 
 
+async def test_stock_question_corrects_included_excluded_premise(monkeypatch) -> None:
+    snapshot = SimpleNamespace(id=uuid4(), optimization_run_id=uuid4())
+
+    async def owned(*_args):
+        return snapshot
+
+    async def universe(_session):
+        return ("RELIANCE",), ("Energy",)
+
+    async def narrative(_session, _snapshot, _symbol, *, included):
+        return None if included else "RELIANCE was excluded by the solved allocation."
+
+    monkeypatch.setattr("app.assistant.service.require_owned_snapshot", owned)
+    monkeypatch.setattr("app.assistant.service._universe", universe)
+    monkeypatch.setattr("app.assistant.service._stock_narrative", narrative)
+    monkeypatch.setattr(
+        "app.assistant.service.classify_intent",
+        lambda _question: IntentPrediction(
+            AssistantIntent.EXPLAIN_STOCK_INCLUSION, 0.90, {}
+        ),
+    )
+
+    result = await answer_question(
+        object(),
+        SimpleNamespace(id=uuid4()),
+        Settings(),
+        uuid4(),
+        snapshot.id,
+        "Why was RELIANCE included?",
+    )
+
+    assert result.intent is AssistantIntent.EXPLAIN_STOCK_EXCLUSION
+    assert result.answer == "RELIANCE was excluded by the solved allocation."
+    assert result.is_fallback is False
+
+
 @pytest.mark.parametrize(
     "intent",
     [

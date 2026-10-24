@@ -141,6 +141,7 @@ async def answer_question(
         include_shock=prediction.intent is AssistantIntent.HYPOTHETICAL_SHOCK,
     )
     template = None
+    resolved_intent = prediction.intent
     if prediction.intent in {
         AssistantIntent.EXPLAIN_STOCK_INCLUSION,
         AssistantIntent.EXPLAIN_STOCK_EXCLUSION,
@@ -150,6 +151,19 @@ async def answer_question(
             narrative = await _stock_narrative(
                 session, snapshot, slots.stock_symbol, included=included
             )
+            if narrative is None:
+                # Correct a false premise such as asking why an excluded stock was
+                # included. The opposite decision is still grounded in the same run.
+                narrative = await _stock_narrative(
+                    session, snapshot, slots.stock_symbol, included=not included
+                )
+                if narrative is not None:
+                    included = not included
+                    resolved_intent = (
+                        AssistantIntent.EXPLAIN_STOCK_INCLUSION
+                        if included
+                        else AssistantIntent.EXPLAIN_STOCK_EXCLUSION
+                    )
             if narrative is not None:
                 template = answer_templates.stock_explanation(
                     slots.stock_symbol, narrative, included=included
@@ -222,7 +236,7 @@ async def answer_question(
         )
     return AssistantAnswer(
         template.answer,
-        prediction.intent,
+        resolved_intent,
         prediction.confidence,
         template.grounding,
         template.is_fallback,

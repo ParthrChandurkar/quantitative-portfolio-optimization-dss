@@ -30,3 +30,6 @@ def test_classifier_reports_accuracy_and_inspectable_confusion_matrix(tmp_path) 
         classify_intent("what if the market crashes", artifact_path).intent
         is AssistantIntent.HYPOTHETICAL_SHOCK
     )
+    diversification = classify_intent("Is this portfolio diversified?", artifact_path)
+    assert diversification.intent is AssistantIntent.DIVERSIFICATION_QUESTION
+    assert diversification.confidence >= 0.55

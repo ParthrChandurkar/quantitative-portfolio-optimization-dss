@@ -9,9 +9,9 @@ type ChatMessage =
   | { role: 'assistant'; response: AssistantAnswer }
 
 const examples = [
-  'Why was RELIANCE included?',
+  'Why is this portfolio allocated this way?',
   'How risky is this portfolio?',
-  'Is this portfolio diversified?',
+  'How diversified is my portfolio?',
   'What happens in a 20% market crash?',
 ]
 
